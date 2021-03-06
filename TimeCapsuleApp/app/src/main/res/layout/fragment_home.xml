@@ -14,15 +14,89 @@
         android:layout_marginBottom="20dp"
         android:textSize="40sp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_task_grid"
-        android:name="com.unarimit.timecapsuleapp.ui.home.HomeFragment"
+    <!-- often tasks -->
+    <LinearLayout
+        android:id="@+id/home_task_often_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment"
-        tools:listitem="@layout/fragment_home_taskitem" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_often_task"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white_gray"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_task_often_grid"
+            android:name="com.unarimit.timecapsuleapp.ui.home.HomeFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            tools:context=".ui.home.HomeFragment"
+            tools:listitem="@layout/fragment_home_taskitem" />
+    </LinearLayout>
+
+    <!-- curve tasks -->
+    <LinearLayout
+        android:id="@+id/home_task_curve_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_unoften_task"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white_gray"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_task_curve_grid"
+            android:name="com.unarimit.timecapsuleapp.ui.home.HomeFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            tools:context=".ui.home.HomeFragment"
+            tools:listitem="@layout/fragment_home_curvetaskitem" />
+    </LinearLayout>
+
+    <!-- un often tasks -->
+    <LinearLayout
+        android:id="@+id/home_task_unoften_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_unoften_task"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white_gray"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_task_unoften_grid"
+            android:name="com.unarimit.timecapsuleapp.ui.home.HomeFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            tools:context=".ui.home.HomeFragment"
+            tools:listitem="@layout/fragment_home_taskitem" />
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/home_task_notask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textAlignment="center"
