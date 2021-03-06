@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/text_margin"
+    tools:context=".ui.task.manager.TaskManagerActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_line_height">
+        <Button
+            android:id="@+id/taskmanager_return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:text="return"/>
+
+        <Button
+            android:id="@+id/taskmanager_confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:text="confirm" />
+
+        <Button
+            android:id="@+id/taskmanager_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/taskmanager_confirm_button"
+            android:layout_marginEnd="10dp"
+            android:text="delete"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/taskmanager_taskclass_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_line_height">
+        <TextView
+            android:id="@+id/taskmanager_tv1"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:text="@string/taskmanager_taskclass_text"/>
+        <TextView
+            android:id="@+id/taskmanager_taskclass_name"
+            android:layout_toEndOf="@id/taskmanager_tv1"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:layout_marginStart="15dp"
+            android:text="@string/taskmanager_taskclass_text_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/taskmanager_taskclass_colordisplay"
+            android:layout_toEndOf="@id/taskmanager_taskclass_name"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_line_height"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/taskmanager_name_text"/>
+        <EditText
+            android:id="@+id/taskmanager_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_line_height"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/taskmanager_desc_text"/>
+        <EditText
+            android:id="@+id/taskmanager_desc_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:layout_height="@dimen/input_line_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/taskmanager_achieveperhour_text" />
+        <SeekBar
+            android:id="@+id/taskmanager_achieve_sb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:max="20"
+            android:progress="0" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_line_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/taskmanager_icon_text" />
+        <com.unarimit.timecapsuleapp.ui.common.IconTextView
+            android:id="@+id/taskmanager_icon_button"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/icon_crown"
+            android:textSize="30sp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

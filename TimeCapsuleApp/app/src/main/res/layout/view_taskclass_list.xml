@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/text_margin"
+    android:orientation="vertical">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/taskmanager_classview_list"
+        android:name="com.unarimit.timecapsuleapp.ui.task.TaskFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".ui.task.TaskFragment"
+        tools:listitem="@layout/fragment_taskclass_item" />
+    <TextView
+        android:id="@+id/taskmanager_classview_tip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAlignment="center"
+        android:textColor="@color/gray"
+        android:visibility="gone"
+        android:text="@string/tip_taskclasslist"/>
+</LinearLayout>

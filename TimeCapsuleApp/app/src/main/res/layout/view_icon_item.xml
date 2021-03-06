@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.unarimit.timecapsuleapp.ui.common.IconTextView
+        android:id="@+id/icon_text"
+        android:textSize="25sp"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:textColor="@color/gray"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
+</LinearLayout>

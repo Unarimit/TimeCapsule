@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/home_task_ing"/>
+    <TextView
+        android:id="@+id/home_ontask_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/rl_1"
+        android:layout_marginBottom="30dp"
+        android:textSize="40sp"/>
+    <RelativeLayout
+        android:id="@+id/rl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <com.unarimit.timecapsuleapp.ui.common.IconTextView
+            android:id="@+id/home_ontask_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"/>
+        <TextView
+            android:id="@+id/home_ontask_time_text"
+            android:layout_below="@id/home_ontask_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"/>
+        <TextView
+            android:id="@+id/home_ontask_desc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/home_ontask_time_text"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/home_ontask_stop_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stop"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/rl_1"/>
+    <!--TODO: quick switch-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_ontask_stop_button"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="TODO: quick switch"/>
+
+</RelativeLayout>

@@ -1,0 +1,148 @@
+package com.unarimit.timecapsuleapp.ui.home;
+
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.SystemClock;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.unarimit.timecapsuleapp.MainActivity;
+import com.unarimit.timecapsuleapp.R;
+import com.unarimit.timecapsuleapp.entities.Period;
+import com.unarimit.timecapsuleapp.ui.common.IconStringList;
+import com.unarimit.timecapsuleapp.ui.common.IconTextView;
+import com.unarimit.timecapsuleapp.ui.task.TaskFragment;
+import com.unarimit.timecapsuleapp.utils.database.DbContext;
+
+import java.util.Locale;
+
+public class HomeFragment extends Fragment {
+
+    private HomeViewModel homeViewModel;
+    View root;
+
+    LayoutInflater inflater;
+    ViewGroup container;
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        // homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        this.inflater = inflater;
+        this.container = container;
+        homeViewModel = new HomeViewModel();
+        if(homeViewModel.getCurrentPeriod() == null){
+            root = inflater.inflate(R.layout.fragment_home, container, false);
+            NoCurrentPeriodCreate();
+        }else{
+            root = inflater.inflate(R.layout.fragment_home_ontask, container, false);
+            InCurrentPeriodCreate();
+        }
+        return root;
+    }
+
+    public void BigUpdateUI(){
+        MainActivity activity = (MainActivity)getActivity();
+        activity.refreshFragment(this);
+    }
+
+    RecyclerView recyclerView;
+    private void NoCurrentPeriodCreate(){
+        // init task grid
+        // create period in recyclerAdapter
+        recyclerView = root.findViewById(R.id.home_task_grid);
+        if(homeViewModel.getTasks() == null || homeViewModel.getTasks().isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 4));
+            recyclerView.setAdapter(new HomeTaskViewAdapter(homeViewModel.getTasks(), this));
+        }
+    }
+    IconTextView icon;
+    TextView timeText;
+    TextView taskDescText;
+    TextView nameText;
+    Button taskStopButton;
+    TimingServiceConnection connection;
+    TimingHandler handler = new TimingHandler();
+    Period period;
+    public static final int UPDATE_TIMING = 123;
+    private void InCurrentPeriodCreate(){
+        icon = root.findViewById(R.id.home_ontask_icon);
+        timeText = root.findViewById(R.id.home_ontask_time_text);
+        taskDescText = root.findViewById(R.id.home_ontask_desc_text);
+        taskStopButton = root.findViewById(R.id.home_ontask_stop_button);
+        nameText = root.findViewById(R.id.home_ontask_name_text);
+
+        period = homeViewModel.getCurrentPeriod();
+        icon.setText(period.getTask().getIcon());
+        icon.setTextColor(Color.parseColor(period.getTask().getTaskClass().getColor()));
+        timeText.setText("00:00:00");
+        taskDescText.setText(period.getTask().getDesc());
+        nameText.setText(period.getTask().getName());
+        Intent intent = new Intent(getContext(), TimingService.class);
+        connection = new TimingServiceConnection();
+        getContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
+        taskStopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                period.Finish();
+                DbContext.Periods.UpdatePeriod(period);
+                connection.StopTiming();
+                getContext().unbindService(connection);
+                BigUpdateUI();
+            }
+        });
+    }
+    class TimingHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == UPDATE_TIMING){
+                timeText.setText(msg.getData().getString("show"));
+            }
+        }
+    }
+
+
+    class TimingServiceConnection implements ServiceConnection {
+
+        TimingService.TimingBinder binder;
+        boolean run;
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            binder = (TimingService.TimingBinder) service;
+            binder.StartTiming(period.getTask().getTaskClass().getColor(), period.getTask().getIcon(), period.getBegin(), handler);
+            run = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+
+        public void StopTiming(){
+            run = false;
+            binder.StopTiming();
+        }
+    }
+}

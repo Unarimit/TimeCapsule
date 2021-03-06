@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/boradline"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/period_statistic_menu_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:text="@string/period_statistic_menu_list"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/clickable_text_color"/>
+    <TextView
+        android:id="@+id/period_statistic_menu_pie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:text="@string/period_statistic_menu_pie"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/clickable_text_color"/>
+    <TextView
+        android:id="@+id/period_statistic_menu_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:text="@string/period_statistic_menu_bar"/>
+</LinearLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_width="match_parent">
+    <RelativeLayout
+        android:id="@+id/period_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.unarimit.timecapsuleapp.ui.common.IconTextView
+            android:id="@+id/period_list_statistic_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="23sp"
+            android:text="@string/icon_chart_pie"/>
+        <TextView
+            android:id="@+id/period_list_date_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:text="2月25日"/>
+        <View
+            android:layout_width="95dp"
+            android:layout_below="@id/period_list_date_choose"
+            android:layout_centerHorizontal="true"
+            android:layout_height="1dp"
+            android:background="@color/clickable_text_color"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/period_main_layout"
+        android:layout_below="@id/period_layout1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/period_nullhint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/period_nullhint"
+        android:gravity="center"/>
+</RelativeLayout>

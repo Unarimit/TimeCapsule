@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/text_margin"
+    tools:context=".ui.period.manager.PeriodManagerActivity">
+
+    <!-- action button -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/periodmanager_return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="return"/>
+        <Button
+            android:id="@+id/periodmanager_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/periodmanager_confirm_button"
+            android:layout_marginEnd="10dp"
+            android:text="delete"/>
+        <Button
+            android:id="@+id/periodmanager_confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="confirm"/>
+    </RelativeLayout>
+
+
+    <!-- task display, click to change-->
+    <LinearLayout
+        android:id="@+id/periodmanager_task_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.unarimit.timecapsuleapp.ui.common.IconTextView
+            android:id="@+id/periodmanager_task_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"/>
+        <TextView
+            android:id="@+id/periodmanager_task_text"
+            android:paddingStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"/>
+    </LinearLayout>
+
+    <!-- depend taskclass info-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="所属任务类："/>
+        <TextView
+            android:id="@+id/periodmanager_dependtaskclass_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- begin and end time -->
+    <RelativeLayout
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- begin -->
+        <TextView
+            android:id="@+id/periodmanager_begin_text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="@string/periodmanager_begin_text"/>
+        <TextView
+            android:id="@+id/periodmanager_begin_date_tv"
+            android:layout_below="@id/periodmanager_begin_text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2月29日, 2021"/>
+        <View
+            android:layout_width="95dp"
+            android:layout_below="@id/periodmanager_begin_date_tv"
+            android:layout_height="1dp"
+            android:background="@color/clickable_text_color"/>
+        <TextView
+            android:id="@+id/periodmanager_begin_time_tv"
+            android:layout_below="@id/periodmanager_begin_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="19:00"/>
+        <View
+            android:layout_width="65dp"
+            android:layout_below="@id/periodmanager_begin_time_tv"
+            android:layout_height="1dp"
+            android:background="@color/clickable_text_color"/>
+        <View
+            android:layout_width="65dp"
+            android:layout_centerInParent="true"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+        <!-- end -->
+        <TextView
+            android:id="@+id/periodmanager_end_text_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="@string/periodmanager_end_text"/>
+        <TextView
+            android:id="@+id/periodmanager_end_date_tv"
+            android:layout_below="@id/periodmanager_begin_text_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2月29日, 2021"/>
+        <View
+            android:layout_width="95dp"
+            android:layout_below="@id/periodmanager_end_date_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_height="1dp"
+            android:background="@color/clickable_text_color"/>
+        <TextView
+            android:id="@+id/periodmanager_end_time_tv"
+            android:layout_below="@id/periodmanager_end_date_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="21:00"/>
+        <View
+            android:layout_width="65dp"
+            android:layout_below="@id/periodmanager_end_time_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_height="1dp"
+            android:background="@color/clickable_text_color"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

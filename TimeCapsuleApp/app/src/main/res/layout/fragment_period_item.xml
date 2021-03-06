@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.unarimit.timecapsuleapp.ui.common.IconTextView
+        android:id="@+id/period_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginEnd="10dp"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:id="@+id/period_item_name_tv"
+        android:layout_toEndOf="@id/period_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Name"/>
+
+    <TextView
+        android:id="@+id/period_item_during_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/period_item_icon"
+        android:layout_below="@id/period_item_name_tv"
+        android:textSize="20sp"
+        android:text="8:00-8:45"/>
+    <TextView
+        android:id="@+id/period_item_totaltime_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:textSize="25sp"
+        android:layout_centerVertical="true"
+        android:text="0:45"/>
+    <TextView
+        android:id="@+id/period_item_achieve_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/period_item_totaltime_tv"
+        android:textSize="13sp"
+        android:text="+0.8"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white_gray"/>
+</RelativeLayout>

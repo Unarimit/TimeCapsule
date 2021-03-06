@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">TimeCapsuleApp</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <!-- nav bar -->
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_taskclass">TaskClass</string>
+    <string name="menu_task">Task</string>
+    <string name="menu_period">Period</string>
+    <string name="menu_exceptioninfo">ExceptionInfo</string>
+
+    <!--home-->
+    <string name="home_task_ing">任务进行中</string>
+
+
+    <!-- task -->
+    <string name="tip_tasklist">现在还没有任务哦，点击创建一个</string>
+    <string name="taskmanager_taskclass_text">任务类:</string>
+    <string name="taskmanager_taskclass_text_tip">点击选择任务类</string>
+    <string name="taskmanager_name_text">名称：</string>
+    <string name="taskmanager_desc_text">详情：</string>
+    <string name="taskmanager_icon_text">图标：</string>
+    <string name="taskmanager_achieveperhour_text">成就值每小时：</string>
+
+    <string name="depend_task_class">所属任务类：</string>
+    <!-- taskclass -->
+    <string name="tip_taskclasslist">现在还没有任务类哦，点击创建一个</string>
+    <string name="button_addnewtaskclass">添加新的任务类</string>
+    <string name="taskclassmanager_name_text">类别名称：</string>
+    <string name="taskclassmanager_color_text">颜色：</string>
+
+    <!--period-->
+    <string name="period_nullhint">这段时间没有任何时间记录</string>
+
+    <string name="periodmanager_begin_text">开始</string>
+    <string name="periodmanager_end_text">结束</string>
+
+    <string name="period_menu_pre">〈</string>
+    <string name="period_menu_day">日</string>
+    <string name="period_menu_week">周</string>
+    <string name="period_menu_month">月</string>
+    <string name="period_menu_year">年</string>
+    <string name="period_menu_next">〉</string>
+
+    <!-- period statistic menu -->
+    <string name="period_statistic_menu_pie">饼图统计</string>
+    <string name="period_statistic_menu_bar">条形图统计</string>
+    <string name="period_statistic_menu_list">时间段列表</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+    <!-- icon more info: https://fontawesome.com/cheatsheet/free/solid -->
+    <string name="icon_crown">&#xf521;</string>
+    <string name="icon_chart_pie">&#xf200;</string>
+    <string name="icon_finish">&#xf00c;</string>
+    <string name="icon_trash">&#xf2ed;</string>
+</resources>
