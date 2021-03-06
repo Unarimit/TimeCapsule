@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -31,6 +32,8 @@ public class TaskManagerActivity extends AppCompatActivity {
     private EditText nameEt;
     private EditText descEt;
     private SeekBar achieveSb;
+    private CheckBox isOftenCb;
+
     private TaskClass taskClass;
     private TaskManagerViewModel viewModel;
 
@@ -53,6 +56,7 @@ public class TaskManagerActivity extends AppCompatActivity {
         descEt = findViewById(R.id.taskmanager_desc_et);
         achieveSb = findViewById(R.id.taskmanager_achieve_sb);
         iconButton = findViewById(R.id.taskmanager_icon_button);
+        isOftenCb = findViewById(R.id.taskmanager_often_checkbox);
         viewModel = new TaskManagerViewModel();
 
         returnButton = findViewById(R.id.taskmanager_return_button);
@@ -95,13 +99,15 @@ public class TaskManagerActivity extends AppCompatActivity {
                             task.getTaskClass(),
                             (double)achieveSb.getProgress() / 10 - 1,
                             task.isFinished(),
-                            iconButton.getText().toString()));
+                            iconButton.getText().toString(),
+                            isOftenCb.isChecked()));
                 } else { // else click add new button into this page
                     DbContext.Tasks.Add(new Task(nameEt.getText().toString(),
                             descEt.getText().toString(),
                             taskClass,
                             (double)achieveSb.getProgress() / 10 - 1,
-                            iconButton.getText().toString()));
+                            iconButton.getText().toString(),
+                            isOftenCb.isChecked()));
                 }
                 finish();
             }

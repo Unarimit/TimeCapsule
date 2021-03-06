@@ -25,6 +25,7 @@
     <string name="taskmanager_desc_text">详情：</string>
     <string name="taskmanager_icon_text">图标：</string>
     <string name="taskmanager_achieveperhour_text">成就值每小时：</string>
+    <string name="taskmanager_often_checkbox">是否为常用任务：</string>
 
     <string name="depend_task_class">所属任务类：</string>
     <!-- taskclass -->

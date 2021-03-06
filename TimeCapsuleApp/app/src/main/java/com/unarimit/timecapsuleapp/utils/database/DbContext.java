@@ -32,7 +32,7 @@ public class DbContext {
     public static PeriodFragment.StatisticType statisticType = PeriodFragment.StatisticType.LIST;
     public static int WindowsWidth;
 
-    private static final int DB_VERSION = 12;         //数据库版本
+    private static final int DB_VERSION = 13;         //数据库版本
 
     public static void InitDbContext(Context context){
         _databaseHelper = new DatabaseHelper(context);
@@ -53,11 +53,15 @@ public class DbContext {
         TaskClass studyTaskClass = new TaskClass(UUID.randomUUID().toString(),"study", "#FF6666",2);
         DbContext.TaskClasses.Add(studyTaskClass);
         // add task
-        Task eatTask = new Task(1, UUID.randomUUID().toString(), "eat", "eat make me strong", eatTaskClass, 0.2, false, "\uf805");
+        Task eatTask = new Task(1, UUID.randomUUID().toString(), "eat", "eat make me strong",
+                eatTaskClass, 0.2, false, "\uf805", true);
         DbContext.Tasks.Add(eatTask);
-        Task englishTask = new Task(2, UUID.randomUUID().toString(),"english", "i like english", studyTaskClass, 1, false,"\uf805");
-        Task readingTask = new Task(3, UUID.randomUUID().toString(),"reading", "reading make me feel good", studyTaskClass, 1, false,"\uf805");
-        Task mathTask = new Task(4, UUID.randomUUID().toString(),"math", "i hate math", studyTaskClass, 1, false,"\uf805");
+        Task englishTask = new Task(2, UUID.randomUUID().toString(),"english", "i like english",
+                studyTaskClass, 1, false,"\uf805", true);
+        Task readingTask = new Task(3, UUID.randomUUID().toString(),"reading", "reading make me feel good",
+                studyTaskClass, 1, false,"\uf805", true);
+        Task mathTask = new Task(4, UUID.randomUUID().toString(),"math", "i hate math",
+                studyTaskClass, 1, false,"\uf805", false);
         DbContext.Tasks.Add(englishTask);
         DbContext.Tasks.Add(mathTask);
         DbContext.Tasks.Add(readingTask);

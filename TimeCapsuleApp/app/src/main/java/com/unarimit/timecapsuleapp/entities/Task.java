@@ -15,11 +15,12 @@ public class Task implements Serializable {
     double AchievePerHour;
     boolean IsFinished;
     String Icon;
+    boolean IsOften;
 
     /**
      * create evoke
      * */
-    public Task(String name, String desc, TaskClass taskClass, double achievePerHour, String icon) {
+    public Task(String name, String desc, TaskClass taskClass, double achievePerHour, String icon, boolean isOften) {
         Name = name;
         Desc = desc;
         TaskClass = taskClass;
@@ -27,12 +28,13 @@ public class Task implements Serializable {
         Icon = icon;
         Guid = UUID.randomUUID().toString();
         IsFinished = false;
+        IsOften = isOften;
     }
 
     /**
      * DAO evoke
      * */
-    public Task(int id, String guid, String name, String desc, TaskClass taskClass, double achievePerHour, boolean isFinished, String icon) {
+    public Task(int id, String guid, String name, String desc, TaskClass taskClass, double achievePerHour, boolean isFinished, String icon, boolean isOften) {
         Id = id;
         Guid = guid;
         Name = name;
@@ -41,6 +43,7 @@ public class Task implements Serializable {
         AchievePerHour = achievePerHour;
         IsFinished = isFinished;
         Icon = icon;
+        IsOften = isOften;
     }
 
 
@@ -84,4 +87,11 @@ public class Task implements Serializable {
         return IsFinished;
     }
 
+    public boolean isOften() {
+        return IsOften;
+    }
+
+    public void setOften(boolean often) {
+        IsOften = often;
+    }
 }

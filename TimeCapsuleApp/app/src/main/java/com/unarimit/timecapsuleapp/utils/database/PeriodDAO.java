@@ -43,8 +43,12 @@ public class PeriodDAO {
             return null;
 
         boolean isfinish_temp = false;
+        boolean isoften_temp = false;
         if(cursor.getInt(cursor.getColumnIndex(TaskDAO.IS_FINISHED)) == 1)
             isfinish_temp = true;
+        if(cursor.getInt(cursor.getColumnIndex(TaskDAO.IS_OFTEN)) == 1)
+            isoften_temp = true;
+
         TaskClass taskClass = new TaskClass(cursor.getString(cursor.getColumnIndex(TaskClassDAO.GUID)),
                 cursor.getString(cursor.getColumnIndex(TaskClassDAO.NAME)),
                 cursor.getString(cursor.getColumnIndex(TaskClassDAO.COLOR)),
@@ -56,7 +60,8 @@ public class PeriodDAO {
                 taskClass,
                 cursor.getDouble(cursor.getColumnIndex(TaskDAO.ACHIEVE_PER_HOUR)),
                 isfinish_temp,
-                cursor.getString(cursor.getColumnIndex(TaskDAO.ICON)));
+                cursor.getString(cursor.getColumnIndex(TaskDAO.ICON)),
+                isoften_temp);
 
         return new Period(cursor.getString(cursor.getColumnIndex(GUID)),
                 cursor.getInt(cursor.getColumnIndex(ID)),
@@ -81,8 +86,12 @@ public class PeriodDAO {
         LinkedList<Period> list = new LinkedList<Period>();
         do{
             boolean isfinish_temp = false;
+            boolean isoften_temp = false;
             if(cursor.getInt(cursor.getColumnIndex(TaskDAO.IS_FINISHED)) == 1)
                 isfinish_temp = true;
+            if(cursor.getInt(cursor.getColumnIndex(TaskDAO.IS_OFTEN)) == 1)
+                isoften_temp = true;
+
             TaskClass taskClass = new TaskClass(cursor.getString(cursor.getColumnIndex(TaskClassDAO.GUID)),
                     cursor.getString(cursor.getColumnIndex(TaskClassDAO.NAME)),
                     cursor.getString(cursor.getColumnIndex(TaskClassDAO.COLOR)),
@@ -94,7 +103,8 @@ public class PeriodDAO {
                     taskClass,
                     cursor.getDouble(cursor.getColumnIndex(TaskDAO.ACHIEVE_PER_HOUR)),
                     isfinish_temp,
-                    cursor.getString(cursor.getColumnIndex(TaskDAO.ICON)));
+                    cursor.getString(cursor.getColumnIndex(TaskDAO.ICON)),
+                    isoften_temp);
 
             list.add(new Period(cursor.getString(cursor.getColumnIndex(GUID)),
                     cursor.getInt(cursor.getColumnIndex(ID)),

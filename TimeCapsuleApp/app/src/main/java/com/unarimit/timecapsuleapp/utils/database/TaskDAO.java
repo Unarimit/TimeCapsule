@@ -18,6 +18,7 @@ public class TaskDAO {
     public static final String DESC = "t_desc";
     public static final String ACHIEVE_PER_HOUR = "t_achieve_per_hour";
     public static final String IS_FINISHED = "t_isFinished";
+    public static final String IS_OFTEN = "t_isOften";
     public static final String ICON = "t_icon";
     public static final String TASK_CLASS_ID = "t_taskClassId";
 
@@ -29,6 +30,7 @@ public class TaskDAO {
             + DESC + " text,"
             + ACHIEVE_PER_HOUR + " real not null,"
             + IS_FINISHED + " bool not null,"
+            + IS_OFTEN + " bool not null,"
             + ICON + " text not null,"
             + TASK_CLASS_ID + " integer not null,"
             + "foreign key("+TASK_CLASS_ID + ") references " + TaskClassDAO.TABLE_NAME + "(" +TaskClassDAO.ID + "))";
@@ -58,17 +60,21 @@ public class TaskDAO {
                 cursor.getInt(cursor.getColumnIndex(TaskClassDAO.ID)));
 
             boolean isfinish_temp = false;
+            boolean isoften_temp = false;
             if(cursor.getInt(cursor.getColumnIndex(IS_FINISHED)) == 1)
                 isfinish_temp = true;
+            if(cursor.getInt(cursor.getColumnIndex(IS_OFTEN)) == 1)
+                isoften_temp = true;
 
             result.add(new Task(cursor.getInt(cursor.getColumnIndex(ID)),
-                cursor.getString(cursor.getColumnIndex(GUID)),
-                cursor.getString(cursor.getColumnIndex(NAME)),
-                cursor.getString(cursor.getColumnIndex(DESC)),
-                taskClass,
-                cursor.getDouble(cursor.getColumnIndex(ACHIEVE_PER_HOUR)),
-                isfinish_temp,
-                cursor.getString(cursor.getColumnIndex(ICON))));
+                    cursor.getString(cursor.getColumnIndex(GUID)),
+                    cursor.getString(cursor.getColumnIndex(NAME)),
+                    cursor.getString(cursor.getColumnIndex(DESC)),
+                    taskClass,
+                    cursor.getDouble(cursor.getColumnIndex(ACHIEVE_PER_HOUR)),
+                    isfinish_temp,
+                    cursor.getString(cursor.getColumnIndex(ICON)),
+                    isoften_temp));
 
         }while (cursor.moveToNext());
 
@@ -82,7 +88,8 @@ public class TaskDAO {
         values.put(NAME, task.getName());
         values.put(DESC, task.getDesc());
         values.put(ACHIEVE_PER_HOUR, task.getAchievePerHour());
-        values.put(IS_FINISHED, false);
+        values.put(IS_FINISHED, task.isFinished());
+        values.put(IS_OFTEN, task.isOften());
         values.put(ICON, task.getIcon());
         values.put(TASK_CLASS_ID, task.getTaskClass().getId());
         DbContext._SQLiteDatabase.insert(TABLE_NAME, ID, values);
@@ -95,6 +102,7 @@ public class TaskDAO {
         values.put(DESC, task.getDesc());
         values.put(ACHIEVE_PER_HOUR, task.getAchievePerHour());
         values.put(IS_FINISHED, task.isFinished());
+        values.put(IS_OFTEN, task.isOften());
         values.put(ICON, task.getIcon());
         values.put(TASK_CLASS_ID, task.getTaskClass().getId());
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+task.getId(), null);
