@@ -24,7 +24,7 @@ public class PeriodDAO {
             + TABLE_NAME
             + " (" + ID + " integer PRIMARY KEY AUTOINCREMENT,"
             + GUID + " text not null,"
-            + TASK_ID + " text not null,"
+            + TASK_ID + " integer not null,"
             + BEGIN + " integer not null,"
             + END + " integer not null,"
             + BEGIN_CALENDER + " integer not null,"
@@ -91,7 +91,7 @@ public class PeriodDAO {
                 isfinish_temp = true;
             if(cursor.getInt(cursor.getColumnIndex(TaskDAO.IS_OFTEN)) == 1)
                 isoften_temp = true;
-
+            // TODO: 性能优化，getIndex在循环外进行，不要进行联表查询
             TaskClass taskClass = new TaskClass(cursor.getString(cursor.getColumnIndex(TaskClassDAO.GUID)),
                     cursor.getString(cursor.getColumnIndex(TaskClassDAO.NAME)),
                     cursor.getString(cursor.getColumnIndex(TaskClassDAO.COLOR)),

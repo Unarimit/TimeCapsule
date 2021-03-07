@@ -1,5 +1,7 @@
 package com.unarimit.timecapsuleapp.entities;
 
+import java.util.List;
+
 public class CurveJobBase {
     int Id;
     Task Task;
@@ -7,6 +9,8 @@ public class CurveJobBase {
     long BeginCalendar;
     long LastCheckCalendar;
     boolean IsOver;
+    int Fails;
+    List<CurveJob> Jobs;
 
     /**
      * create call
@@ -16,20 +20,24 @@ public class CurveJobBase {
         BeginCalendar = beginCalendar;
         LastCheckCalendar = -1;
         BaseCost = baseCost;
+        Fails = 0;
         IsOver = false;
     }
 
-    /**
-     * DAO query call
-     * */
-    public CurveJobBase(int id, com.unarimit.timecapsuleapp.entities.Task task, int baseCost, long beginCalendar, long lastCheckCalendar, boolean isOver) {
+    public CurveJobBase(int id, com.unarimit.timecapsuleapp.entities.Task task, int baseCost, long beginCalendar, long lastCheckCalendar, boolean isOver, int fails) {
         Id = id;
         Task = task;
         BaseCost = baseCost;
         BeginCalendar = beginCalendar;
         LastCheckCalendar = lastCheckCalendar;
         IsOver = isOver;
+        Fails = fails;
     }
+
+    /**
+     * DAO query call
+     * */
+
 
     public void Over(){
         IsOver = true;
@@ -69,5 +77,17 @@ public class CurveJobBase {
 
     public void setLastCheckCalendar(long lastCheckCalendar) {
         LastCheckCalendar = lastCheckCalendar;
+    }
+
+    public int getFails() {
+        return Fails;
+    }
+
+    public List<CurveJob> getJobs() {
+        return Jobs;
+    }
+
+    public void setJobs(List<CurveJob> jobs) {
+        Jobs = jobs;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.unarimit.timecapsuleapp.entities.CurveJobBase;
 import com.unarimit.timecapsuleapp.entities.ExceptionInfo;
 import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
@@ -20,6 +21,8 @@ public class DbContext {
     public static TaskDAO Tasks;
     public static TaskClassDAO TaskClasses;
     public static PeriodDAO Periods;
+    public static CurveJobBaseDAO CurveJobBases;
+    public static CurveJobDAO CurveJobs;
     public static ExceptionInfoDAO ExceptionInfos;
 
     static boolean JustCreate = false;
@@ -41,6 +44,8 @@ public class DbContext {
         TaskClasses = new TaskClassDAO();
         Periods = new PeriodDAO();
         ExceptionInfos = new ExceptionInfoDAO();
+        CurveJobBases = new CurveJobBaseDAO();
+        CurveJobs = new CurveJobDAO();
 
         if(JustCreate)
             SeedDataForTest();
@@ -92,6 +97,9 @@ public class DbContext {
             db.execSQL(TaskClassDAO.CreateSql);
             db.execSQL(TaskDAO.CreateSql);
             db.execSQL(PeriodDAO.CreateSql);
+            db.execSQL(CurveJobBaseDAO.CreateSql);
+            db.execSQL(CurveJobDAO.CreateSql);
+
             db.execSQL(ExceptionInfoDAO.CreateSql);
             DbContext.JustCreate = true;
         }
@@ -102,6 +110,9 @@ public class DbContext {
             db.execSQL("DROP TABLE IF EXISTS "+ TaskDAO.TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS "+ TaskClassDAO.TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS "+ PeriodDAO.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS "+ CurveJobDAO.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS "+ CurveJobBaseDAO.TABLE_NAME);
+
             db.execSQL("DROP TABLE IF EXISTS "+ ExceptionInfoDAO.TABLE_NAME);
             onCreate(db);
         }

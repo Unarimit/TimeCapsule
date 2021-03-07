@@ -3,36 +3,46 @@ package com.unarimit.timecapsuleapp.entities;
 import java.util.UUID;
 
 public class CurveJob {
-    String Guid;
+    int Id;
     CurveJobBase CurveJobBase;
-    int Epoch;
+    int EpochLog;
     String DoWhat;
     int CostTime;
-    boolean IsFinish;
+    boolean IsActive;
 
-    public CurveJob(CurveJobBase curveJobBase, int epoch, String doWhat, int costTime) {
+    /**
+     * create call
+     * */
+    public CurveJob(CurveJobBase curveJobBase, int epochLog, String doWhat, int costTime) {
         CurveJobBase = curveJobBase;
-        Epoch = epoch;
+        EpochLog = epochLog;
         DoWhat = doWhat;
         CostTime = costTime;
-        IsFinish = false;
-        Guid = UUID.randomUUID().toString();
+        IsActive = true;
     }
 
-    public void Finish(){
-        IsFinish = true;
+    /**
+     * DAO call
+     * */
+    public CurveJob(int id, com.unarimit.timecapsuleapp.entities.CurveJobBase curveJobBase, int epochLog, String doWhat, int costTime, boolean isActive) {
+        Id = id;
+        CurveJobBase = curveJobBase;
+        EpochLog = epochLog;
+        DoWhat = doWhat;
+        CostTime = costTime;
+        IsActive = isActive;
     }
 
-    public String getGuid() {
-        return Guid;
+    public int getId() {
+        return Id;
     }
 
     public com.unarimit.timecapsuleapp.entities.CurveJobBase getCurveJobBase() {
         return CurveJobBase;
     }
 
-    public int getEpoch() {
-        return Epoch;
+    public int getEpochLog() {
+        return EpochLog;
     }
 
     public String getDoWhat() {
@@ -43,7 +53,7 @@ public class CurveJob {
         return CostTime;
     }
 
-    public boolean isFinish() {
-        return IsFinish;
+    public boolean isActive() {
+        return IsActive;
     }
 }
