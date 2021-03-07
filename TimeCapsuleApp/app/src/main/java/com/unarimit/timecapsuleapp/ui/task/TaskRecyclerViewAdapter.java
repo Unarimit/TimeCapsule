@@ -1,13 +1,9 @@
 package com.unarimit.timecapsuleapp.ui.task;
 
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +13,6 @@ import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.ui.common.IconTextView;
 import com.unarimit.timecapsuleapp.ui.task.manager.TaskManagerActivity;
-import com.unarimit.timecapsuleapp.ui.task.manager.TaskManagerViewModel;
 
 import java.util.List;
 
@@ -70,7 +65,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            icon = view.findViewById(R.id.task_item_icon);
+            icon = view.findViewById(R.id.curvejob_item_icon);
             name = view.findViewById(R.id.task_item_name);
             taskClassName = view.findViewById(R.id.task_item_taskclass_name);
         }

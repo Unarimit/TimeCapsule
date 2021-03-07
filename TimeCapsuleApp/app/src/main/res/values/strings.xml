@@ -54,6 +54,11 @@
     <string name="period_statistic_menu_list">时间段列表</string>
     <!-- TODO: Remove or change this placeholder text -->
 
+    <!-- curve job -->
+    <string name="curvejob_sync">同步率：</string>
+    <string name="curvejob_cost">预计花费：</string>
+    <string name="curvejob_close">〉</string>
+    <string name="curvejob_open">∨</string>
 
     <!-- icon more info: https://fontawesome.com/cheatsheet/free/solid -->
     <string name="icon_crown">&#xf521;</string>
