@@ -35,7 +35,7 @@ public class DbContext {
     public static PeriodFragment.StatisticType statisticType = PeriodFragment.StatisticType.LIST;
     public static int WindowsWidth;
 
-    private static final int DB_VERSION = 13;         //数据库版本
+    private static final int DB_VERSION = 14;         //数据库版本
 
     public static void InitDbContext(Context context){
         _databaseHelper = new DatabaseHelper(context);

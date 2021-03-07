@@ -28,7 +28,6 @@ public class CurveJobBaseDAO {
             + TABLE_NAME
             + " (" + ID + " integer PRIMARY KEY AUTOINCREMENT,"
             + BASE_COST + " integer not null,"
-            + TASK_ID + " integer not null,"
             + IS_OVER + " bool not null,"
             + BEGIN_CALENDER + " integer not null,"
             + LAST_CHECK_CALENDER + " integer not null,"
