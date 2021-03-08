@@ -13,17 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unarimit.timecapsuleapp.R;
+import com.unarimit.timecapsuleapp.entities.CurveJobBase;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
  */
 public class CurveJobFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -32,23 +31,11 @@ public class CurveJobFragment extends Fragment {
     public CurveJobFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static CurveJobFragment newInstance(int columnCount) {
-        CurveJobFragment fragment = new CurveJobFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -56,17 +43,16 @@ public class CurveJobFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_curvejob, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new CurveJobRecyclerViewAdapter(DbContext.CurveJobBases.GetList()));
+        Context context = view.getContext();
+        List<CurveJobBase> list = DbContext.CurveJobBases.GetList();
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        if(list == null){
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(new CurveJobRecyclerViewAdapter(list));
         }
+
         return view;
     }
 }

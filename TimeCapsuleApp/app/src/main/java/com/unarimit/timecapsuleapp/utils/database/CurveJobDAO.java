@@ -5,6 +5,7 @@ import android.database.Cursor;
 
 import com.unarimit.timecapsuleapp.entities.CurveJob;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class CurveJobDAO {
      * this method do not return base class instance
      * */
     public List<CurveJob> GetByBaseId(int baseId, boolean allowUnActive){
-        List<CurveJob> result = new LinkedList<>();
+        List<CurveJob> result = new ArrayList<>();
         Cursor cursor;
         if(!allowUnActive){
             cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME+
@@ -43,7 +44,8 @@ public class CurveJobDAO {
                     " and " + IS_ACTIVE +"= 1", null);
         }else{
             cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME+
-                    " where " + CURVE_JOB_BASE_ID + "=" + baseId, null);
+                    " where " + CURVE_JOB_BASE_ID + "=" + baseId
+                    +" order by " + ID, null);
         }
         if(cursor == null || !cursor.moveToFirst())
             return null;
@@ -71,6 +73,46 @@ public class CurveJobDAO {
     }
 
 
+    public List<CurveJob> GetByBaseIdAndIndex(int baseId, List<Integer> allowIndex){
+        boolean begin = true;
+        StringBuilder index_express = new StringBuilder("");
+        for (Integer index:
+             allowIndex) {
+            if(begin){
+                begin = false;
+            }else{
+                index_express.append(" or ");
+            }
+            index_express.append(index);
+        }
+        Cursor cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME+
+                " where " + CURVE_JOB_BASE_ID + "=" + baseId +
+                " and " + ID +"=" + index_express.toString(), null);
+        if(cursor == null || !cursor.moveToFirst())
+            return null;
+        List<CurveJob> result = new LinkedList<>();
+        int id_i = cursor.getColumnIndex(ID);
+        int epoch_log_i = cursor.getColumnIndex(EPOCH_LOG);
+        int do_what_i = cursor.getColumnIndex(DO_WHAT);
+        int cost_time_i = cursor.getColumnIndex(COST_TIME);
+        int is_active_i = cursor.getColumnIndex(IS_ACTIVE);
+        do{
+            boolean is_active = false;
+            if(cursor.getInt(is_active_i) == 1){
+                is_active = true;
+            }
+            result.add(new CurveJob(cursor.getInt(id_i),
+                    null,
+                    cursor.getInt(epoch_log_i),
+                    cursor.getString(do_what_i),
+                    cursor.getInt(cost_time_i),
+                    is_active));
+        }while (cursor.moveToNext());
+
+        cursor.close();
+        return result;
+    }
+
     public void Add(CurveJob curveJob){
         ContentValues values = new  ContentValues();
         values.put(ID, curveJob.getId());
@@ -89,7 +131,6 @@ public class CurveJobDAO {
         values.put(EPOCH_LOG, curveJob.getEpochLog());
         values.put(COST_TIME, curveJob.getCostTime());
         values.put(IS_ACTIVE, curveJob.isActive());
-        values.put(CURVE_JOB_BASE_ID, curveJob.getCurveJobBase().getId());
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+curveJob.getId(), null);
     }
 
