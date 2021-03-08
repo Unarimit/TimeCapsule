@@ -27,6 +27,7 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
 
     private final List<CurveJobBase> mValues;
     private final long mCalendar;
+    private boolean mSwitch;
     public CurveJobRecyclerViewAdapter(List<CurveJobBase> items) {
         mValues = items;
         mCalendar = TimeHelper.GetCurrentSeconds()/3600/24;
@@ -47,10 +48,24 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
         float sync = 1f - (float)mValues.get(position).getFails() / (float)mValues.get(position).GetTotalJobs(mCalendar);
         holder.sync_value.setText(String.format(Locale.getDefault(), "%.1f",sync * 100));
         holder.sync_bar.getLayoutParams().width = (int)(DbContext.WindowsWidth *  sync);
-        holder.cost.setText(mValues.get(position).GetListCostString()); 
-
+        holder.cost.setText(mValues.get(position).GetListCostString());
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder.mView.getContext()));
         holder.recyclerView.setAdapter(new CurveJobItemRecyclerViewAdapter(mValues.get(position).getJobs(), mCalendar));
+        mSwitch = true;
+        holder.expandTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mSwitch){
+                    holder.recyclerView.setVisibility(View.GONE);
+                    holder.expandTv.setText(R.string.curvejob_close);
+                    mSwitch = false;
+                }else{
+                    holder.recyclerView.setVisibility(View.VISIBLE);
+                    holder.expandTv.setText(R.string.curvejob_open);
+                    mSwitch = true;
+                }
+            }
+        });
     }
 
     @Override
@@ -66,6 +81,7 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
         public final View sync_bar;
         public final TextView cost;
         public final RecyclerView recyclerView;
+        public final TextView expandTv;
 
         public ViewHolder(View view) {
             super(view);
@@ -76,6 +92,7 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
             sync_value = view.findViewById(R.id.curvejob_item_sync_value);
             sync_bar = view.findViewById(R.id.curvejob_item_sync_bar);
             cost = view.findViewById(R.id.curvejob_item_cost);
+            expandTv = view.findViewById(R.id.curvejob_item_expand);
         }
 
         @Override

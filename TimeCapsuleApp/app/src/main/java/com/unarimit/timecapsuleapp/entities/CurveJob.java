@@ -64,7 +64,7 @@ public class CurveJob {
 
     public String GetCostString(){
         int cost = GetCostTimeForNowLoop();
-        return cost / 60 + String.format(Locale.getDefault(), "%02d", cost % 60);
+        return cost / 60 + ":" + String.format(Locale.getDefault(), "%02d", cost % 60);
     }
 
 

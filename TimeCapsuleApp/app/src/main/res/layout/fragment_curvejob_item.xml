@@ -51,14 +51,14 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/curvejob_item_down_hint"
+            android:id="@+id/curvejob_item_expand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:padding="15dp"
-            android:text="@string/curvejob_close" />
+            android:text="@string/curvejob_open" />
 
         <TextView
             android:id="@+id/curvejob_item_cost_tv"
@@ -73,7 +73,7 @@
             android:id="@+id/curvejob_item_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:layout_centerInParent="true" />
 
         <View

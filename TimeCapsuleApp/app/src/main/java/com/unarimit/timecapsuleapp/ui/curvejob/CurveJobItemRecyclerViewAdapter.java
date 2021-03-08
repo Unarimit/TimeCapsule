@@ -34,6 +34,7 @@ public class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJ
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.doWhat.setText(mValues.get(position).getDoWhat());
+        Log.d("debug", "i am loading");
         holder.epochLog.setText(mValues.get(position).GetEpochInfo());
         try {
             if(mValues.get(position).IsFinish(mCalendar)){
@@ -54,7 +55,7 @@ public class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJ
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

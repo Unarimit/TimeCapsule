@@ -12,6 +12,7 @@
         android:name="com.unarimit.timecapsuleapp.ui.curvejob.CurveJobFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".ui.curvejob.CurveJobFragment"
         tools:listitem="@layout/fragment_curvejob_item" />
