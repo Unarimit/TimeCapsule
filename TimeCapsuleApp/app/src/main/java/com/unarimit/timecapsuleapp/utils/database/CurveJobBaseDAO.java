@@ -49,7 +49,7 @@ public class CurveJobBaseDAO {
         int begin_calendar_index = cursor.getColumnIndex(BEGIN_CALENDER);
         int last_check_calendar_index = cursor.getColumnIndex(LAST_CHECK_CALENDER);
         int is_over_index = cursor.getColumnIndex(IS_OVER);
-        int fails_index = cursor.getColumnIndex(IS_OVER);
+        int fails_index = cursor.getColumnIndex(FAILS);
 
         do{
             boolean is_over = false;
@@ -76,7 +76,6 @@ public class CurveJobBaseDAO {
 
     public void Add(@NotNull CurveJobBase curveJobBase){
         ContentValues values = new  ContentValues();
-        values.put(ID, curveJobBase.getId());
         values.put(BASE_COST, curveJobBase.getBaseCost());
         values.put(BEGIN_CALENDER, curveJobBase.getBeginCalendar());
         values.put(LAST_CHECK_CALENDER, curveJobBase.getLastCheckCalendar());
@@ -88,7 +87,6 @@ public class CurveJobBaseDAO {
 
     public void Update(@NotNull CurveJobBase curveJobBase){
         ContentValues values = new  ContentValues();
-        values.put(ID, curveJobBase.getId());
         values.put(BASE_COST, curveJobBase.getBaseCost());
         values.put(BEGIN_CALENDER, curveJobBase.getBeginCalendar());
         values.put(LAST_CHECK_CALENDER, curveJobBase.getLastCheckCalendar());

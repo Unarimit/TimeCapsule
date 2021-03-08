@@ -26,7 +26,7 @@ public class CurveJobDAO {
             + TABLE_NAME
             + " (" + ID + " integer PRIMARY KEY AUTOINCREMENT,"
             + DO_WHAT + " text not null,"
-            + EPOCH_LOG + " integer not null,"
+            + EPOCH_LOG + " text not null,"
             + COST_TIME + " integer not null,"
             + IS_ACTIVE + " bool not null,"
             + CURVE_JOB_BASE_ID + " integer not null,"
@@ -62,7 +62,7 @@ public class CurveJobDAO {
             }
             result.add(new CurveJob(cursor.getInt(id_i),
                     null,
-                    cursor.getInt(epoch_log_i),
+                    cursor.getString(epoch_log_i),
                     cursor.getString(do_what_i),
                     cursor.getInt(cost_time_i),
                     is_active));
@@ -103,7 +103,7 @@ public class CurveJobDAO {
             }
             result.add(new CurveJob(cursor.getInt(id_i),
                     null,
-                    cursor.getInt(epoch_log_i),
+                    cursor.getString(epoch_log_i),
                     cursor.getString(do_what_i),
                     cursor.getInt(cost_time_i),
                     is_active));
@@ -115,7 +115,6 @@ public class CurveJobDAO {
 
     public void Add(CurveJob curveJob){
         ContentValues values = new  ContentValues();
-        values.put(ID, curveJob.getId());
         values.put(DO_WHAT, curveJob.getDoWhat());
         values.put(EPOCH_LOG, curveJob.getEpochLog());
         values.put(COST_TIME, curveJob.getCostTime());
@@ -126,7 +125,6 @@ public class CurveJobDAO {
 
     public void Update(CurveJob curveJob){
         ContentValues values = new  ContentValues();
-        values.put(ID, curveJob.getId());
         values.put(DO_WHAT, curveJob.getDoWhat());
         values.put(EPOCH_LOG, curveJob.getEpochLog());
         values.put(COST_TIME, curveJob.getCostTime());

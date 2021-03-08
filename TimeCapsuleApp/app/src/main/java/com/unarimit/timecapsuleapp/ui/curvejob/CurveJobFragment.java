@@ -44,7 +44,9 @@ public class CurveJobFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_curvejob, container, false);
 
         Context context = view.getContext();
-        List<CurveJobBase> list = DbContext.CurveJobBases.GetList();
+        CurveJobViewModel viewModel = new CurveJobViewModel();
+        List<CurveJobBase> list = viewModel.getJobBases();
+
         RecyclerView recyclerView = view.findViewById(R.id.list);
         if(list == null){
             recyclerView.setVisibility(View.GONE);

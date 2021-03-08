@@ -61,6 +61,7 @@
     <string name="curvejob_close">〉</string>
     <string name="curvejob_open">∨</string>
     <string name="curvejob_empty_dowhat">请在智能任务界面设定内容</string>
+    <string name="curvejob_finish">已完成</string>
 
     <!-- icon more info: https://fontawesome.com/cheatsheet/free/solid -->
     <string name="icon_crown">&#xf521;</string>

@@ -60,12 +60,14 @@ public class HomeFragment extends Fragment {
 
     RecyclerView oftenTaskRecyclerView;
     RecyclerView unOftenTaskRecyclerView;
+    RecyclerView curveTaskRecyclerView;
     TextView noTaskHint;
     private void NoCurrentPeriodCreate(){
         // init task grid
         // create period in recyclerAdapter
         oftenTaskRecyclerView = root.findViewById(R.id.home_task_often_grid);
         unOftenTaskRecyclerView = root.findViewById(R.id.home_task_unoften_grid);
+        curveTaskRecyclerView = root.findViewById(R.id.home_task_curve_grid);
         noTaskHint = root.findViewById(R.id.home_task_notask);
         if(homeViewModel.getTasks() == null || homeViewModel.getTasks().isEmpty()){
             oftenTaskRecyclerView.setVisibility(View.GONE);
@@ -83,7 +85,13 @@ public class HomeFragment extends Fragment {
                 oftenTaskRecyclerView.setAdapter(new HomeTaskViewAdapter(oftenTask, this));
             }
 
-            root.findViewById(R.id.home_task_curve_layout).setVisibility(View.GONE);
+            if(homeViewModel.getJobBases() == null){
+                root.findViewById(R.id.home_task_curve_layout).setVisibility(View.GONE);
+            }else{
+                root.findViewById(R.id.home_task_curve_layout).setVisibility(View.VISIBLE);
+                curveTaskRecyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 4));
+                curveTaskRecyclerView.setAdapter(new HomeCurveTaskViewAdapter(homeViewModel.getJobBases(), this));
+            }
 
             if(unOftenTask.isEmpty()){
                 root.findViewById(R.id.home_task_unoften_layout).setVisibility(View.GONE);

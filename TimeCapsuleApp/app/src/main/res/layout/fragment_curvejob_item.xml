@@ -4,52 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/boardline_radius"
     android:orientation="vertical">
+
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:background="@drawable/boardline_radius"
+        android:layout_height="70dp">
+
         <com.unarimit.timecapsuleapp.ui.common.IconTextView
             android:id="@+id/curvejob_item_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="25sp" />
+
         <TextView
             android:id="@+id/curvejob_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/curvejob_item_icon"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:layout_marginStart="5dp"
-            android:textSize="22sp"/>
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/curvejob_sync_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/curvejob_item_icon"
-            android:textColor="@color/gray"
+            android:layout_above="@id/curvejob_item_sync_bar"
+            android:layout_marginStart="5dp"
             android:text="@string/curvejob_sync"
-            android:textSize="12sp"
-            android:layout_marginTop="2dp"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/curvejob_item_sync_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:layout_above="@id/curvejob_item_sync_bar"
             android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/curvejob_sync_tv"
             android:textColor="@color/gray"
-            android:layout_below="@id/curvejob_item_icon"
-            android:layout_toEndOf="@id/curvejob_sync_tv"/>
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/curvejob_item_down_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
-            android:text="@string/curvejob_close"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:padding="15dp"
+            android:text="@string/curvejob_close" />
 
         <TextView
             android:id="@+id/curvejob_item_cost_tv"
@@ -57,21 +66,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toStartOf="@id/curvejob_item_cost"
-            android:text="@string/curvejob_cost"/>
+            android:textSize="12sp"
+            android:text="@string/curvejob_cost" />
+
         <TextView
             android:id="@+id/curvejob_item_cost"
             android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerInParent="true" />
 
         <View
             android:id="@+id/curvejob_item_sync_bar"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_marginTop="3dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="0dp"
-            android:layout_below="@+id/curvejob_sync_tv"
-            android:background="@color/white_gray"/>
+            android:background="@color/white_gray" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

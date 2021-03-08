@@ -8,9 +8,6 @@ import android.graphics.Typeface;
 
 import com.unarimit.timecapsuleapp.MainActivity;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class IconStringList {
     public static String[] List = {"\uf805", "\uf094", "\uf094", "\uf521", "\uf094", "\uf094", "\uf094"};
 
@@ -18,7 +15,7 @@ public class IconStringList {
         Bitmap myBitmap = Bitmap.createBitmap(128, 160, Bitmap.Config.ARGB_4444);
         Canvas myCanvas = new Canvas(myBitmap);
         Paint paint = new Paint();
-        Typeface clock = Typeface.createFromAsset(MainActivity.Activity.getAssets(), "fonts/fa-solid-900.ttf");
+        Typeface clock = Typeface.createFromAsset(MainActivity.Activity.getAssets(), "fonts/fa_solid_900.ttf");
         paint.setAntiAlias(true);
         paint.setSubpixelText(true);
         paint.setTypeface(clock);

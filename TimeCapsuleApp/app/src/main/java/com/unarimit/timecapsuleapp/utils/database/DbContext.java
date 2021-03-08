@@ -3,6 +3,7 @@ package com.unarimit.timecapsuleapp.utils.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.unarimit.timecapsuleapp.entities.CurveJobBase;
 import com.unarimit.timecapsuleapp.entities.ExceptionInfo;
@@ -35,7 +36,7 @@ public class DbContext {
     public static PeriodFragment.StatisticType statisticType = PeriodFragment.StatisticType.LIST;
     public static int WindowsWidth;
 
-    private static final int DB_VERSION = 14;         //数据库版本
+    private static final int DB_VERSION = 34;         //database version
 
     public static void InitDbContext(Context context){
         _databaseHelper = new DatabaseHelper(context);
@@ -52,6 +53,7 @@ public class DbContext {
     }
 
     private static void SeedDataForTest(){
+        Log.d("debug", "database seed");
         // add task class
         TaskClass eatTaskClass = new TaskClass(UUID.randomUUID().toString(),"eat", "#444444",1);
         DbContext.TaskClasses.Add(eatTaskClass);
@@ -82,6 +84,8 @@ public class DbContext {
         DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, readingTask, begin + 3600 * 18 + 900, begin + 3600 * 22, begin_c, begin_c));
         DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, mathTask, begin + 3600 * 22, begin + 3600 * 25, begin_c, begin_c+1));
         DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 32, begin + 3600 * 33, begin_c+1, begin_c+1));
+
+        DbContext.CurveJobBases.Add(new CurveJobBase(mathTask, begin_c-1, 40));
 
         JustCreate = false;
     }

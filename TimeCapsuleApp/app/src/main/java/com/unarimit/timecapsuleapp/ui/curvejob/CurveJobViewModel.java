@@ -1,48 +1,31 @@
-package com.unarimit.timecapsuleapp.ui.home;
-
-import androidx.lifecycle.ViewModel;
+package com.unarimit.timecapsuleapp.ui.curvejob;
 
 import com.unarimit.timecapsuleapp.entities.CurveJob;
 import com.unarimit.timecapsuleapp.entities.CurveJobBase;
-import com.unarimit.timecapsuleapp.entities.Period;
-import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.List;
 
-public class HomeViewModel extends ViewModel {
+public class CurveJobViewModel {
 
-    private final List<Task> tasks;
     private final List<CurveJobBase> jobBases;
-    public HomeViewModel() {
-        tasks = DbContext.Tasks.GetTaskList(false);
-
+    public CurveJobViewModel(){
         jobBases = DbContext.CurveJobBases.GetList();
         for (CurveJobBase jobBase: jobBases
-             ) {
+        ) {
             long calendar = TimeHelper.GetCurrentSeconds()/3600/24;
             if(calendar > jobBase.getLastCheckCalendar()){
                 jobBase.AuditActiveJob();
                 jobBase.Create(calendar);
                 DbContext.CurveJobBases.Update(jobBase);
             }
-            // get active job
-            // TODO: change ways
             jobBase.setJobs(DbContext.CurveJobs.GetByBaseId(jobBase.getId(), false));
             for (CurveJob job:  jobBase.getJobs()
-                 ) {
+            ) {
                 job.setCurveJobBase(jobBase);
             }
         }
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public Period getCurrentPeriod() {
-        return DbContext.Periods.GetCurrentPeriod();
     }
 
     public List<CurveJobBase> getJobBases() {

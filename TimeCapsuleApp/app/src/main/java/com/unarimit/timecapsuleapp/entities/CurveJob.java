@@ -1,5 +1,7 @@
 package com.unarimit.timecapsuleapp.entities;
 
+import android.util.Log;
+
 import com.unarimit.timecapsuleapp.ui.common.ConstField;
 
 import java.util.Locale;
@@ -8,7 +10,7 @@ import java.util.UUID;
 public class CurveJob {
     int Id;
     CurveJobBase CurveJobBase;
-    int EpochLog; // 对应的二进制表示对应次数loop的完成与否
+    String EpochLog;
     String DoWhat;
     int CostTime;
     boolean IsActive;
@@ -16,9 +18,9 @@ public class CurveJob {
     /**
      * create call
      * */
-    public CurveJob(CurveJobBase curveJobBase, int epochLog, String doWhat, int costTime) {
+    public CurveJob(CurveJobBase curveJobBase, String doWhat, int costTime) {
         CurveJobBase = curveJobBase;
-        EpochLog = epochLog;
+        EpochLog = "";
         DoWhat = doWhat;
         CostTime = costTime;
         IsActive = true;
@@ -27,7 +29,7 @@ public class CurveJob {
     /**
      * DAO call
      * */
-    public CurveJob(int id, com.unarimit.timecapsuleapp.entities.CurveJobBase curveJobBase, int epochLog, String doWhat, int costTime, boolean isActive) {
+    public CurveJob(int id, com.unarimit.timecapsuleapp.entities.CurveJobBase curveJobBase, String epochLog, String doWhat, int costTime, boolean isActive) {
         Id = id;
         CurveJobBase = curveJobBase;
         EpochLog = epochLog;
@@ -69,19 +71,38 @@ public class CurveJob {
     public com.unarimit.timecapsuleapp.entities.CurveJobBase getCurveJobBase() {
         return CurveJobBase;
     }
-
+    public void Begin(){
+        IsActive = true;
+    }
     public void Fail(){
-        EpochLog *= 2;
+        EpochLog += "0";
+        IsActive = false;
     }
     public void Finish(){
-        EpochLog = (EpochLog + 1) * 2;
+        EpochLog += "1";
+        IsActive = false;
+    }
+
+    public boolean IsFinish(long calendar) throws Exception {
+        long during = (calendar - CurveJobBase.getBeginCalendar()) - Id + 2;
+        for(int i = 0; i < ConstField.EpochCount; i++){
+            if(during == ConstField.CurveEpoch[i]){
+                int result = Integer.parseInt(EpochLog.toCharArray()[i] + "");
+                if(result == 1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        throw new Exception("error calendar");
     }
 
     public int getId() {
         return Id;
     }
 
-    public int getEpochLog() {
+    public String getEpochLog() {
         return EpochLog;
     }
 
@@ -99,9 +120,5 @@ public class CurveJob {
 
     public void setCurveJobBase(com.unarimit.timecapsuleapp.entities.CurveJobBase curveJobBase) {
         CurveJobBase = curveJobBase;
-    }
-
-    public void setActive(boolean active) {
-        IsActive = active;
     }
 }

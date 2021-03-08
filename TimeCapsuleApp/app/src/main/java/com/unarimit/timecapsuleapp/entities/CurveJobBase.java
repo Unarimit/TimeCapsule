@@ -1,8 +1,11 @@
 package com.unarimit.timecapsuleapp.entities;
 
+import android.util.Log;
+
 import com.unarimit.timecapsuleapp.ui.common.ConstField;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,8 +25,8 @@ public class CurveJobBase {
     public CurveJobBase(com.unarimit.timecapsuleapp.entities.Task task, long beginCalendar, int baseCost) {
         Task = task;
         BeginCalendar = beginCalendar;
-        LastCheckCalendar = -1;
-        BaseCost = baseCost;
+        LastCheckCalendar = beginCalendar - 1;
+        BaseCost = baseCost; // all minutes express a time
         Fails = 0;
         IsOver = false;
     }
@@ -64,7 +67,7 @@ public class CurveJobBase {
 
     public String GetListCostString(){
         int cost = GetListCost();
-        return cost / 60 + String.format(Locale.getDefault(), "%02d", cost % 60);
+        return cost / 60 + ":" + String.format(Locale.getDefault(), "%02d", cost % 60);
     }
 
     public void Fail(){
@@ -82,30 +85,34 @@ public class CurveJobBase {
      * */
     public void Create(long calendar){
         List<CurveJob> allJobs = DbContext.CurveJobs.GetByBaseId(Id, true);
+        if(allJobs == null)
+            allJobs = new ArrayList<>();
         // for before days
         for(long i = LastCheckCalendar; i < calendar; i++){
-            int during = (int)(i - calendar + 1);
-            CurveJob temp = new CurveJob(this, 0, "", BaseCost);
-            temp.setActive(false);
+            int during = (int)(i - BeginCalendar + 1);
+            CurveJob temp = new CurveJob(this, "", BaseCost);
+
             temp.Fail();
+            this.Fail();
             DbContext.CurveJobs.Add(temp);
-            Fail();
+            allJobs = DbContext.CurveJobs.GetByBaseId(Id, true);
             for(int epoch : ConstField.CurveEpoch){
                 if(during > epoch){
-                    temp = allJobs.get(during - epoch);
+                    temp = allJobs.get(during - epoch - 1);
                     temp.Fail();
                     this.Fail();
                     DbContext.CurveJobs.Update(temp);
                 }
             }
         }
+
         // for calendar day(normally today)
-        int during = (int)(LastCheckCalendar - calendar + 1);
+        int during = (int)(calendar - BeginCalendar + 1);
         CurveJob temp;
         for(int epoch : ConstField.CurveEpoch){
             if(during > epoch){
                 temp = allJobs.get(during - epoch);
-                temp.setActive(true);
+                temp.Begin();
                 DbContext.CurveJobs.Update(temp);
             }
         }
@@ -116,11 +123,13 @@ public class CurveJobBase {
      * */
     public void AuditActiveJob(){
         List<CurveJob> activeJobs = DbContext.CurveJobs.GetByBaseId(Id, false);
+        if(activeJobs == null){
+            return;
+        }
         for (CurveJob job: activeJobs
              ) {
             job.Fail();
             this.Fail();
-            job.setActive(false);
             DbContext.CurveJobs.Update(job);
         }
     }

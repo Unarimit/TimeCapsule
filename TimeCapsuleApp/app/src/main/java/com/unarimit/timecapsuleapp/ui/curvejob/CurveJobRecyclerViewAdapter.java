@@ -1,8 +1,10 @@
 package com.unarimit.timecapsuleapp.ui.curvejob;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.CurveJobBase;
 import com.unarimit.timecapsuleapp.ui.common.IconTextView;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
+import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,9 +26,10 @@ import java.util.Locale;
 public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerViewAdapter.ViewHolder> {
 
     private final List<CurveJobBase> mValues;
-
+    private final long mCalendar;
     public CurveJobRecyclerViewAdapter(List<CurveJobBase> items) {
         mValues = items;
+        mCalendar = TimeHelper.GetCurrentSeconds()/3600/24;
     }
 
     @Override
@@ -37,13 +41,16 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.icon.setText(mValues.get(position).getTask().getName());
+        holder.icon.setText(mValues.get(position).getTask().getIcon());
         holder.icon.setTextColor(Color.parseColor(mValues.get(position).getTask().getTaskClass().getColor()));
         holder.task_name.setText(mValues.get(position).getTask().getName());
-        float sync = 1 - (float)(mValues.get(position).getFails() / mValues.get(position).GetTotalJobs(TimeHelper.GetCurrentSeconds()/3600/24));
+        float sync = 1f - (float)mValues.get(position).getFails() / (float)mValues.get(position).GetTotalJobs(mCalendar);
         holder.sync_value.setText(String.format(Locale.getDefault(), "%.1f",sync * 100));
-        holder.sync_bar.getLayoutParams().width *= sync;
-        holder.cost.setText(mValues.get(position).GetListCostString());
+        holder.sync_bar.getLayoutParams().width = (int)(DbContext.WindowsWidth *  sync);
+        holder.cost.setText(mValues.get(position).GetListCostString()); 
+
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder.mView.getContext()));
+        holder.recyclerView.setAdapter(new CurveJobItemRecyclerViewAdapter(mValues.get(position).getJobs(), mCalendar));
     }
 
     @Override

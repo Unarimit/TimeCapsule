@@ -1,5 +1,6 @@
 package com.unarimit.timecapsuleapp.ui.curvejob;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,10 @@ import java.util.List;
 
 public class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobItemRecyclerViewAdapter.ViewHolder>{
     private final List<CurveJob> mValues;
-
-    public CurveJobItemRecyclerViewAdapter(List<CurveJob> items) {
+    private final long mCalendar;
+    public CurveJobItemRecyclerViewAdapter(List<CurveJob> items, long calendar) {
         mValues = items;
+        mCalendar  = calendar;
     }
     @NonNull
     @Override
@@ -33,7 +35,16 @@ public class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJ
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.doWhat.setText(mValues.get(position).getDoWhat());
         holder.epochLog.setText(mValues.get(position).GetEpochInfo());
-        holder.cost.setText(mValues.get(position).GetCostString());
+        try {
+            if(mValues.get(position).IsFinish(mCalendar)){
+                holder.cost.setText(R.string.curvejob_finish);
+            }else{
+                holder.cost.setText(mValues.get(position).GetCostString());
+            }
+        }catch (Exception ex){
+            Log.d("bug", ex.getMessage());
+        }
+
         if(mValues.get(position).getDoWhat().isEmpty()){
             holder.doWhat.setText(R.string.curvejob_empty_dowhat);
         }else{
