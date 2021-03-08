@@ -6,8 +6,9 @@
     <string name="action_settings">Settings</string>
     <!-- nav bar -->
     <string name="menu_home">Home</string>
-    <string name="menu_taskclass">TaskClass</string>
+    <string name="menu_curvejob">CurveJob</string>
     <string name="menu_task">Task</string>
+    <string name="menu_taskclass">TaskClass</string>
     <string name="menu_period">Period</string>
     <string name="menu_exceptioninfo">ExceptionInfo</string>
 
@@ -59,6 +60,7 @@
     <string name="curvejob_cost">预计花费：</string>
     <string name="curvejob_close">〉</string>
     <string name="curvejob_open">∨</string>
+    <string name="curvejob_empty_dowhat">请在智能任务界面设定内容</string>
 
     <!-- icon more info: https://fontawesome.com/cheatsheet/free/solid -->
     <string name="icon_crown">&#xf521;</string>

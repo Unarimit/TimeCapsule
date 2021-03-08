@@ -34,6 +34,11 @@ public class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJ
         holder.doWhat.setText(mValues.get(position).getDoWhat());
         holder.epochLog.setText(mValues.get(position).GetEpochInfo());
         holder.cost.setText(mValues.get(position).GetCostString());
+        if(mValues.get(position).getDoWhat().isEmpty()){
+            holder.doWhat.setText(R.string.curvejob_empty_dowhat);
+        }else{
+            holder.doWhat.setText(mValues.get(position).getDoWhat());
+        }
     }
 
     @Override

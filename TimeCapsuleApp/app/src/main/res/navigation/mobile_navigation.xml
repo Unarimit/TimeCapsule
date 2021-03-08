@@ -10,7 +10,11 @@
         android:name="com.unarimit.timecapsuleapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
+    <fragment
+        android:id="@+id/nav_curvejob"
+        android:name="com.unarimit.timecapsuleapp.ui.curvejob.CurveJobFragment"
+        android:label="@string/menu_curvejob"
+        tools:layout="@layout/fragment_curvejob" />
     <fragment
         android:id="@+id/nav_task"
         android:name="com.unarimit.timecapsuleapp.ui.task.TaskFragment"

@@ -10,6 +10,10 @@
             android:title="@string/menu_home" />
         <!--添加fragment要在3个地方进行配置，MainActivity， this，navigation-->
         <item
+            android:id="@+id/nav_curvejob"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_curvejob" />
+        <item
             android:id="@+id/nav_task"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_task" />
