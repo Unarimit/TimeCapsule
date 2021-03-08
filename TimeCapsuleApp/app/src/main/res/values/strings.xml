@@ -57,11 +57,13 @@
 
     <!-- curve job -->
     <string name="curvejob_sync">同步率：</string>
-    <string name="curvejob_cost">预计花费：</string>
+    <string name="curvejob_cost">预计：</string>
     <string name="curvejob_close">〉</string>
     <string name="curvejob_open">∨</string>
     <string name="curvejob_empty_dowhat">请在智能任务界面设定内容</string>
     <string name="curvejob_finish">已完成</string>
+
+    <string name="curvejobcreator_basetime">基准时间</string>
 
     <!-- icon more info: https://fontawesome.com/cheatsheet/free/solid -->
     <string name="icon_crown">&#xf521;</string>

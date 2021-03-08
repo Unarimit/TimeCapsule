@@ -8,8 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@drawable/boardline_radius"
-        android:layout_height="70dp">
+        android:layout_height="60dp">
 
         <com.unarimit.timecapsuleapp.ui.common.IconTextView
             android:id="@+id/curvejob_item_icon"
@@ -24,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/curvejob_item_icon"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textSize="15sp" />
@@ -84,13 +83,18 @@
             android:layout_marginEnd="0dp"
             android:background="@color/white_gray" />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/white_gray" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/curvejob_item_list"
         android:name="com.unarimit.timecapsuleapp.ui.curvejob.CurveJobFragment.item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".ui.curvejob.CurveJobFragment"
         tools:listitem="@layout/fragment_curvejob_item_item" />

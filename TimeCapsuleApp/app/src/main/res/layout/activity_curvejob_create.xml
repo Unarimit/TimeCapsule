@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/text_margin"
+    tools:context=".ui.curvejob.manager.CurveJobCreateActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/curvejobcreator_return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:text="return"/>
+
+        <Button
+            android:id="@+id/curvejobcreator_confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:text="confirm" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/curvejobcreator_task_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.unarimit.timecapsuleapp.ui.common.IconTextView
+            android:id="@+id/curvejobcreator_task_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"/>
+        <TextView
+            android:id="@+id/curvejobcreator_task_text"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+        <TextView
+            android:id="@+id/curvejobcreator_begin_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/curvejobcreator_basetime"
+            android:textSize="25sp"/>
+        <TextView
+            android:id="@+id/curvejobcreator_begin_time"
+            android:layout_toEndOf="@id/curvejobcreator_begin_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textSize="25sp"
+            android:text="19:00"/>
+        <View
+            android:layout_width="65dp"
+            android:layout_toEndOf="@id/curvejobcreator_begin_time_tv"
+            android:layout_below="@id/curvejobcreator_begin_time_tv"
+            android:layout_marginStart="5dp"
+            android:layout_height="1dp"
+            android:background="@color/clickable_text_color"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeCapsuleApp">
-        <activity android:name=".ui.period.manager.PeriodManagerActivity"
-            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar"/>
+        <activity android:name=".ui.curvejob.manager.CurveJobCreateActivity"></activity>
+        <activity
+            android:name=".ui.period.manager.PeriodManagerActivity"
+            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar" />
 
         <service
             android:name=".ui.home.TimingService"

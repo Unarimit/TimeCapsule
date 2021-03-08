@@ -33,9 +33,10 @@ import java.util.Locale;
 
 public class PeriodManagerActivity extends AppCompatActivity {
 
-    TextView taskName;
+    TextView taskName; // change by private function for easy copy
     IconTextView taskIcon;
     View taskLayout;
+
     TextView dependTaskClass;
     TextView beginDate;
     TextView beginTime;

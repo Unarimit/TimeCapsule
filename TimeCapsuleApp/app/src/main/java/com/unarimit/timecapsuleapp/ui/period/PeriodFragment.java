@@ -165,7 +165,9 @@ public class PeriodFragment extends Fragment {
     }
 
 
-
+    /**
+     * mainly prepare data for statistic view
+     * */
     public void UpdateUI(){
         CustomDate date = new CustomDate(viewModel.getCalendar());
         chooseDate.setText(date.GetDateString());
