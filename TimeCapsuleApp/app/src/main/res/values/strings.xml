@@ -60,8 +60,9 @@
     <string name="curvejob_cost">预计：</string>
     <string name="curvejob_close">〉</string>
     <string name="curvejob_open">∨</string>
-    <string name="curvejob_empty_dowhat">点击添加内容</string>
     <string name="curvejob_finish">已完成</string>
+    <string name="curvejob_empty_dowhat">点击添加内容</string>
+    <string name="curvejob_hint_dowhat">请添加内容</string>
 
     <string name="curvejobcreator_basetime">基准时间</string>
 

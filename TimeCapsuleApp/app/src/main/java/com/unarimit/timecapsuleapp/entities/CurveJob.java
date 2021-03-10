@@ -125,4 +125,8 @@ public class CurveJob {
     public void setCurveJobBase(com.unarimit.timecapsuleapp.entities.CurveJobBase curveJobBase) {
         CurveJobBase = curveJobBase;
     }
+
+    public void setDoWhat(String doWhat) {
+        DoWhat = doWhat;
+    }
 }
