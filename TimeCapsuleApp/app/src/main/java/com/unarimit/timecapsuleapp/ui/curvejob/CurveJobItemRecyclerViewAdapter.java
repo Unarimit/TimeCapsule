@@ -42,14 +42,21 @@ public class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJ
                 holder.cost.setText(mValues.get(position).GetCostString());
             }
         }catch (Exception ex){
-            Log.d("bug", ex.getMessage());
+            ex.printStackTrace();
         }
 
         if(mValues.get(position).getDoWhat().isEmpty()){
             holder.doWhat.setText(R.string.curvejob_empty_dowhat);
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("debug", "i am clicked");
+                }
+            });
         }else{
             holder.doWhat.setText(mValues.get(position).getDoWhat());
         }
+
     }
 
     @Override

@@ -59,7 +59,7 @@ public class CurveJob {
         else if(during > 1){
             loop_factor += 0.5;
         }
-        return (int)(CostTime / loop_factor);
+        return (int)Math.floor(CostTime / loop_factor);
     }
 
     public String GetCostString(){
@@ -83,11 +83,15 @@ public class CurveJob {
         IsActive = false;
     }
 
+    /**
+     * 根据EpochLog判断此时的任务是否完成
+     * */
     public boolean IsFinish(long calendar) throws Exception {
         long during = (calendar - CurveJobBase.getBeginCalendar()) - Id + 2;
         for(int i = 0; i < ConstField.EpochCount; i++){
             if(during == ConstField.CurveEpoch[i]){
-                int result = Integer.parseInt(EpochLog.toCharArray()[i] + "");
+                // 若未完成，最新位会out of index
+                int result = Integer.parseInt((EpochLog+"0").toCharArray()[i]+""); // for out of index
                 if(result == 1){
                     return true;
                 }else{

@@ -3,6 +3,7 @@ package com.unarimit.timecapsuleapp.ui.curvejob;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
         float sync = 1f - (float)mValues.get(position).getFails() / (float)mValues.get(position).GetTotalJobs(mCalendar);
         holder.sync_value.setText(String.format(Locale.getDefault(), "%.1f",sync * 100));
         holder.sync_bar.getLayoutParams().width = (int)(DbContext.WindowsWidth *  sync);
+        holder.sync_bar.setBackgroundColor(Color.parseColor(GetColorString(sync)));
         holder.cost.setText(mValues.get(position).GetListCostString());
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder.mView.getContext()));
         holder.recyclerView.setAdapter(new CurveJobItemRecyclerViewAdapter(mValues.get(position).getJobs(), mCalendar));
@@ -66,6 +68,19 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
                 }
             }
         });
+    }
+    private String GetColorString(float sync){
+
+        String r = "FF";
+        String g = "FF";
+        if(sync > 0.5){
+            r = Integer.toHexString((int)(255 * (1 - sync) * 2));
+        }
+        if(sync < 0.5){
+            g = Integer.toHexString((int)(255 *  sync * 2));
+        }
+        String b = "00";
+        return "#" + r + g + b;
     }
 
     @Override
