@@ -15,13 +15,14 @@ public class HomeViewModel extends ViewModel {
 
     private final List<Task> tasks;
     private final List<CurveJobBase> jobBases;
+    private final long calendar = TimeHelper.GetCurrentSeconds()/3600/24;
     public HomeViewModel() {
         tasks = DbContext.Tasks.GetTaskList(false);
 
         jobBases = DbContext.CurveJobBases.GetList();
         for (CurveJobBase jobBase: jobBases
              ) {
-            long calendar = TimeHelper.GetCurrentSeconds()/3600/24;
+
             if(calendar > jobBase.getLastCheckCalendar()){
                 jobBase.AuditActiveJob();
                 jobBase.Create(calendar);
@@ -47,5 +48,9 @@ public class HomeViewModel extends ViewModel {
 
     public List<CurveJobBase> getJobBases() {
         return jobBases;
+    }
+
+    public long getCalendar() {
+        return calendar;
     }
 }

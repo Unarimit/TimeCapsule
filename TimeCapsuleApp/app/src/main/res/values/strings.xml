@@ -17,6 +17,7 @@
     <string name="home_often_task">常用任务</string>
     <string name="home_curve_task">智能任务</string>
     <string name="home_unoften_task">不常用任务</string>
+    <string name="home_curvejob_empty_dowhat">请到智能任务界面添加内容</string>
 
 
     <!-- task -->

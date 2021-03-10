@@ -83,6 +83,11 @@ public class CurveJob {
         IsActive = false;
     }
 
+    public void ResetFinish(){
+        EpochLog = EpochLog.substring(0,EpochLog.length() - 1);
+        IsActive = true;
+    }
+
     /**
      * 根据EpochLog判断此时的任务是否完成
      * */

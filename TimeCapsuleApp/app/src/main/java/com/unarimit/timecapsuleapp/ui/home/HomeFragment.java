@@ -22,9 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.unarimit.timecapsuleapp.MainActivity;
 import com.unarimit.timecapsuleapp.R;
+import com.unarimit.timecapsuleapp.entities.CurveJobBase;
 import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.ui.common.IconTextView;
+import com.unarimit.timecapsuleapp.utils.TimeHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.List;
@@ -110,6 +112,7 @@ public class HomeFragment extends Fragment {
     TextView taskDescText;
     TextView nameText;
     Button taskStopButton;
+    RecyclerView jobsRecyclerView;
     TimingServiceConnection connection;
     TimingHandler handler = new TimingHandler();
     Period period;
@@ -120,7 +123,7 @@ public class HomeFragment extends Fragment {
         taskDescText = root.findViewById(R.id.home_ontask_desc_text);
         taskStopButton = root.findViewById(R.id.home_ontask_stop_button);
         nameText = root.findViewById(R.id.home_ontask_name_text);
-
+        jobsRecyclerView = root.findViewById(R.id.home_ontask_job_list);
         period = homeViewModel.getCurrentPeriod();
         icon.setText(period.getTask().getIcon());
         icon.setTextColor(Color.parseColor(period.getTask().getTaskClass().getColor()));
@@ -130,6 +133,24 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getContext(), TimingService.class);
         connection = new TimingServiceConnection();
         getContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
+        CurveJobBase thisTask = null;
+        // curve task
+        for (CurveJobBase base: homeViewModel.getJobBases()
+             ) {
+            if(base.getTask().getId() == period.getTask().getId()){
+                thisTask = base;
+                break;
+            }
+        }
+
+        if(thisTask == null){
+            jobsRecyclerView.setVisibility(View.GONE);
+        }else{
+            jobsRecyclerView.setVisibility(View.VISIBLE);
+            jobsRecyclerView.setAdapter(new HomeCurveJobViewAdapter(thisTask.getJobs(), homeViewModel.getCalendar()));
+        }
+
 
         taskStopButton.setOnClickListener(new View.OnClickListener() {
             @Override

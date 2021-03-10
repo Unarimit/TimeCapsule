@@ -1,6 +1,5 @@
 package com.unarimit.timecapsuleapp.ui.curvejob;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.CurveJob;
-import com.unarimit.timecapsuleapp.ui.task.manager.TaskManagerActivity;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.List;
@@ -109,9 +107,9 @@ public class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJ
         public ViewHolder(@NonNull View view, @NonNull View dialogView) {
             super(view);
             mView = view;
-            epochLog = view.findViewById(R.id.curvejob_item_item_epochlog);
+            epochLog = view.findViewById(R.id.curvejob_epochlog);
             cost = view.findViewById(R.id.curvejob_item_item_cost);
-            doWhat = view.findViewById(R.id.curvejob_item_item_dowhat);
+            doWhat = view.findViewById(R.id.curvejob_dowhat);
 
             doWhatView = dialogView;
             doWhatEt = dialogView.findViewById(R.id.view_curvejob_et);
