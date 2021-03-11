@@ -41,6 +41,7 @@ public class CurveJobFragment extends Fragment {
 
     }
     Button createBtn;
+    RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,16 +49,9 @@ public class CurveJobFragment extends Fragment {
         createBtn = view.findViewById(R.id.curvejob_fragment_create_btn);
 
         Context context = view.getContext();
-        CurveJobViewModel viewModel = new CurveJobViewModel();
-        List<CurveJobBase> list = viewModel.getJobBases();
+        recyclerView = view.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        RecyclerView recyclerView = view.findViewById(R.id.list);
-        if(list == null){
-            recyclerView.setVisibility(View.GONE);
-        }else{
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new CurveJobRecyclerViewAdapter(list));
-        }
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,5 +61,21 @@ public class CurveJobFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        UpdateList();
+        super.onResume();
+    }
+
+    private void UpdateList(){
+        CurveJobViewModel viewModel = new CurveJobViewModel();
+        List<CurveJobBase> list = viewModel.getJobBases();
+        if(list == null){
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            recyclerView.setAdapter(new CurveJobRecyclerViewAdapter(list));
+        }
     }
 }

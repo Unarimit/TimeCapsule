@@ -59,8 +59,8 @@
     <!-- curve job -->
     <string name="curvejob_sync">同步率：</string>
     <string name="curvejob_cost">预计：</string>
-    <string name="curvejob_close">〉</string>
-    <string name="curvejob_open">∨</string>
+    <string name="curvejob_close">&#xf105;</string>
+    <string name="curvejob_open">&#xf107;</string>
     <string name="curvejob_finish">已完成</string>
     <string name="curvejob_empty_dowhat">点击添加内容</string>
     <string name="curvejob_hint_dowhat">请添加内容</string>
@@ -68,8 +68,10 @@
     <string name="curvejobcreator_basetime">基准时间</string>
 
     <!-- icon more info: https://fontawesome.com/cheatsheet/free/solid -->
-    <string name="icon_crown">&#xf521;</string>
+    <string name="icon_trophy">&#xf091;</string>
     <string name="icon_chart_pie">&#xf200;</string>
     <string name="icon_finish">&#xf00c;</string>
     <string name="icon_trash">&#xf2ed;</string>
+    <string name="icon_check">&#xf00c;</string>
+    <string name="icon_edit">&#xf304;</string>
 </resources>

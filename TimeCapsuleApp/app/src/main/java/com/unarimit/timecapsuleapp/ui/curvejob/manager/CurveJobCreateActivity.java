@@ -65,6 +65,7 @@ public class CurveJobCreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DbContext.CurveJobBases.Add(new CurveJobBase(task, TimeHelper.GetCurrentSeconds()/3600/24, baseCost));
+                finish();
             }
         });
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
@@ -14,22 +15,29 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_curvejob" />
         <item
-            android:id="@+id/nav_task"
+            android:id="@+id/nav_period"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_task" />
+            android:title="@string/menu_period" />
+
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/menu_middle">
         <item
             android:id="@+id/nav_taskclass"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_taskclass" />
-
         <item
-            android:id="@+id/nav_period"
+            android:id="@+id/nav_task"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_period" />
+            android:title="@string/menu_task" />
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/menu_bottom">
         <item
             android:id="@+id/nav_exceptioninfo"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_exceptioninfo" />
-
     </group>
 </menu>

@@ -80,6 +80,11 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
             g = Integer.toHexString((int)(255 *  sync * 2));
         }
         String b = "00";
+        if(r.length() == 1)
+            r = '0' + r;
+        if(g.length() == 1)
+            g = '0' + r;
+
         return "#" + r + g + b;
     }
 

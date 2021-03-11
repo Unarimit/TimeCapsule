@@ -46,7 +46,7 @@ public class TaskFragment extends Fragment {
 
         // list config
         recyclerView = view.findViewById(R.id.task_fragment_list);
-        updateList();
+        // updateList(); update in resume
 
 
         // create new button config

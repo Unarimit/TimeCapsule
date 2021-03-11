@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gold_yellow"
-            android:text="@string/icon_crown"/>
+            android:text="@string/icon_trophy"/>
         <TextView
             android:id="@+id/nav_bar_achieve"
             android:layout_width="wrap_content"

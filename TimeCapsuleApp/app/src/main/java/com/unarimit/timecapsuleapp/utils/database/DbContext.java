@@ -37,10 +37,12 @@ public class DbContext {
     // in memory user preference
     public static PeriodFragment.StatisticType statisticType = PeriodFragment.StatisticType.LIST;
     public static int WindowsWidth;
+    public static Context Context;
 
     private static final int DB_VERSION = 46;         //database version
 
     public static void InitDbContext(Context context){
+        Context = context;
         _databaseHelper = new DatabaseHelper(context);
         _SQLiteDatabase = _databaseHelper.getWritableDatabase();
         Tasks = new TaskDAO();

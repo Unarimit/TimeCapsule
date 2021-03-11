@@ -2,6 +2,7 @@ package com.unarimit.timecapsuleapp.entities;
 
 import android.util.Log;
 
+import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.ui.common.ConstField;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
@@ -61,14 +62,18 @@ public class CurveJobBase {
         int sum = 0;
         for (CurveJob job:
              Jobs) {
-            sum += job.GetCostTimeForNowLoop();
+            if(job.isActive())
+                sum += job.GetCostTimeForNowLoop();
         }
         return sum;
     }
 
     public String GetListCostString(){
         int cost = GetListCost();
-        return cost / 60 + ":" + String.format(Locale.getDefault(), "%02d", cost % 60);
+        if(cost == 0)
+            return DbContext.Context.getString(R.string.curvejob_finish);
+        else
+            return cost / 60 + ":" + String.format(Locale.getDefault(), "%02d", cost % 60);
     }
 
     public void Fail(){
