@@ -11,6 +11,7 @@ import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.entities.TaskClass;
 import com.unarimit.timecapsuleapp.entities.User;
+import com.unarimit.timecapsuleapp.ui.common.UserConfig;
 import com.unarimit.timecapsuleapp.ui.period.PeriodFragment;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
 
@@ -25,18 +26,19 @@ public class DbContext {
     public static CurveJobBaseDAO CurveJobBases;
     public static CurveJobDAO CurveJobs;
     public static ExceptionInfoDAO ExceptionInfos;
+    public static UserDAO UserInfos;
 
     static boolean JustCreate = false;
     /**
      * 当前用户
      * */
-    public static User CurrentUser = new User();
+    public static User CurrentUser;
 
     // in memory user preference
     public static PeriodFragment.StatisticType statisticType = PeriodFragment.StatisticType.LIST;
     public static int WindowsWidth;
 
-    private static final int DB_VERSION = 44;         //database version
+    private static final int DB_VERSION = 46;         //database version
 
     public static void InitDbContext(Context context){
         _databaseHelper = new DatabaseHelper(context);
@@ -47,9 +49,12 @@ public class DbContext {
         ExceptionInfos = new ExceptionInfoDAO();
         CurveJobBases = new CurveJobBaseDAO();
         CurveJobs = new CurveJobDAO();
-
+        UserInfos = new UserDAO();
         if(JustCreate)
             SeedDataForTest();
+
+
+        CurrentUser = new User();
     }
 
     private static void SeedDataForTest(){
@@ -87,6 +92,10 @@ public class DbContext {
 
         DbContext.CurveJobBases.Add(new CurveJobBase(mathTask, begin_c-1, 40));
 
+        DbContext.UserInfos.AddValue(UserConfig.USER_NAME, "test");
+        DbContext.UserInfos.AddValue(UserConfig.ACHIEVE, 100+"");
+
+
         JustCreate = false;
     }
 
@@ -103,6 +112,7 @@ public class DbContext {
             db.execSQL(PeriodDAO.CreateSql);
             db.execSQL(CurveJobBaseDAO.CreateSql);
             db.execSQL(CurveJobDAO.CreateSql);
+            db.execSQL(UserDAO.CreateSql);
 
             db.execSQL(ExceptionInfoDAO.CreateSql);
             DbContext.JustCreate = true;
@@ -116,6 +126,7 @@ public class DbContext {
             db.execSQL("DROP TABLE IF EXISTS "+ PeriodDAO.TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS "+ CurveJobDAO.TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS "+ CurveJobBaseDAO.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS "+ UserDAO.TABLE_NAME);
 
             db.execSQL("DROP TABLE IF EXISTS "+ ExceptionInfoDAO.TABLE_NAME);
             onCreate(db);
