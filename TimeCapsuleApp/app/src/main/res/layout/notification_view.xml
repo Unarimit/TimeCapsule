@@ -2,21 +2,31 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="64dp">
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/notification_view_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:contentDescription="Icon" />
-
-    <TextView
-        android:id="@+id/notification_view_during"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/notification_view_icon"
-        android:layout_marginStart="20dp"
-        android:textSize="30sp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/notification_view_during"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textSize="25sp"/>
+        <TextView
+            android:id="@+id/notification_view_taskname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

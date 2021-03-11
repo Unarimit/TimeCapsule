@@ -181,7 +181,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             binder = (TimingService.TimingBinder) service;
-            binder.StartTiming(period.getTask().getTaskClass().getColor(), period.getTask().getIcon(), period.getBegin(), handler);
+            binder.StartTiming(period.getTask().getTaskClass().getColor(), period.getTask().getIcon(), period.getTask().getName(), period.getBegin(), handler);
             run = true;
         }
 

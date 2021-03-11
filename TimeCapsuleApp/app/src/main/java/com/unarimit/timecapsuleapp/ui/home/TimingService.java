@@ -84,11 +84,12 @@ public class TimingService extends Service {
 
 
     class TimingBinder extends Binder{
-        public void StartTiming(String color, String icon, long begin, HomeFragment.TimingHandler handler){
+        public void StartTiming(String color, String icon, String taskName, long begin, HomeFragment.TimingHandler handler){
             _begin = begin;
             timing = true;
             bitmap = IconStringList.StringToBitmap(icon, color);
             remoteViews.setImageViewBitmap(R.id.notification_view_icon, bitmap);
+            remoteViews.setTextViewText(R.id.notification_view_taskname, taskName);
             _handler = handler;
             new Thread(new TimingTask()).start();
         }

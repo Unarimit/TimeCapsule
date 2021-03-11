@@ -96,7 +96,7 @@ public class CurveJobDAO {
                     " and " + DAYS +" in (" + allowIndex.stream().map(String::valueOf).collect(Collectors.joining(",")) + ")", null);
         }
 
-        Log.d("debug_int array", allowIndex.stream().map(String::valueOf).collect(Collectors.joining(",")));
+        // Log.d("debug_int array", allowIndex.stream().map(String::valueOf).collect(Collectors.joining(",")));
         if(cursor == null || !cursor.moveToFirst()){
             Log.d("debug_int array", "null cursor");
             return null;
