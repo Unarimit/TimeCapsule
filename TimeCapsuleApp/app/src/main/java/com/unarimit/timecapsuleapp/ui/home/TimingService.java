@@ -104,13 +104,14 @@ public class TimingService extends Service {
         public void run() {
             int index = 0;
             while(timing){
+                /*
                 index++;
                 if(index == 10){  // after some time, reset the remoteView
                     index = 0;
                     remoteViews = new RemoteViews(getPackageName(), R.layout.notification_view);
                     remoteViews.setImageViewBitmap(R.id.notification_view_icon, bitmap);
                     notificationBuilder.setContent(remoteViews);
-                }
+                }*/
                 long during = TimeHelper.GetCurrentSeconds() - _begin;
                 show = String.format(Locale.getDefault(), "%02d",during / 3600)
                         + ":" + String.format(Locale.getDefault(), "%02d",during / 60 % 60)

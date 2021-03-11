@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_curvejob, R.id.nav_taskclass, R.id.nav_task, R.id.nav_period, R.id.nav_exceptioninfo)
-                .setDrawerLayout(drawer)
+                .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -72,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
         InitExceptionProcessor();
         Intent intent = new Intent(this, TimingService.class);
         startService(intent);
+
+
+        View header_layout = navigationView.getHeaderView(0);
+        ((TextView)header_layout.findViewById(R.id.nav_bar_username)).setText(DbContext.CurrentUser.getUsername());
+        ((TextView)header_layout.findViewById(R.id.nav_bar_achieve)).setText(DbContext.CurrentUser.getAchievePoint() + "");
+
     }
 
     @Override

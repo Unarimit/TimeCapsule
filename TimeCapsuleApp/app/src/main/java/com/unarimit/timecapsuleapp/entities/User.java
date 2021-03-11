@@ -8,6 +8,10 @@ public class User {
     String Username = "test";
     int AchievePoint = 100;
 
+    public void GetAchieve(int point){
+        AchievePoint += point;
+    }
+
     public String getId() {
         return Id;
     }

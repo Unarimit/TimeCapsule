@@ -34,6 +34,7 @@ import com.unarimit.timecapsuleapp.ui.period.barchart.BarChartRecyclerViewAdapte
 import com.unarimit.timecapsuleapp.ui.period.barchart.TaskClassElement;
 import com.unarimit.timecapsuleapp.ui.period.barchart.TaskElement;
 import com.unarimit.timecapsuleapp.utils.CustomDate;
+import com.unarimit.timecapsuleapp.utils.TimeHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.lang.reflect.Array;
@@ -195,8 +196,11 @@ public class PeriodFragment extends Fragment {
             List<TaskClassElement> taskClassElementList = new LinkedList<>();
             for (Period period:
                     viewModel.getPeriods()) {
+                long end = period.getEnd();
+                if(period.getEnd() == -1)
+                    end = TimeHelper.GetCurrentSeconds();
                 long real_begin = Math.max(period.getBegin(), viewModel.getCalendar() * 24 * 3600);
-                long real_end = Math.min(period.getEnd(), (viewModel.getCalendar() + 1) * 24 * 3600);
+                long real_end = Math.min(end, (viewModel.getCalendar() + 1) * 24 * 3600);
                 long during = real_end - real_begin;
                 // statistic period by task, tasks sort by taskclass
                 TaskClassElement taskClassElement = taskClassElementList.stream()
@@ -243,8 +247,11 @@ public class PeriodFragment extends Fragment {
             if(viewModel.getPeriods() != null){
                 for (Period period:
                         viewModel.getPeriods()) {
+                    long end = period.getEnd();
+                    if(period.getEnd() == -1)
+                        end = TimeHelper.GetCurrentSeconds();
                     long real_begin = Math.max(period.getBegin(), viewModel.getCalendar() * 24 * 3600);
-                    long real_end = Math.min(period.getEnd(), (viewModel.getCalendar() + 1) * 24 * 3600);
+                    long real_end = Math.min(end, (viewModel.getCalendar() + 1) * 24 * 3600);
                     long during = real_end - real_begin;
                     sum += during;
                     if(map.containsKey(period.getTask().getTaskClass().getName())){
@@ -268,9 +275,9 @@ public class PeriodFragment extends Fragment {
             // TODO: remove following debug output
             if(last < 0){
                 last = 0;
-                Log.d("debug", "bug < 0");
+                Log.d("debug_periodFragment", "bug < 0");
             }else if(last > 1){
-                Log.d("debug", "bug > 1");
+                Log.d("debug_periodFragment", "bug > 1 ");
             }
             // TODO: use string value
             entry_list.add(new PieEntry(last * 100, "未记录时间"));
