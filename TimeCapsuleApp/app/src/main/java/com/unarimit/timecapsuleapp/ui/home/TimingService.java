@@ -1,8 +1,6 @@
 package com.unarimit.timecapsuleapp.ui.home;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -21,6 +19,8 @@ import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.NotificationChannelCompat;
+import androidx.core.app.NotificationChannelCompat.Builder;
 
 import com.unarimit.timecapsuleapp.MainActivity;
 import com.unarimit.timecapsuleapp.R;
@@ -41,9 +41,10 @@ public class TimingService extends Service {
     public void onCreate() {
         super.onCreate();
         notificationManager = NotificationManagerCompat.from(this);
-
-        NotificationChannel channel = new NotificationChannel("my_test", "frontend notification", NotificationManager.IMPORTANCE_LOW);
-        channel.setShowBadge(false);
+        NotificationChannelCompat channel = new NotificationChannelCompat.Builder("my_test",  NotificationManagerCompat.IMPORTANCE_LOW)
+                .setName("name1")
+                .setShowBadge(false)
+                .build();
         notificationManager.createNotificationChannel(channel);
 
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification_view);
@@ -104,7 +105,7 @@ public class TimingService extends Service {
             int index = 0;
             while(timing){
                 index++;
-                if(index == 100){  // after some time, reset the remoteview
+                if(index == 10){  // after some time, reset the remoteView
                     index = 0;
                     remoteViews = new RemoteViews(getPackageName(), R.layout.notification_view);
                     remoteViews.setImageViewBitmap(R.id.notification_view_icon, bitmap);
@@ -118,7 +119,7 @@ public class TimingService extends Service {
                 notificationManager.notify(1, notificationBuilder.build());
                 Message msg = new Message();
                 msg.what = HomeFragment.UPDATE_TIMING;
-                Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle(); // send message to homePage
                 bundle.putString("show", show);
                 msg.setData(bundle);
                 _handler.sendMessage(msg);

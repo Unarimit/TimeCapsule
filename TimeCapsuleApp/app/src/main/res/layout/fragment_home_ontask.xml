@@ -48,6 +48,7 @@
             android:id="@+id/home_ontask_job_list"
             android:layout_below="@id/home_ontask_desc_text"
             android:name="com.unarimit.timecapsuleapp.ui.home.HomeFragment.ontaskjob"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginLeft="40dp"

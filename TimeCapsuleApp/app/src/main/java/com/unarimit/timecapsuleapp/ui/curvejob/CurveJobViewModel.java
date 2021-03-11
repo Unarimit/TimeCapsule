@@ -20,7 +20,7 @@ public class CurveJobViewModel {
                 jobBase.Create(calendar);
                 DbContext.CurveJobBases.Update(jobBase);
             }
-            jobBase.setJobs(DbContext.CurveJobs.GetByBaseId(jobBase.getId(), false));
+            jobBase.setJobs(DbContext.CurveJobs.GetDateList(jobBase, calendar));
             for (CurveJob job:  jobBase.getJobs()
             ) {
                 job.setCurveJobBase(jobBase);

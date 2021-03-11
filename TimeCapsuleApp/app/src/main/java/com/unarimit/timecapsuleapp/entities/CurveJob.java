@@ -13,33 +13,36 @@ public class CurveJob {
     String EpochLog;
     String DoWhat;
     int CostTime;
+    int Days;
     boolean IsActive;
 
     /**
      * create call
      * */
-    public CurveJob(CurveJobBase curveJobBase, String doWhat, int costTime) {
+    public CurveJob(CurveJobBase curveJobBase, String doWhat, int costTime, int days) {
         CurveJobBase = curveJobBase;
         EpochLog = "";
         DoWhat = doWhat;
         CostTime = costTime;
         IsActive = true;
+        Days = days;
     }
 
     /**
      * DAO call
      * */
-    public CurveJob(int id, com.unarimit.timecapsuleapp.entities.CurveJobBase curveJobBase, String epochLog, String doWhat, int costTime, boolean isActive) {
+    public CurveJob(int id, com.unarimit.timecapsuleapp.entities.CurveJobBase curveJobBase, String epochLog, String doWhat, int costTime, int days, boolean isActive) {
         Id = id;
         CurveJobBase = curveJobBase;
         EpochLog = epochLog;
         DoWhat = doWhat;
         CostTime = costTime;
         IsActive = isActive;
+        Days = days;
     }
 
     public String GetEpochInfo(){
-        long during = (CurveJobBase.getLastCheckCalendar() - CurveJobBase.getBeginCalendar()) - Id + 2;
+        long during = (CurveJobBase.getLastCheckCalendar() - CurveJobBase.getBeginCalendar()) - Days + 1;
         int loop = 1;
         for(int i = ConstField.EpochCount - 1; i >= 0; i--){
             if(during > ConstField.CurveEpoch[i]){
@@ -92,7 +95,7 @@ public class CurveJob {
      * 根据EpochLog判断此时的任务是否完成
      * */
     public boolean IsFinish(long calendar) throws Exception {
-        long during = (calendar - CurveJobBase.getBeginCalendar()) - Id + 2;
+        long during = (calendar - CurveJobBase.getBeginCalendar()) - Days + 1;
         for(int i = 0; i < ConstField.EpochCount; i++){
             if(during == ConstField.CurveEpoch[i]){
                 // 若未完成，最新位会out of index
@@ -133,5 +136,9 @@ public class CurveJob {
 
     public void setDoWhat(String doWhat) {
         DoWhat = doWhat;
+    }
+
+    public int getDays() {
+        return Days;
     }
 }

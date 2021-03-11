@@ -30,7 +30,10 @@ public class HomeViewModel extends ViewModel {
             }
             // get active job
             // TODO: change ways
-            jobBase.setJobs(DbContext.CurveJobs.GetByBaseId(jobBase.getId(), false));
+            jobBase.setJobs(DbContext.CurveJobs.GetDateList(jobBase, calendar));
+            if(jobBase.getJobs() == null){
+                return;
+            }
             for (CurveJob job:  jobBase.getJobs()
                  ) {
                 job.setCurveJobBase(jobBase);

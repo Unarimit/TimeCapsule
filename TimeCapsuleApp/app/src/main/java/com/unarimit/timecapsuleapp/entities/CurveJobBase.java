@@ -6,6 +6,7 @@ import com.unarimit.timecapsuleapp.ui.common.ConstField;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,7 +49,7 @@ public class CurveJobBase {
         int days = (int)(calendar - BeginCalendar) + 1;
         int jobs = days;
 
-        for(int i = 0; i < ConstField.EpochCount; i++){
+        for(int i = 1; i < ConstField.EpochCount; i++){
             if(days > ConstField.CurveEpoch[i]){
                 jobs += days - ConstField.CurveEpoch[i];
             }
@@ -81,37 +82,44 @@ public class CurveJobBase {
     }
 
     /**
-     * check date, call this function if need create CurveJob for this day, do not forget update in dbcontext
+     * [DB related] check date, call this function if need create CurveJob for this day, do not forget update in dbcontext
      * */
     public void Create(long calendar){
-        List<CurveJob> allJobs = DbContext.CurveJobs.GetByBaseId(Id, true);
-        if(allJobs == null)
-            allJobs = new ArrayList<>();
-        // for before days
-        for(long i = LastCheckCalendar; i < calendar; i++){
-            int during = (int)(i - BeginCalendar + 1);
-            CurveJob temp = new CurveJob(this, "", BaseCost);
+        if(calendar <= LastCheckCalendar)
+            return;
 
-            temp.Fail();
-            this.Fail();
+        // for before days create
+        for(long i = LastCheckCalendar; i < calendar - 1; i++){ // lastCheckCalendar always smaller than calendar
+            int during = (int)(i - BeginCalendar + 2);
+            CurveJob temp = new CurveJob(this, "", BaseCost, during);
             DbContext.CurveJobs.Add(temp);
-            allJobs = DbContext.CurveJobs.GetByBaseId(Id, true);
-            for(int epoch : ConstField.CurveEpoch){
-                if(during > epoch){
-                    temp = allJobs.get(during - epoch - 1);
-                    temp.Fail();
-                    this.Fail();
-                    DbContext.CurveJobs.Update(temp);
+        }
+        // for before days fails
+        List<CurveJob> allJobs = DbContext.CurveJobs.GetByBaseId(Id, true);
+        if(allJobs != null){
+            for(long i = LastCheckCalendar; i < calendar - 1; i++){
+                int during = (int)(i - BeginCalendar + 1);
+                for(int epoch : ConstField.CurveEpoch){
+                    if(during >= epoch){
+                        CurveJob temp = allJobs.get(during - epoch); // index begin with 0
+                        temp.Fail();
+                        this.Fail();
+                        DbContext.CurveJobs.Update(temp);
+                    }
                 }
             }
         }
 
-        // for calendar day(normally today)
-        int during = (int)(calendar - BeginCalendar + 1);
-        CurveJob temp;
-        for(int epoch : ConstField.CurveEpoch){
-            if(during > epoch){
-                temp = allJobs.get(during - epoch);
+        // for calendar day(normally today) create
+        CurveJob temp = new CurveJob(this, "", BaseCost, (int)calendar - (int)BeginCalendar + 1);
+        temp.Begin();
+        DbContext.CurveJobs.Add(temp);
+
+        // for calendar day(normally today) review
+        int during = (int)(calendar - BeginCalendar);
+        for(int i = 1; i < ConstField.EpochCount;  i ++){
+            if(during >= ConstField.CurveEpoch[i]){
+                temp = allJobs.get(during - ConstField.CurveEpoch[i]); // index begin with 0
                 temp.Begin();
                 DbContext.CurveJobs.Update(temp);
             }
@@ -119,7 +127,7 @@ public class CurveJobBase {
         LastCheckCalendar = calendar;
     }
     /**
-     * do not forget update in dbcontext
+     * [DB related] do not forget update in dbcontext
      * */
     public void AuditActiveJob(){
         List<CurveJob> activeJobs = DbContext.CurveJobs.GetByBaseId(Id, false);
@@ -133,7 +141,20 @@ public class CurveJobBase {
             DbContext.CurveJobs.Update(job);
         }
     }
+    /**
+     *
+     * */
+    public List<Integer> GetTodayJobsId(long calendar){
+        List<Integer> result = new LinkedList<>();
 
+        for(int i = 0; i < ConstField.EpochCount; i++){
+            int during = (int)(calendar - BeginCalendar); // 从第一天时，第一个任务应当执行开始推
+            if(during >= ConstField.CurveEpoch[i]){
+                result.add(during - ConstField.CurveEpoch[i] + 1);
+            }
+        }
+        return result;
+    }
 
     public int getId() {
         return Id;
