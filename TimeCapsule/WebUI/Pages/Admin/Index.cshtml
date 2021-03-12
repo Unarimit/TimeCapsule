@@ -1,0 +1,19 @@
+﻿@page
+@{
+    ViewData["Title"] = "AdminIndex";
+}
+<script>
+function adminOnload() {
+    @{
+        if (User == null || User.FindFirst("myadmin")==null)
+        {
+            Response.Redirect("Error");
+        }
+    }
+}
+</script>
+<div onload="adminOnload()">
+    <h1>管理页面</h1>
+    未完成的页面
+</div>
+

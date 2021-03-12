@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html style="height:100%">
+<head>
+    <meta name="viewport" content="width=device-width,height=device-height" />
+    <title>@ViewData["Title"] - Identify</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <script>
+        @{
+            if(User == null || User.Claims.Count() >= 2)
+            {
+                Context.Response.Redirect("/Index");
+            }
+         }
+    </script>
+    <style>
+
+        .left_div {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 5%;
+            width: 35%;
+            margin-top: 5%;
+            height: 80%;
+        }
+
+        .right_div {
+            display: inline-block;
+            vertical-align: top;
+            width: 55%;
+            height: 85%;
+            background-image: url("/img/tuanzhang.png"), linear-gradient(#4982a4, #ffffff);
+            background-blend-mode: lighten;
+            background-size: cover;
+        }
+        .mytitle {
+            font-size: 20px;
+            width: 100%;
+            text-align: right;
+            font-family: "Microsoft YaHei";
+        }
+        .mysub {
+            font-size: 16px;
+            width: 100%;
+            text-align: right;
+            font-family: "Microsoft YaHei";
+        }
+    </style>
+</head>
+<body style="height:100%;font-family:'Microsoft YaHei'">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="height:7%">
+        <div class="container">
+            <a class="navbar-brand">TimeCapsule</a>
+        </div>
+    </nav>
+    <div class="left_div">
+        @RenderBody()
+    </div>
+    <div class="right_div">
+        <p class="mytitle" style="margin-top:70%">我们至今为止所做的一切都不是徒劳的</p>
+        <p class="mysub"> 
+            俺たちが今まで積み上げてきたもんは<span style="color:#FF6666">全部無駄</span>じゃなかった
+        </p>
+    </div>
+</body>
+</html>

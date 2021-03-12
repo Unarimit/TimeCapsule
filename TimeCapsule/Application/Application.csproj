@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>TimeCapsule.Application</AssemblyName>
+    <RootNamespace>TimeCapsule.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Exceptions\" />
+    <Folder Include="AndroidSync\" />
+    <Folder Include="RegisterRequests\Commands\CreateRequest\" />
+    <Folder Include="RegisterRequests\Commands\UpdateRequest\" />
+    <Folder Include="RegisterRequests\Queries\GetRegisterRequests\" />
+    <Folder Include="TimeDailies\Commands\UpdateDaily\" />
+    <Folder Include="TimeSubTaskRecords\Commands\" />
+    <Folder Include="TimeSubTasks\Commands\" />
+    <Folder Include="TimeTasks\Queries\GetTask\" />
+    <Folder Include="Users\Commands\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>TimeCapsule.Infrastructure</AssemblyName>
+    <RootNamespace>TimeCapsule.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Persistence\Migrations\20200619145418_TryRelation.cs" />
+    <Compile Remove="Persistence\Migrations\20200619145418_TryRelation.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619150211_TryRelation2.cs" />
+    <Compile Remove="Persistence\Migrations\20200619150211_TryRelation2.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619151532_TryRelation.cs" />
+    <Compile Remove="Persistence\Migrations\20200619151532_TryRelation.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619151752_TryRelation.cs" />
+    <Compile Remove="Persistence\Migrations\20200619151752_TryRelation.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619152749_TryRelation.cs" />
+    <Compile Remove="Persistence\Migrations\20200619152749_TryRelation.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619152921_TryRelation.cs" />
+    <Compile Remove="Persistence\Migrations\20200619152921_TryRelation.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619152959_TryRelation.cs" />
+    <Compile Remove="Persistence\Migrations\20200619152959_TryRelation.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619153105_TryRelation.cs" />
+    <Compile Remove="Persistence\Migrations\20200619153105_TryRelation.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619154144_ForeignKeyShouldNull.cs" />
+    <Compile Remove="Persistence\Migrations\20200619154144_ForeignKeyShouldNull.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20200619154923_ForeignKeyShouldNull.cs" />
+    <Compile Remove="Persistence\Migrations\20200619154923_ForeignKeyShouldNull.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+  </ItemGroup>
+
+</Project>

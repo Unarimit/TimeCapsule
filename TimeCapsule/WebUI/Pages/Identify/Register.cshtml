@@ -1,0 +1,69 @@
+﻿@page
+@model TimeCapsule.WebUI.Pages.Identify.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_IdentifyLayout";
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <title>注册</title>
+        <script>
+            function register() {
+                var object = {};
+                object.Username = $('#Username').val();
+                object.Password = $("#Password").val();
+                object.Email = $("#Email").val();
+                object.Desc = $("#Desc").val();
+                var submit_str = JSON.stringify(object);
+
+                $.ajax({
+                    url: "/api/unidentify/register",
+                    type: "post",
+                    data: submit_str,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+
+                    success: function (data) {
+                        window.location.href = '/identify/registersuccess'
+                    },
+
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        bootbox.alert(XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText);
+                    }
+                });
+
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container" style="margin-top: 20px">
+            <h1>Register</h1>
+            <h1>注册</h1>
+            <div class="col-md-10">
+                <input type="text" placeholder="username" id="Username" name="Username" class="form-control" />
+            </div>
+
+            <div class="col-md-10" style="margin-top: 20px">
+                <input type="password" placeholder="password" id="Password" name="Password" class="form-control" />
+            </div>
+
+            <div class="col-md-10" style="margin-top: 20px">
+                <input type="text" placeholder="email" id="Email" name="Email" class="form-control" />
+            </div>
+
+            <div class="col-md-10" style="margin-top: 20px">
+                <input type="text" placeholder="desc" id="Desc" name="Desc" class="form-control" />
+            </div>
+            <p>*注册完毕后还需要经过管理员同意哦</p>
+            <div class="col-md-10" style="margin-top: 20px">
+                <button type="submit" class="btn btn-primary" onclick="register()">提交注册请求</button>
+            </div>
+        </div>
+    </body>
+</html>
+

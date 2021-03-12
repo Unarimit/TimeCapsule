@@ -1,0 +1,150 @@
+﻿@page
+@{
+    ViewData["Title"] = "TaskList";
+}
+<style>
+    
+    .colorful {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        background-color: var(--mycolor);
+        -webkit-mask: var(--pic) no-repeat;
+        mask: var(--pic);
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+    }
+    .colorbox {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: var(--mycolor);
+    }
+
+    .left_div {
+        display: inline-block;
+        vertical-align: top;
+        width: 60%;
+        height: 100%;
+    }
+
+    .right_div {
+        display: inline-block;
+        vertical-align: top;
+        margin-left:5%;
+        width: 30%;
+        height: 100%;
+    }
+    .mytitle {
+        font-size: 20px;
+        font-family: "Microsoft YaHei";
+    }
+</style>
+<script>
+    document.onreadystatechange = loadAsync;
+    function loadAsync() {
+        if (document.readyState == "complete") {
+            loadTasks();
+            loadClasses();
+        }
+    }
+
+    function loadTasks() {
+        $.ajax({
+            url: "/api/user/task",
+            type: "get",
+            dataType: "json",
+            async: false,
+
+            success: function (data) {
+                dataprocess_tasks(data);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function loadClasses() {
+        $.ajax({
+            url: "/api/user/taskclass",
+            type: "get",
+            dataType: "json",
+            async: false,
+
+            success: function (data) {
+                dataprocess_classes(data);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+
+    function dataprocess_tasks(d) {
+        var htmldata = "";
+        
+        for (var i = 0; i < d.tasks.length; i++) {
+            htmldata += "<tr>";
+            htmldata += "<td><div class=\"colorful\" style=\"--pic:url('/img/" + d.tasks[i].icon + "'); --mycolor:#000000 \" ></div></td>";
+            htmldata += "<td><p style=\"color:" + d.tasks[i].taskClass.color +"\">" + d.tasks[i].taskClass.name + "</p></td>";
+            htmldata += "<td>" + d.tasks[i].name + "</td>";
+            // operation
+            htmldata += "<td>";
+            htmldata += "<button class='btn btn-info btn-sm'  onclick=\"window.location.href = 'specify?id=" + d.tasks[i].id + "'\">详情</button>"
+            htmldata += "</td>";
+            // end
+            htmldata += "</tr>";
+        }
+        $("#task_tbody").html(htmldata);
+    }
+
+    function dataprocess_classes(d) {
+        var htmldata = "";
+
+        for (var i = 0; i < d.classes.length; i++) {
+            htmldata += "<tr>";
+            htmldata += "<td><div class='colorbox' style='--mycolor:" + d.classes[i].color +"'></div><p style=\"display: inline-block; font-family:'Consolas'\">" + d.classes[i].color + "</p></td>";
+            htmldata += "<td>" + d.classes[i].name + "</td>";
+            // end
+            htmldata += "</tr>";
+            htmldata += 'test';
+        }
+        $("#class_tbody").html(htmldata);
+    }
+    
+</script>
+
+<h1>任务&任务类</h1>
+<div class="left_div" style="margin-top: 30px;">
+    <table class="table table-striped" style="margin-top: 50px;">
+        <thead>
+            <tr>
+                <td>图标</td>
+                <td>所属任务类</td>
+                <td>任务名</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody id="task_tbody">
+            <!--async response will fill there-->
+        </tbody>
+    </table>
+</div>
+
+<div class="right_div" style="margin-top: 30px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>颜色</td>
+                <td>名称</td>
+            </tr>
+        </thead>
+        <tbody id="class_tbody">
+
+        </tbody>
+    </table>
+</div>

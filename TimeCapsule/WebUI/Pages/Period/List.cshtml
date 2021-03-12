@@ -1,0 +1,306 @@
+﻿@page
+@{
+    ViewData["Title"] = "PeriodList";
+}
+<style>
+    .colorful {
+        display: inline-block;
+        vertical-align: middle;
+        width: 32px;
+        height: 32px;
+        background-color: var(--mycolor);
+        -webkit-mask: var(--pic) no-repeat;
+        mask: var(--pic);
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+    }
+</style>
+<script>
+    var mydate;
+    var firstLoading = true;
+    mydate = new Date();
+    document.onreadystatechange = loadAsync;
+    // button
+    function nextDay() {
+        mydate.setDate(mydate.getDate() + 1);
+        showDate();
+        loadPeriods();
+    }
+    // button
+    function preDay() {
+        mydate.setDate(mydate.getDate() - 1);
+        showDate();
+        loadPeriods();
+    }
+    // 显示当前选择的时间
+    function showDate() {
+        var dd = mydate.getDate();
+        var mm = mydate.getMonth() + 1;
+        var yyyy = mydate.getFullYear();
+        var str = yyyy + "年" + mm + "月" + dd + "日";
+        $("#date_show").html(str);
+    }
+    // 在网页加载后请求数据
+    function loadAsync() {
+        if (document.readyState == "complete") {
+            showDate();
+            loadPeriods();
+        }
+    }
+    // 请求时间段数据
+    function loadPeriods(load_current = false) {
+        var dd = mydate.getDate();
+        var mm = mydate.getMonth() + 1;
+        var yyyy = mydate.getFullYear();
+        mm_str = "" + mm;
+        dd_str = "" + dd;
+        if (mm < 10)
+            mm_str = "0" + mm;
+        if (dd < 10)
+            dd_str = "0" + dd;
+        var int_date = yyyy + "" + mm_str + "" + dd_str;
+
+        $.ajax({
+            url: "/api/user/period/calendar/" + int_date,
+            type: "get",
+            dataType: "json",
+            async: false,
+
+            success: function (data) {
+                dataprocess(data);
+                if (load_current) {
+                    dataprocess_currentP(data);
+                } else {
+                    if (firstLoading) {
+                        firstLoading = false;
+                        dataprocess_currentP(data);
+                    }
+                }
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    // 请求今天的时间段数据
+    function loadTodayPeriods() {
+        var _date = new Date();
+        var dd = _date.getDate();
+        var mm = _date.getMonth() + 1;
+        var yyyy = _date.getFullYear();
+        mm_str = "" + mm;
+        dd_str = "" + dd;
+        if (mm < 10)
+            mm_str = "0" + mm;
+        if (dd < 10)
+            dd_str = "0" + dd;
+        var int_date = yyyy + "" + mm_str + "" + dd_str;
+
+        $.ajax({
+            url: "/api/user/period/calendar/" + int_date,
+            type: "get",
+            dataType: "json",
+            async: false,
+
+            success: function (data) {
+                dataprocess_currentP(data);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    // 处理请求时间段的返回数据
+    // TODO: 显示任务总时间
+    function dataprocess(d) {
+        var htmldata = "";
+        for (var i = 0; i < d.periods.length; i++) {
+            var b_temp = d.periods[i].beginTime.split(",");
+            var begin = new Date(b_temp[0], b_temp[1], b_temp[2], b_temp[3], b_temp[4], b_temp[5]);
+            var end = new Date();
+            if (d.periods[i].endTime != null) {
+                b_temp = d.periods[i].endTime.split(",");
+                end = new Date(b_temp[0], b_temp[1], b_temp[2], b_temp[3], b_temp[4], b_temp[5]);
+            }
+            
+            htmldata += "<tr>";
+            htmldata += "<td><div class=\"colorful\" style=\"--pic:url('/img/" + d.periods[i].task.icon + "'); --mycolor:" + d.periods[i].task.taskClass.color + " \" ></div>";
+            htmldata += "<p style=\"display: inline; vertical-align: middle;\">" + d.periods[i].task.name + " </p></td>";
+            if (begin.getMinutes() < 10) {
+                htmldata += "<td>" + begin.getHours() + ":0" + begin.getMinutes() + "</td>";
+            } else {
+                htmldata += "<td>" + begin.getHours() + ":" + begin.getMinutes() + "</td>";
+            }
+
+            if (d.periods[i].endTime != null) {
+                if (end.getMinutes() < 10) {
+                    htmldata += "<td>" + end.getHours() + ":0" + end.getMinutes() + "</td>";
+                } else {
+                    htmldata += "<td>" + end.getHours() + ":" + end.getMinutes() + "</td>";
+                }
+
+                htmldata += "<td>" + ((end.getTime() - begin.getTime()) / 1000 / 3600).toFixed(2) + "</td>";
+            } else {
+                htmldata += "<td>进行中</td>";
+                htmldata += "<td>--</td>";
+            }
+
+            htmldata += "<td>";
+            htmldata += "<button class='btn btn-info btn-sm'  style='width:60px; height:30px;' onclick=\"window.location.href = 'specify?id=" + d.periods[i].id + "'\">编辑</button>"
+            htmldata += "<button class='btn btn-info btn-danger'  style='margin-left:15px; width:60px; height:30px;' onclick=\"deletePeriod('" + d.periods[i].id + "')\">删除</button>"
+            htmldata += "</td>";
+            htmldata += "</tr>";
+        }
+        $("#data_area").html(htmldata);
+    }
+
+    // 处理进行中的任务
+    var counting_arr = new Array();
+    var counting_arr_date = new Array();
+    function dataprocess_currentP(d) {
+        counting_arr = new Array();
+        counting_arr_date = new Array();
+        var no_proceding = true;
+        var htmldata = "";
+        var count = 0;
+        for (var i = 0; i < d.periods.length; i++) {
+            if (d.periods[i].isFinish == false) {
+                no_proceding = false;
+                htmldata += "<div class=\"colorful\" style=\"--pic:url('/img/" + d.periods[i].task.icon + "'); --mycolor:" + d.periods[i].task.taskClass.color + " \" ></div>";
+                htmldata += "<p id=\"mycount_p" + count + "\" style=\"display: inline\"> </p>";
+                htmldata += "<button class='btn btn-info btn-sm' style=\"display: inline; vertical-align: middle; margin-left:3px;\" onclick=\"finishPeriod('" + d.periods[i].id + "')\">结束</button>";
+                counting_arr.push("mycount_p" + count);
+                var b_temp = d.periods[i].beginTime.split(",");
+                temp = new Date(b_temp[0], b_temp[1], b_temp[2], b_temp[3], b_temp[4], b_temp[5]);
+
+                counting_arr_date.push(temp);
+                count++;
+            }
+        }
+
+        if (no_proceding) {
+            $("#proceding_p").html("没有正在进行的任务");
+            window.clearInterval("display_count()");
+            $("#proceding_div").html("");
+        }
+        else {
+            display_count();
+            $("#proceding_div").html(htmldata);
+            window.clearInterval("display_count()");
+            window.setInterval("display_count()", 1000);
+        }
+    }
+
+    // 定时刷新进行时间
+    function display_count() {
+        for (var i = 0; i < counting_arr.length; i++) {
+            var now = new Date();
+            now.setHours(now.getHours() - counting_arr_date[i].getHours());
+            now.setMinutes(now.getMinutes() - counting_arr_date[i].getMinutes());
+            now.setSeconds(now.getSeconds() - counting_arr_date[i].getSeconds());
+            minutes = now.getMinutes();
+            seconds = now.getSeconds();
+            if (minutes < 10)
+                minutes = "0" + minutes;
+            if (seconds < 10)
+                seconds = "0" + seconds;
+            $("#" + counting_arr[i]).html(now.getHours() + ":" + minutes + ":" + seconds);
+        }
+    }
+
+    //TODO: Error Process
+    function finishPeriod(id) {
+        var now = new Date();
+        var jobj = {};
+        var yyyy = now.getFullYear().toString();
+        var MM = (now.getMonth()+1).toString();
+        var dd = now.getDate().toString();
+        var HH = now.getHours().toString();
+        var mm = now.getMinutes().toString();
+        if (MM.length < 2)
+            MM = "0" + MM;
+        if (dd.length < 2)
+            dd = "0" + dd;
+        if (mm.length < 2)
+            mm = "0" + mm;
+        if (HH.length < 2)
+            HH = "0" + HH;
+        jobj.isFinish = true;
+        jobj.endTime = yyyy + "-" + MM + "-" + dd + "T" + HH + ":" + mm;
+        jstr = JSON.stringify(jobj);
+
+        $.ajax({
+            url: "/api/user/period/finish/" + id,
+            type: "put",
+            data: jstr,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+
+            success: function (data) {
+                if (mydate.getDate() == now.getDate()) {
+                    loadPeriods(true);
+                } else {
+                    loadTodayPeriods();
+                }
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function deletePeriod(id) {
+        var now = new Date();
+        $.ajax({
+            url: "/api/user/period/" + id,
+            type: "delete",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+
+            success: function (data) {
+                if (mydate.getDate() == now.getDate()) {
+                    loadPeriods(true);
+                } else {
+                    loadTodayPeriods();
+                }
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+</script>
+
+<h1>时间段列表</h1>
+<div>
+    <p id="proceding_p">正在进行：</p>
+    <div id="proceding_div"> </div>
+</div>
+<div>
+    <button class="btn btn-primary" onclick="preDay()"> < </button>
+    <p style="display:inline" id="date_show"></p>
+    <button class="btn btn-primary" onclick="nextDay()"> > </button>
+</div>
+
+<table class="table table-striped" style="margin-top: 50px;">
+    <thead>
+        <tr>
+            <td> </td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>持续(小时)</td>
+            <td> </td>
+        </tr>
+    </thead>
+    <tbody id="data_area">
+
+    </tbody>
+</table>
