@@ -35,9 +35,7 @@ namespace TimeCapsule.WebUI.Controllers
             {
                 Name = "英语6级",
                 Icon = "abc.png",
-                IsFinish = false,
-                IsCounting = true,
-                DeadLine = new DateTime(today.Year, 12, 18)
+                IsFinish = false
             };
 
             var task2 = new TimeTask
@@ -45,7 +43,6 @@ namespace TimeCapsule.WebUI.Controllers
                 Name = "上课",
                 Icon = "course.png",
                 IsFinish = false,
-                IsCounting = false
             };
 
             var task3 = new TimeTask
@@ -53,7 +50,6 @@ namespace TimeCapsule.WebUI.Controllers
                 Name = "吃饭",
                 Icon = "lunch.png",
                 IsFinish = false,
-                IsCounting = false
             };
 
 

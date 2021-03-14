@@ -13,9 +13,12 @@ public class Period implements Serializable {
     int Id;
     Task Task;
     long Begin;
-    long End;
+    long End; // equal -1 when not finish
     long BeginCalendar;
-    long EndCalendar;
+    long EndCalendar; // equal -1 when not finish
+
+    long LogEnd; // for calculate achievement
+    Task LogTask; // for calculate achievement
 
     /**
      * begin a period evoke this function
@@ -40,6 +43,8 @@ public class Period implements Serializable {
         End = end;
         BeginCalendar = beginCalendar;
         EndCalendar = endCalendar;
+        LogTask = task;
+        LogEnd = end;
     }
 
     public void Finish(){
@@ -75,6 +80,14 @@ public class Period implements Serializable {
         return EndCalendar;
     }
 
+    public long getLogEnd() {
+        return LogEnd;
+    }
+
+    public com.unarimit.timecapsuleapp.entities.Task getLogTask() {
+        return LogTask;
+    }
+
     public void setTask(com.unarimit.timecapsuleapp.entities.Task task) {
         Task = task;
     }
@@ -94,4 +107,6 @@ public class Period implements Serializable {
     public void setEndCalendar(long endCalendar) {
         EndCalendar = endCalendar;
     }
+
+
 }

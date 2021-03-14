@@ -24,12 +24,6 @@ namespace TimeCapsule.Infrastructure.Persistence.Configurations
                 .HasMaxLength(256);
 
 
-
-            builder.Property(x => x.LastModifiedBy)
-                .HasMaxLength(40);
-
-            builder.Property(x => x.CreatedBy)
-                .HasMaxLength(40);
         }
     }
 }

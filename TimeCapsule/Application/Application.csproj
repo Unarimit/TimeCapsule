@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AndroidSync\Commands\" />
     <Folder Include="Common\Exceptions\" />
-    <Folder Include="AndroidSync\" />
     <Folder Include="RegisterRequests\Commands\CreateRequest\" />
     <Folder Include="RegisterRequests\Commands\UpdateRequest\" />
     <Folder Include="RegisterRequests\Queries\GetRegisterRequests\" />

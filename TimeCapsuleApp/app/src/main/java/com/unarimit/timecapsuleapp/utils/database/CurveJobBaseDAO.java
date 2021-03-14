@@ -41,6 +41,8 @@ public class CurveJobBaseDAO {
         List<Task> taskList = DbContext.Tasks.GetTaskList(false);
         Cursor cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME+
                 " where " + IS_OVER + "=0", null);
+        if(taskList == null)
+            return null;
         if(cursor == null || !cursor.moveToFirst())
             return null;
         int id_index = cursor.getColumnIndex(ID);

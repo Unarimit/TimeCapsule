@@ -16,13 +16,6 @@ namespace TimeCapsule.Infrastructure.Persistence.Configurations
                 .HasMaxLength(10)
                 .IsRequired();
 
-
-            builder.Property(x => x.LastModifiedBy)
-                .HasMaxLength(40);
-
-            builder.Property(x => x.CreatedBy)
-                .HasMaxLength(40)
-                .IsRequired();
         }
     }
 }

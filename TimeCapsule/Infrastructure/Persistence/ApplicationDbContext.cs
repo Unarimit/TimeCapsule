@@ -37,13 +37,11 @@ namespace TimeCapsule.Infrastructure.Persistence
             {
                 switch (entry.State)
                 {
-                    // TODO: when not debug, delete ??"debug" flollowing
+                    // TODO: not very necessary for createtime and username
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.Username ?? "debug";
-                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.LastModified = DateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = _currentUserService.Username;
                         entry.Entity.LastModified = DateTime.Now;
                         break;
                 }

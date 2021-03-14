@@ -6,6 +6,9 @@ import android.database.Cursor;
 import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.entities.TaskClass;
+import com.unarimit.timecapsuleapp.utils.TimeHelper;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +22,8 @@ public class PeriodDAO {
     public static final String END = "p_end_date";
     public static final String BEGIN_CALENDER = "p_begin_calender";
     public static final String END_CALENDER = "p_end_calender";
+    public static final String SYNC = "p_sync";
+    public static final String LAST_MODIFIED = "p_last_modified";
 
     public static final String CreateSql = "CREATE TABLE "
             + TABLE_NAME
@@ -29,6 +34,8 @@ public class PeriodDAO {
             + END + " integer not null,"
             + BEGIN_CALENDER + " integer not null,"
             + END_CALENDER + " integer not null,"
+            + SYNC + " bool not null,"
+            + LAST_MODIFIED + " integer not null,"
             + "foreign key("+TASK_ID + ") references " + TaskDAO.TABLE_NAME + "(" +TaskDAO.ID + "))";
 
     /**
@@ -127,7 +134,15 @@ public class PeriodDAO {
         values.put(END, period.getEnd());
         values.put(BEGIN_CALENDER, period.getBeginCalendar());
         values.put(END_CALENDER, period.getEndCalendar());
+        values.put(SYNC, false);
+        values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         DbContext._SQLiteDatabase.insert(TABLE_NAME, ID, values);
+
+        if(period.getEnd() != -1){
+            long total = (period.getEnd() - period.getBegin()) / 3600; // to min
+            double achieve = (double)total  * period.getTask().getAchievePerHour();
+            DbContext.CurrentUser.SetAchievePoint(DbContext.CurrentUser.getAchievePoint() + achieve);
+        }
     }
 
     public void UpdatePeriod(Period period){
@@ -138,6 +153,23 @@ public class PeriodDAO {
         values.put(END, period.getEnd());
         values.put(BEGIN_CALENDER, period.getBeginCalendar());
         values.put(END_CALENDER, period.getEndCalendar());
+        values.put(SYNC, false);
+        values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
+        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+period.getId(), null);
+        if(period.getEnd() != -1){
+            double last_achievement = 0;
+            if(period.getLogEnd() != -1){
+                long total = (period.getLogEnd() - period.getBegin()) / 3600; // to min
+                last_achievement = (double)total  * period.getLogTask().getAchievePerHour();
+            }
+            long total = (period.getEnd() - period.getBegin()) / 3600; // to min
+            double achieve = (double)total  * period.getTask().getAchievePerHour();
+            DbContext.CurrentUser.SetAchievePoint(DbContext.CurrentUser.getAchievePoint() + (achieve - last_achievement));
+        }
+    }
+    public void Sync(@NotNull Period period){
+        ContentValues values = new  ContentValues();
+        values.put(SYNC, true);
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+period.getId(), null);
     }
 

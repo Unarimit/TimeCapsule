@@ -20,6 +20,8 @@ public class HomeViewModel extends ViewModel {
         tasks = DbContext.Tasks.GetTaskList(false);
 
         jobBases = DbContext.CurveJobBases.GetList();
+        if(jobBases == null)
+            return;
         for (CurveJobBase jobBase: jobBases
              ) {
 

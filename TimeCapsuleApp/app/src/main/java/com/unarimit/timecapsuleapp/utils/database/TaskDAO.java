@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.entities.TaskClass;
+import com.unarimit.timecapsuleapp.utils.TimeHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +21,8 @@ public class TaskDAO {
     public static final String IS_FINISHED = "t_isFinished";
     public static final String IS_OFTEN = "t_isOften";
     public static final String ICON = "t_icon";
+    public static final String SYNC = "t_sync";
+    public static final String LAST_MODIFIED = "t_last_modified";
     public static final String TASK_CLASS_ID = "t_taskClassId";
 
     public static final String CreateSql = "CREATE TABLE "
@@ -32,6 +35,8 @@ public class TaskDAO {
             + IS_FINISHED + " bool not null,"
             + IS_OFTEN + " bool not null,"
             + ICON + " text not null,"
+            + SYNC + " bool not null,"
+            + LAST_MODIFIED + " integer not null,"
             + TASK_CLASS_ID + " integer not null,"
             + "foreign key("+TASK_CLASS_ID + ") references " + TaskClassDAO.TABLE_NAME + "(" +TaskClassDAO.ID + "))";
 
@@ -91,6 +96,8 @@ public class TaskDAO {
         values.put(IS_FINISHED, task.isFinished());
         values.put(IS_OFTEN, task.isOften());
         values.put(ICON, task.getIcon());
+        values.put(SYNC, false);
+        values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         values.put(TASK_CLASS_ID, task.getTaskClass().getId());
         DbContext._SQLiteDatabase.insert(TABLE_NAME, ID, values);
     }
@@ -104,7 +111,15 @@ public class TaskDAO {
         values.put(IS_FINISHED, task.isFinished());
         values.put(IS_OFTEN, task.isOften());
         values.put(ICON, task.getIcon());
+        values.put(SYNC, false);
+        values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         values.put(TASK_CLASS_ID, task.getTaskClass().getId());
+        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+task.getId(), null);
+    }
+
+    public void Sync(@NotNull Task task){
+        ContentValues values = new  ContentValues();
+        values.put(SYNC, true);
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+task.getId(), null);
     }
 

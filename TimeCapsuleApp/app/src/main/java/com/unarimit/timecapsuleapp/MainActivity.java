@@ -3,7 +3,6 @@ package com.unarimit.timecapsuleapp;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Menu;
@@ -14,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.unarimit.timecapsuleapp.entities.ExceptionInfo;
 import com.unarimit.timecapsuleapp.ui.home.TimingService;
-import com.unarimit.timecapsuleapp.utils.TimeHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import androidx.fragment.app.Fragment;
@@ -75,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
         InitExceptionProcessor();
         Intent intent = new Intent(this, TimingService.class);
         startService(intent);
-        Log.d("debug", TimeHelper.GetCurrentSeconds()/3600/24 * 24 * 3600 + "");
+
 
         View header_layout = navigationView.getHeaderView(0);
         ((TextView)header_layout.findViewById(R.id.nav_bar_username)).setText(DbContext.CurrentUser.getUsername());
-        ((TextView)header_layout.findViewById(R.id.nav_bar_achieve)).setText(DbContext.CurrentUser.getAchievePoint() + "");
+        ((TextView)header_layout.findViewById(R.id.nav_bar_achieve)).setText((int)DbContext.CurrentUser.getAchievePoint() + "");
 
     }
 

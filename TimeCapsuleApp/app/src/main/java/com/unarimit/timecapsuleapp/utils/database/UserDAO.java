@@ -41,6 +41,6 @@ public class UserDAO {
         ContentValues values = new  ContentValues();
         values.put(FIELD_VALUE, value);
         values.put(LAST_MODIFY, TimeHelper.GetCurrentSeconds());
-        DbContext._SQLiteDatabase.update(TABLE_NAME, values, FIELD_NAME+"="+String.valueOf(key), null);
+        DbContext._SQLiteDatabase.update(TABLE_NAME, values, FIELD_NAME+"='"+String.valueOf(key)+ "' ", null);
     }
 }

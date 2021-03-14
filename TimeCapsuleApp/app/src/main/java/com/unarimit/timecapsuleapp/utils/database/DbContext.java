@@ -39,7 +39,7 @@ public class DbContext {
     public static int WindowsWidth;
     public static Context Context;
 
-    private static final int DB_VERSION = 46;         //database version
+    private static final int DB_VERSION = 53;         //database version
 
     public static void InitDbContext(Context context){
         Context = context;
@@ -61,6 +61,10 @@ public class DbContext {
 
     private static void SeedDataForTest(){
         Log.d("debug", "database seed");
+
+        DbContext.UserInfos.AddValue(UserConfig.USER_NAME, "test");
+        DbContext.UserInfos.AddValue(UserConfig.ACHIEVE, 100+"");
+        CurrentUser = new User();
         // add task class
         TaskClass eatTaskClass = new TaskClass(UUID.randomUUID().toString(),"eat", "#444444",1);
         DbContext.TaskClasses.Add(eatTaskClass);
@@ -93,10 +97,6 @@ public class DbContext {
         DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 32, begin + 3600 * 33, begin_c+1, begin_c+1));
 
         DbContext.CurveJobBases.Add(new CurveJobBase(mathTask, begin_c-1, 40));
-
-        DbContext.UserInfos.AddValue(UserConfig.USER_NAME, "test");
-        DbContext.UserInfos.AddValue(UserConfig.ACHIEVE, 100+"");
-
 
         JustCreate = false;
     }
