@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -108,18 +108,17 @@ public class HomeFragment extends Fragment {
 
     // following is on task config
     IconTextView icon;
-    TextView timeText;
+    Chronometer timeMeter;
     TextView taskDescText;
     TextView nameText;
     Button taskStopButton;
     RecyclerView jobsRecyclerView;
     TimingServiceConnection connection;
-    TimingHandler handler = new TimingHandler();
     Period period;
     public static final int UPDATE_TIMING = 123;
     private void InCurrentPeriodCreate(){
         icon = root.findViewById(R.id.home_ontask_icon);
-        timeText = root.findViewById(R.id.home_ontask_time_text);
+        timeMeter = root.findViewById(R.id.home_ontask_meter);
         taskDescText = root.findViewById(R.id.home_ontask_desc_text);
         taskStopButton = root.findViewById(R.id.home_ontask_stop_button);
         nameText = root.findViewById(R.id.home_ontask_name_text);
@@ -127,7 +126,11 @@ public class HomeFragment extends Fragment {
         period = homeViewModel.getCurrentPeriod();
         icon.setText(period.getTask().getIcon());
         icon.setTextColor(Color.parseColor(period.getTask().getTaskClass().getColor()));
-        timeText.setText("00:00:00");
+
+        timeMeter.setVisibility(View.VISIBLE);
+        timeMeter.setBase(SystemClock.elapsedRealtime() - (TimeHelper.GetCurrentSeconds() - period.getBegin()) * 1000);
+        timeMeter.start();
+
         taskDescText.setText(period.getTask().getDesc());
         nameText.setText(period.getTask().getName());
         Intent intent = new Intent(getContext(), TimingService.class);
@@ -158,18 +161,12 @@ public class HomeFragment extends Fragment {
                 period.Finish();
                 DbContext.Periods.UpdatePeriod(period);
                 connection.StopTiming();
+                timeMeter.stop();
+                timeMeter.setVisibility(View.GONE);
                 getContext().unbindService(connection);
                 BigUpdateUI();
             }
         });
-    }
-    class TimingHandler extends Handler{
-        @Override
-        public void handleMessage(Message msg) {
-            if(msg.what == UPDATE_TIMING){
-                timeText.setText(msg.getData().getString("show"));
-            }
-        }
     }
 
 
@@ -181,7 +178,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             binder = (TimingService.TimingBinder) service;
-            binder.StartTiming(period.getTask().getTaskClass().getColor(), period.getTask().getIcon(), period.getTask().getName(), period.getBegin(), handler);
+            binder.StartTiming(period.getTask().getTaskClass().getColor(), period.getTask().getIcon(), period.getTask().getName(), period.getBegin());
             run = true;
         }
 

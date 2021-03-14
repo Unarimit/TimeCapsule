@@ -29,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="50sp"/>
-        <TextView
-            android:id="@+id/home_ontask_time_text"
+        <Chronometer
+            android:id="@+id/home_ontask_meter"
             android:layout_below="@id/home_ontask_icon"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/home_ontask_time_text"
+            android:layout_below="@id/home_ontask_meter"
             android:textSize="20sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
