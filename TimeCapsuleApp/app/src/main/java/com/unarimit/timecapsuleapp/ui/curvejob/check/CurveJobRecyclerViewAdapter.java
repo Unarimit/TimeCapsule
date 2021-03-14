@@ -1,27 +1,23 @@
 package com.unarimit.timecapsuleapp.ui.curvejob.check;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.CurveJob;
-import com.unarimit.timecapsuleapp.entities.CurveJobBase;
-import com.unarimit.timecapsuleapp.ui.common.IconTextView;
-import com.unarimit.timecapsuleapp.utils.TimeHelper;
+import com.unarimit.timecapsuleapp.utils.BitmapHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.List;
-import java.util.Locale;
 
 class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerViewAdapter.ViewHolder>{
     private final List<CurveJob> mValues;
@@ -45,7 +41,7 @@ class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerV
     public void onBindViewHolder(@NonNull CurveJobRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.doWhat.setText(mValues.get(position).getDoWhat());
         holder.epoch.setText("#" + mValues.get(position).getId());
-
+        holder.epochBar.setImageBitmap(BitmapHelper.DrawEpochLogBar(DbContext.WindowsWidth-100, mValues.get(position).getEpochLog()));
 
         if(mValues.get(position).getDoWhat().isEmpty()){
             holder.doWhat.setText(R.string.curvejob_empty_dowhat);
@@ -94,6 +90,7 @@ class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerV
         public final View mView;
         public final TextView epoch;
         public final TextView doWhat;
+        public final ImageView epochBar;
 
         public final View doWhatView;
         public final EditText doWhatEt;
@@ -104,6 +101,7 @@ class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerV
             mView = view;
             epoch = view.findViewById(R.id.curvejob_epochlog);
             doWhat = view.findViewById(R.id.curvejob_dowhat);
+            epochBar = view.findViewById(R.id.curvejob_epochlog_bar);
 
             doWhatView = dialogView;
             doWhatEt = dialogView.findViewById(R.id.view_curvejob_et);
