@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -43,9 +44,9 @@ public class PeriodManagerActivity extends AppCompatActivity {
     TextView beginTime;
     TextView endDate;
     TextView endTime;
-    Button returnBtn;
-    Button confirmBtn;
-    Button deleteBtn;
+    ImageButton returnBtn;
+    ImageButton confirmBtn;
+    ImageButton deleteBtn;
 
     CustomDate date_begin;
     CustomDate date_end;

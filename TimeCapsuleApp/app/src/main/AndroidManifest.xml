@@ -11,10 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeCapsuleApp">
-        <activity android:name=".ui.curvejob.manager.CurveJobCreateActivity" />
+        <activity android:name=".ui.curvejob.check.CurveJobCheckActivity"
+            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar"/>
+        <activity android:name=".ui.curvejob.manager.CurveJobCreateActivity"
+            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar"/>
         <activity
             android:name=".ui.period.manager.PeriodManagerActivity"
-            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar" />
+            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar"/>
 
         <service
             android:name=".ui.home.TimingService"
@@ -23,10 +26,10 @@
 
         <activity
             android:name=".ui.task.manager.TaskManagerActivity"
-            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar" />
+            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar"/>
         <activity
             android:name=".ui.taskclass.manager.TaskClassManagerActivity"
-            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar" />
+            android:theme="@style/Theme.TimeCapsuleApp.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

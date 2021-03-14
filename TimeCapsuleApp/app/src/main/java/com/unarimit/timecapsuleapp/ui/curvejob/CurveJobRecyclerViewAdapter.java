@@ -51,6 +51,12 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
         holder.sync_bar.getLayoutParams().width = (int)(DbContext.WindowsWidth *  sync);
         holder.sync_bar.setBackgroundColor(Color.parseColor(GetColorString(sync)));
         holder.cost.setText(mValues.get(position).GetListCostString());
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder.mView.getContext()));
         holder.recyclerView.setAdapter(new CurveJobItemRecyclerViewAdapter(mValues.get(position).getJobs(), mCalendar));
         mSwitch = true;

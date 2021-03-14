@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -24,8 +25,8 @@ import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 public class CurveJobCreateActivity extends AppCompatActivity {
 
-    Button returnBtn;
-    Button confirmBtn;
+    ImageButton returnBtn;
+    ImageButton confirmBtn;
 
     TextView taskName;
     IconTextView taskIcon;
