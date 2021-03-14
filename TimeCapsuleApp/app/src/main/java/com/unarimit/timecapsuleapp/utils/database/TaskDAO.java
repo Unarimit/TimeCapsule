@@ -21,6 +21,8 @@ public class TaskDAO {
     public static final String IS_FINISHED = "t_isFinished";
     public static final String IS_OFTEN = "t_isOften";
     public static final String ICON = "t_icon";
+    public static final String CREATE_TIME = "t_create_time";
+    public static final String FINISH_TIME = "t_finish_time";
     public static final String SYNC = "t_sync";
     public static final String LAST_MODIFIED = "t_last_modified";
     public static final String TASK_CLASS_ID = "t_taskClassId";
@@ -35,6 +37,8 @@ public class TaskDAO {
             + IS_FINISHED + " bool not null,"
             + IS_OFTEN + " bool not null,"
             + ICON + " text not null,"
+            + CREATE_TIME + " integer not null,"
+            + FINISH_TIME + " integer not null,"
             + SYNC + " bool not null,"
             + LAST_MODIFIED + " integer not null,"
             + TASK_CLASS_ID + " integer not null,"
@@ -79,7 +83,9 @@ public class TaskDAO {
                     cursor.getDouble(cursor.getColumnIndex(ACHIEVE_PER_HOUR)),
                     isfinish_temp,
                     cursor.getString(cursor.getColumnIndex(ICON)),
-                    isoften_temp));
+                    isoften_temp,
+                    cursor.getLong(cursor.getColumnIndex(FINISH_TIME)),
+                    cursor.getLong(cursor.getColumnIndex(CREATE_TIME))));
 
         }while (cursor.moveToNext());
 
@@ -96,6 +102,9 @@ public class TaskDAO {
         values.put(IS_FINISHED, task.isFinished());
         values.put(IS_OFTEN, task.isOften());
         values.put(ICON, task.getIcon());
+        values.put(CREATE_TIME, task.getCreateTime());
+        values.put(FINISH_TIME, task.getFinishTime());
+
         values.put(SYNC, false);
         values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         values.put(TASK_CLASS_ID, task.getTaskClass().getId());
@@ -111,6 +120,9 @@ public class TaskDAO {
         values.put(IS_FINISHED, task.isFinished());
         values.put(IS_OFTEN, task.isOften());
         values.put(ICON, task.getIcon());
+        values.put(CREATE_TIME, task.getCreateTime());
+        values.put(FINISH_TIME, task.getFinishTime());
+
         values.put(SYNC, false);
         values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         values.put(TASK_CLASS_ID, task.getTaskClass().getId());

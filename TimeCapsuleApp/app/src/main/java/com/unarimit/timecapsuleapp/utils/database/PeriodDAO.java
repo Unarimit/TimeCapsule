@@ -68,7 +68,7 @@ public class PeriodDAO {
                 cursor.getDouble(cursor.getColumnIndex(TaskDAO.ACHIEVE_PER_HOUR)),
                 isfinish_temp,
                 cursor.getString(cursor.getColumnIndex(TaskDAO.ICON)),
-                isoften_temp);
+                isoften_temp,0,0); // 不需要展示task的时间数据
 
         return new Period(cursor.getString(cursor.getColumnIndex(GUID)),
                 cursor.getInt(cursor.getColumnIndex(ID)),
@@ -111,7 +111,7 @@ public class PeriodDAO {
                     cursor.getDouble(cursor.getColumnIndex(TaskDAO.ACHIEVE_PER_HOUR)),
                     isfinish_temp,
                     cursor.getString(cursor.getColumnIndex(TaskDAO.ICON)),
-                    isoften_temp);
+                    isoften_temp, 0, 0); // 不需要展示task的时间数据
 
             list.add(new Period(cursor.getString(cursor.getColumnIndex(GUID)),
                     cursor.getInt(cursor.getColumnIndex(ID)),

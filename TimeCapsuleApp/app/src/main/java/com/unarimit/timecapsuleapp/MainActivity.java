@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.unarimit.timecapsuleapp.entities.ExceptionInfo;
 import com.unarimit.timecapsuleapp.ui.home.TimingService;
+import com.unarimit.timecapsuleapp.ui.period.manager.PeriodManagerActivity;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import androidx.fragment.app.Fragment;
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, PeriodManagerActivity.class);
+                startActivity(intent);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

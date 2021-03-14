@@ -39,7 +39,7 @@ public class DbContext {
     public static int WindowsWidth;
     public static Context Context;
 
-    private static final int DB_VERSION = 53;         //database version
+    private static final int DB_VERSION = 54;         //database version
 
     public static void InitDbContext(Context context){
         Context = context;
@@ -72,14 +72,14 @@ public class DbContext {
         DbContext.TaskClasses.Add(studyTaskClass);
         // add task
         Task eatTask = new Task(1, UUID.randomUUID().toString(), "eat", "eat make me strong",
-                eatTaskClass, 0.2, false, "\uf805", true);
+                eatTaskClass, 0.2, false, "\uf805", true, TimeHelper.GetCurrentSeconds(), -1);
         DbContext.Tasks.Add(eatTask);
         Task englishTask = new Task(2, UUID.randomUUID().toString(),"english", "i like english",
-                studyTaskClass, 1, false,"\uf805", true);
+                studyTaskClass, 1, false,"\uf805", true, TimeHelper.GetCurrentSeconds(), -1);
         Task readingTask = new Task(3, UUID.randomUUID().toString(),"reading", "reading make me feel good",
-                studyTaskClass, 1, false,"\uf805", true);
+                studyTaskClass, 1, false,"\uf805", true, TimeHelper.GetCurrentSeconds(), -1);
         Task mathTask = new Task(4, UUID.randomUUID().toString(),"math", "i hate math",
-                studyTaskClass, 1, false,"\uf805", false);
+                studyTaskClass, 1, false,"\uf805", false, TimeHelper.GetCurrentSeconds(), -1);
         DbContext.Tasks.Add(englishTask);
         DbContext.Tasks.Add(mathTask);
         DbContext.Tasks.Add(readingTask);

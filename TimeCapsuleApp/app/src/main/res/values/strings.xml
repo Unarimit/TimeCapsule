@@ -39,6 +39,7 @@
 
     <!--period-->
     <string name="period_nullhint">这段时间没有任何时间记录</string>
+    <string name="period_create_begin_larger_than_end_hint">结束时间不能小于开始时间！</string>
 
     <string name="periodmanager_begin_text">开始</string>
     <string name="periodmanager_end_text">结束</string>

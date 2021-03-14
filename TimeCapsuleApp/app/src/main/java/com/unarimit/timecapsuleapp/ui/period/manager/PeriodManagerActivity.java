@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
@@ -94,7 +95,7 @@ public class PeriodManagerActivity extends AppCompatActivity {
             // set time
             String lastPeriodTime = TimeHelper.DateLongToTimeString(viewModel.GetLastPeriodTime());
             beginTime.setText(lastPeriodTime);
-            endTime.setText(lastPeriodTime);
+            endTime.setText(TimeHelper.DateLongToTimeString(TimeHelper.GetCurrentSeconds()));
             // if have no task
             if(taskList == null){
                 taskName.setText("请先创建任务");
@@ -175,18 +176,33 @@ public class PeriodManagerActivity extends AppCompatActivity {
                 finish();
             }
         });
-        // confirm button
+        // confirm button period setting aggregate here
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                period.setTask(task);
                 long bc = date_begin.GetCalendar();
                 long ec = date_end.GetCalendar();
-                period.setBeginCalendar(bc);
-                period.setEndCalendar(ec);
-                period.setBegin(bc * 3600 * 24 + Integer.parseInt(begin_time_array[0]) * 3600 + Integer.parseInt(begin_time_array[1]) * 60);
-                period.setEnd(ec * 3600 * 24 + Integer.parseInt(end_time_array[0]) * 3600 + Integer.parseInt(end_time_array[1]) * 60);
-                DbContext.Periods.UpdatePeriod(period);
+                long bt = bc * 3600 * 24 + Integer.parseInt(begin_time_array[0]) * 3600 + Integer.parseInt(begin_time_array[1]) * 60;
+                long et = ec * 3600 * 24 + Integer.parseInt(end_time_array[0]) * 3600 + Integer.parseInt(end_time_array[1]) * 60;
+                if(bt > et){
+                    Snackbar.make(v, R.string.period_create_begin_larger_than_end_hint, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+                if(period != null){
+                    period.setTask(task);
+                    period.setBeginCalendar(bc);
+                    period.setEndCalendar(ec);
+                    period.setBegin(bt);
+                    period.setEnd(et);
+                    DbContext.Periods.UpdatePeriod(period);
+                }else{
+                    period = new Period(task);
+                    period.setBeginCalendar(bc);
+                    period.setEndCalendar(ec);
+                    period.setBegin(bt);
+                    period.setEnd(et);
+                    DbContext.Periods.Add(period);
+                }
                 finish();
             }
         });

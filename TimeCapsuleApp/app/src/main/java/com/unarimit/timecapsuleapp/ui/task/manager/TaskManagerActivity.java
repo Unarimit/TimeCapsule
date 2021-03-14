@@ -100,7 +100,9 @@ public class TaskManagerActivity extends AppCompatActivity {
                             (double)achieveSb.getProgress() / 10 - 1,
                             task.isFinished(),
                             iconButton.getText().toString(),
-                            isOftenCb.isChecked()));
+                            isOftenCb.isChecked(),
+                            task.getCreateTime(),
+                            task.getFinishTime()));
                 } else { // else click add new button into this page
                     DbContext.Tasks.Add(new Task(nameEt.getText().toString(),
                             descEt.getText().toString(),

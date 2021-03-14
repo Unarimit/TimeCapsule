@@ -3,6 +3,8 @@ package com.unarimit.timecapsuleapp.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.unarimit.timecapsuleapp.utils.TimeHelper;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -16,6 +18,8 @@ public class Task implements Serializable {
     boolean IsFinished;
     String Icon;
     boolean IsOften;
+    long CreateTime;
+    long FinishTime;
 
     /**
      * create evoke
@@ -29,12 +33,14 @@ public class Task implements Serializable {
         Guid = UUID.randomUUID().toString();
         IsFinished = false;
         IsOften = isOften;
+        CreateTime = TimeHelper.GetCurrentSeconds();
+        FinishTime = -1;
     }
 
     /**
      * DAO evoke
      * */
-    public Task(int id, String guid, String name, String desc, TaskClass taskClass, double achievePerHour, boolean isFinished, String icon, boolean isOften) {
+    public Task(int id, String guid, String name, String desc, TaskClass taskClass, double achievePerHour, boolean isFinished, String icon, boolean isOften, long createTime, long finishTime) {
         Id = id;
         Guid = guid;
         Name = name;
@@ -44,15 +50,19 @@ public class Task implements Serializable {
         IsFinished = isFinished;
         Icon = icon;
         IsOften = isOften;
+        CreateTime = createTime;
+        FinishTime = finishTime;
     }
 
 
     public void Finish(){
         IsFinished = true;
+        FinishTime = TimeHelper.GetCurrentSeconds();
     }
 
     public void ReverseFinish(){
         IsFinished = false;
+        FinishTime = -1;
     }
 
     public String getGuid() {
@@ -93,5 +103,13 @@ public class Task implements Serializable {
 
     public void setOften(boolean often) {
         IsOften = often;
+    }
+
+    public long getCreateTime() {
+        return CreateTime;
+    }
+
+    public long getFinishTime() {
+        return FinishTime;
     }
 }
