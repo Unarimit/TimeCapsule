@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.CurveJobBase;
 import com.unarimit.timecapsuleapp.ui.common.IconTextView;
+import com.unarimit.timecapsuleapp.ui.curvejob.check.CurveJobCheckActivity;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
@@ -24,7 +25,7 @@ import java.util.Locale;
  * {@link RecyclerView.Adapter} that can display a {@link CurveJobBase}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerViewAdapter.ViewHolder> {
+class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerViewAdapter.ViewHolder> {
 
     private final List<CurveJobBase> mValues;
     private final long mCalendar;
@@ -51,12 +52,16 @@ public class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRe
         holder.sync_bar.getLayoutParams().width = (int)(DbContext.WindowsWidth *  sync);
         holder.sync_bar.setBackgroundColor(Color.parseColor(GetColorString(sync)));
         holder.cost.setText(mValues.get(position).GetListCostString());
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {  // into check activity
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(v.getContext(), CurveJobCheckActivity.class);
+                intent.putExtra("base", mValues.get(position));
+                v.getContext().startActivity(intent);
             }
         });
+
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder.mView.getContext()));
         holder.recyclerView.setAdapter(new CurveJobItemRecyclerViewAdapter(mValues.get(position).getJobs(), mCalendar));
         mSwitch = true;

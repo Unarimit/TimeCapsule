@@ -1,5 +1,6 @@
-package com.unarimit.timecapsuleapp.ui.curvejob;
+package com.unarimit.timecapsuleapp.ui.curvejob.check;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,46 +10,41 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.CurveJob;
+import com.unarimit.timecapsuleapp.entities.CurveJobBase;
+import com.unarimit.timecapsuleapp.ui.common.IconTextView;
+import com.unarimit.timecapsuleapp.utils.TimeHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.List;
+import java.util.Locale;
 
-class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobItemRecyclerViewAdapter.ViewHolder>{
+class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerViewAdapter.ViewHolder>{
     private final List<CurveJob> mValues;
     private final long mCalendar;
-    public CurveJobItemRecyclerViewAdapter(List<CurveJob> items, long calendar) {
+    public CurveJobRecyclerViewAdapter(List<CurveJob> items, long calendar) {
         mValues = items;
         mCalendar  = calendar;
     }
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CurveJobRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_curvejob_item_item, parent, false);
+                .inflate(R.layout.activity_curvejob_check_item, parent, false);
         View dialogView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_curvejob_dowhat, parent, false);
-        return new ViewHolder(view, dialogView);
+        return new CurveJobRecyclerViewAdapter.ViewHolder(view, dialogView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CurveJobRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.doWhat.setText(mValues.get(position).getDoWhat());
-        holder.epochLog.setText(mValues.get(position).GetEpochInfo());
-        try {
-            if(mValues.get(position).IsFinish(mCalendar)){
-                holder.cost.setText(R.string.curvejob_finish);
-            }else{
-                holder.cost.setText(mValues.get(position).GetCostString());
-            }
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+        holder.epoch.setText("#" + mValues.get(position).getId());
 
 
         if(mValues.get(position).getDoWhat().isEmpty()){
@@ -96,8 +92,7 @@ class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobItemR
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public final View mView;
-        public final TextView epochLog;
-        public final TextView cost;
+        public final TextView epoch;
         public final TextView doWhat;
 
         public final View doWhatView;
@@ -107,8 +102,7 @@ class CurveJobItemRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobItemR
         public ViewHolder(@NonNull View view, @NonNull View dialogView) {
             super(view);
             mView = view;
-            epochLog = view.findViewById(R.id.curvejob_epochlog);
-            cost = view.findViewById(R.id.curvejob_item_item_cost);
+            epoch = view.findViewById(R.id.curvejob_epochlog);
             doWhat = view.findViewById(R.id.curvejob_dowhat);
 
             doWhatView = dialogView;

@@ -65,9 +65,11 @@ public class PeriodManagerActivity extends AppCompatActivity {
         returnBtn = findViewById(R.id.periodmanager_return_button);
         confirmBtn = findViewById(R.id.periodmanager_confirm_button);
         deleteBtn = findViewById(R.id.periodmanager_delete_button);
+
         taskLayout = findViewById(R.id.periodmanager_task_layout);
         taskIcon = findViewById(R.id.periodmanager_task_icon);
         taskName = findViewById(R.id.periodmanager_task_text);
+
         dependTaskClass = findViewById(R.id.periodmanager_dependtaskclass_tv);
         beginDate = findViewById(R.id.periodmanager_begin_date_tv);
         beginTime = findViewById(R.id.periodmanager_begin_time_tv);

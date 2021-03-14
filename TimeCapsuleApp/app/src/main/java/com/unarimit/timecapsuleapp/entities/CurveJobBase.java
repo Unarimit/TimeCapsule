@@ -6,12 +6,13 @@ import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.ui.common.ConstField;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class CurveJobBase {
+public class CurveJobBase implements Serializable {
     int Id;
     Task Task;
     int BaseCost;

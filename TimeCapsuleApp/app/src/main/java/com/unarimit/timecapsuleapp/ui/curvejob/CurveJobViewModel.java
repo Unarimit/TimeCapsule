@@ -12,6 +12,8 @@ public class CurveJobViewModel {
     private final List<CurveJobBase> jobBases;
     public CurveJobViewModel(){
         jobBases = DbContext.CurveJobBases.GetList();
+        if(jobBases == null)
+            return;
         for (CurveJobBase jobBase: jobBases
         ) {
             long calendar = TimeHelper.GetCurrentSeconds()/3600/24;

@@ -4,10 +4,11 @@ import android.util.Log;
 
 import com.unarimit.timecapsuleapp.ui.common.ConstField;
 
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.UUID;
 
-public class CurveJob {
+public class CurveJob implements Serializable {
     int Id;
     CurveJobBase CurveJobBase;
     String EpochLog;

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.entities.CurveJob;
-import com.unarimit.timecapsuleapp.ui.curvejob.CurveJobItemRecyclerViewAdapter;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
 import java.util.List;
