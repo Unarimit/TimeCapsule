@@ -84,7 +84,7 @@
 
     <!-- begin and end time -->
     <RelativeLayout
-        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <!-- begin -->
@@ -100,6 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
+            android:textSize="20sp"
             android:text="2月29日, 2021"/>
         <View
             android:layout_width="95dp"
@@ -112,10 +113,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:text="19:00"/>
         <View
-            android:layout_width="65dp"
+            android:layout_width="75dp"
             android:layout_below="@id/periodmanager_begin_time_tv"
             android:layout_height="1dp"
             android:background="@color/clickable_text_color"/>
@@ -139,6 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
+            android:textSize="20sp"
             android:text="2月29日, 2021"/>
         <View
             android:layout_width="95dp"
@@ -152,11 +154,11 @@
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:paddingTop="5dp"
             android:text="21:00"/>
         <View
-            android:layout_width="65dp"
+            android:layout_width="75dp"
             android:layout_below="@id/periodmanager_end_time_tv"
             android:layout_alignParentEnd="true"
             android:layout_height="1dp"

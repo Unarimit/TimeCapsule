@@ -42,7 +42,7 @@ public class TimingService extends Service {
     public void onCreate() {
         super.onCreate();
         notificationManager = NotificationManagerCompat.from(this);
-        NotificationChannelCompat channel = new NotificationChannelCompat.Builder("my_test",  NotificationManagerCompat.IMPORTANCE_LOW)
+        NotificationChannelCompat channel = new NotificationChannelCompat.Builder("my_test",  NotificationManagerCompat.IMPORTANCE_MIN)
                 .setName("name1")
                 .setShowBadge(false)
                 .build();
@@ -58,7 +58,7 @@ public class TimingService extends Service {
         PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
 
         notificationBuilder = new NotificationCompat.Builder(this, "my_test")
-                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setContent(remoteViews)
                 .setSmallIcon(R.drawable.blank)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.blank))

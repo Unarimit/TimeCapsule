@@ -51,7 +51,7 @@ public class CurveJob implements Serializable {
                 break;
             }
         }
-        return "#" + Id + " loop " + loop;
+        return "#" + Days + " loop " + loop;
     }
 
     public int GetCostTimeForNowLoop(){

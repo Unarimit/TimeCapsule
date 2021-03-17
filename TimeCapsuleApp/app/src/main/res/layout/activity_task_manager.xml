@@ -57,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="@string/taskmanager_taskclass_text"/>
         <TextView
             android:id="@+id/taskmanager_taskclass_name"
@@ -83,11 +84,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="@string/taskmanager_name_text"/>
         <EditText
             android:id="@+id/taskmanager_name_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -97,6 +100,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="@string/taskmanager_desc_text"/>
         <EditText
             android:id="@+id/taskmanager_desc_et"
@@ -133,13 +137,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:textSize="20sp"
             android:text="@string/taskmanager_icon_text" />
         <com.unarimit.timecapsuleapp.ui.common.IconTextView
             android:id="@+id/taskmanager_icon_button"
             android:layout_width="wrap_content"
             android:layout_marginStart="5dp"
             android:text="@string/icon_trophy"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <CheckBox
@@ -148,6 +153,7 @@
         android:layout_height="wrap_content"
         android:button="@null"
         android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+        android:textSize="20sp"
         android:text="@string/taskmanager_often_checkbox"/>
 
 </LinearLayout>

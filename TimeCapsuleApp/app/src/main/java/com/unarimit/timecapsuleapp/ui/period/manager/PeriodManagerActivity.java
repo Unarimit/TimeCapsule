@@ -86,7 +86,11 @@ public class PeriodManagerActivity extends AppCompatActivity {
             beginDate.setText(date_begin.GetDateStringWithYear());
             endDate.setText(date_end.GetDateStringWithYear());
             beginTime.setText(TimeHelper.DateLongToTimeString(period.getBegin()));
-            endTime.setText(TimeHelper.DateLongToTimeString(period.getEnd()));
+            if(period.getEnd() == -1){
+                endTime.setText(TimeHelper.DateLongToTimeString(TimeHelper.GetCurrentSeconds()));
+            }else{
+                endTime.setText(TimeHelper.DateLongToTimeString(period.getEnd()));
+            }
             // time_array =
         }else{
             // set date

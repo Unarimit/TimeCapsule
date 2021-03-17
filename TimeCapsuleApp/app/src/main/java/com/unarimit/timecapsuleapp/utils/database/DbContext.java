@@ -39,7 +39,7 @@ public class DbContext {
     public static int WindowsWidth;
     public static Context Context;
 
-    private static final int DB_VERSION = 54;         //database version
+    private static final int DB_VERSION = 55;         //database version
 
     public static void InitDbContext(Context context){
         Context = context;

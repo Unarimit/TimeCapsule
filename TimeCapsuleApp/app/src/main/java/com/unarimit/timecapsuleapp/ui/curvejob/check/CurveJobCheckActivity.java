@@ -9,11 +9,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.unarimit.timecapsuleapp.R;
+import com.unarimit.timecapsuleapp.entities.CurveJob;
 import com.unarimit.timecapsuleapp.entities.CurveJobBase;
 import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.ui.common.IconTextView;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
+import com.unarimit.timecapsuleapp.utils.database.DbContext;
+
+import java.util.List;
 
 public class CurveJobCheckActivity extends AppCompatActivity {
 
@@ -36,6 +40,11 @@ public class CurveJobCheckActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.curvejob_item_list);
 
         curveJobBase = (CurveJobBase)getIntent().getSerializableExtra("base");
+        List<CurveJob> list = DbContext.CurveJobs.GetByBaseId(curveJobBase.getId(),true);
+        for (CurveJob job:
+             list) {
+            job.setCurveJobBase(curveJobBase);
+        }
         if(curveJobBase == null){
             finish();
             return;
@@ -47,7 +56,7 @@ public class CurveJobCheckActivity extends AppCompatActivity {
         taskName.setText(task.getName());
         dependTaskClass.setText(task.getTaskClass().getName());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new CurveJobRecyclerViewAdapter(curveJobBase.getJobs(), TimeHelper.GetCurrentSeconds() / 3600 / 24));
+        recyclerView.setAdapter(new CurveJobRecyclerViewAdapter(list, TimeHelper.GetCurrentSeconds() / 3600 / 24));
 
     }
 }

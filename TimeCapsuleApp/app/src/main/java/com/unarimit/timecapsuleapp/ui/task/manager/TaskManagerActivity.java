@@ -74,6 +74,7 @@ public class TaskManagerActivity extends AppCompatActivity {
             achieveSb.setProgress((int)((task.getAchievePerHour() + 1) * 10));
             taskClass = task.getTaskClass();
             taskClassName.setText(taskClass.getName());
+            isOftenCb.setChecked(task.isOften());
             taskClassColorDisplay.setBackgroundColor(Color.parseColor(taskClass.getColor()));
         }else{
             deleteButton.setVisibility(View.GONE);

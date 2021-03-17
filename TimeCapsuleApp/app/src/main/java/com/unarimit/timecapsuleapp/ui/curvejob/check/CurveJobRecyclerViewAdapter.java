@@ -40,7 +40,7 @@ class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerV
     @Override
     public void onBindViewHolder(@NonNull CurveJobRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.doWhat.setText(mValues.get(position).getDoWhat());
-        holder.epoch.setText("#" + mValues.get(position).getId());
+        holder.epoch.setText("#" + mValues.get(position).getDays());
         holder.epochBar.setImageBitmap(BitmapHelper.DrawEpochLogBar(DbContext.WindowsWidth-100, mValues.get(position).getEpochLog()));
 
         if(mValues.get(position).getDoWhat().isEmpty()){
@@ -52,7 +52,7 @@ class CurveJobRecyclerViewAdapter extends RecyclerView.Adapter<CurveJobRecyclerV
 
         // config change dowhat view
         AlertDialog.Builder builder=new AlertDialog.Builder(holder.mView.getContext());
-        AlertDialog dialog = builder.setTitle(mValues.get(position).GetEpochInfo()).setView(holder.doWhatView).create();
+        AlertDialog dialog = builder.setTitle("#" + mValues.get(position).getDays()).setView(holder.doWhatView).create();
         holder.doWhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
