@@ -13,6 +13,8 @@ import com.unarimit.timecapsuleapp.R;
 import com.unarimit.timecapsuleapp.utils.http.dto.UserDto;
 import com.unarimit.timecapsuleapp.utils.http.requests.AccountRequest;
 
+import java.io.IOException;
+
 public class LoginActivity extends AppCompatActivity {
     TextView username;
     TextView password;
@@ -38,7 +40,11 @@ public class LoginActivity extends AppCompatActivity {
                         }else if(pd.isEmpty()){
                             showInsideCheckError(R.string.invalid_password);
                         }else{
-                            showResponse(AccountRequest.login(new UserDto(un, pd)));
+                            try {
+                                showResponse(AccountRequest.login(new UserDto(un, pd)));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }).start();
