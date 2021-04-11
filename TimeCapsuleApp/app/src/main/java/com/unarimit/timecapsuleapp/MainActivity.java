@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_curvejob, R.id.nav_taskclass, R.id.nav_task, R.id.nav_period, R.id.nav_exceptioninfo)
+                R.id.nav_home, R.id.nav_curvejob, R.id.nav_taskclass, R.id.nav_task, R.id.nav_period, R.id.nav_exceptioninfo, R.id.nav_setting)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -71,11 +71,14 @@ public class MainActivity extends AppCompatActivity {
         defaultDisplay.getSize(point);
         DbContext.WindowsWidth = point.x;
 
+        // Exception Process
         InitExceptionProcessor();
+
+        // Start Timing Service
         Intent intent = new Intent(this, TimingService.class);
         startService(intent);
 
-
+        // Set Value to Nav
         View header_layout = navigationView.getHeaderView(0);
         ((TextView)header_layout.findViewById(R.id.nav_bar_username)).setText(DbContext.CurrentUser.getUsername());
         ((TextView)header_layout.findViewById(R.id.nav_bar_achieve)).setText((int)DbContext.CurrentUser.getAchievePoint() + "");
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        // getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 

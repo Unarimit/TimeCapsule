@@ -36,6 +36,10 @@
         android:checkableBehavior="single"
         android:id="@+id/menu_bottom">
         <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_menu_config"
+            android:title="@string/menu_setting" />
+        <item
             android:id="@+id/nav_exceptioninfo"
             android:icon="@drawable/ic_menu_debug"
             android:title="@string/menu_exceptioninfo" />
