@@ -30,7 +30,8 @@ public class TaskClassDAO {
             + COLOR + " text not null)";
 
     public List<TaskClass> GetTaskClassList(){
-        Cursor cursor = DbContext._SQLiteDatabase.query(TABLE_NAME, new String[]{ID, NAME, COLOR, GUID}, null, null, null, null, null);
+        Cursor cursor = DbContext._SQLiteDatabase.query(TABLE_NAME, new String[]{ID, NAME, COLOR, GUID},
+                null, null, null, null, null);
         if(cursor == null || !cursor.moveToFirst())
             return null;
         List<TaskClass> result = new LinkedList<>();

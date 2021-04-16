@@ -29,12 +29,21 @@ public class UserDAO {
         return result;
     }
 
-    public void AddValue(UserConfig key, String value){
-        ContentValues values = new  ContentValues();
-        values.put(FIELD_NAME, String.valueOf(key));
-        values.put(FIELD_VALUE, value);
-        values.put(LAST_MODIFY, TimeHelper.GetCurrentSeconds());
-        DbContext._SQLiteDatabase.insert(TABLE_NAME, FIELD_NAME, values);
+    public void AddOrUpdateValue(UserConfig key, String value){
+        Cursor cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME+
+                " where "+ FIELD_NAME +"= '"+ String.valueOf(key) + "' ", null);
+        if(cursor == null || !cursor.moveToFirst()) {
+            ContentValues values = new  ContentValues();
+            values.put(FIELD_NAME, String.valueOf(key));
+            values.put(FIELD_VALUE, value);
+            values.put(LAST_MODIFY, TimeHelper.GetCurrentSeconds());
+            DbContext._SQLiteDatabase.insert(TABLE_NAME, FIELD_NAME, values);
+        }else{
+            ContentValues values = new  ContentValues();
+            values.put(FIELD_VALUE, value);
+            values.put(LAST_MODIFY, TimeHelper.GetCurrentSeconds());
+            DbContext._SQLiteDatabase.update(TABLE_NAME, values, FIELD_NAME+"='"+String.valueOf(key)+ "' ", null);
+        }
     }
 
     public void UpdateValue(UserConfig key, String value){

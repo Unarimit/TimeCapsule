@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends AppCompatActivity {
     public static MainActivity Activity;
     private AppBarConfiguration mAppBarConfiguration;
+    private View header_layout; // left menu bar's top
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +80,8 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
 
         // Set Value to Nav
-        View header_layout = navigationView.getHeaderView(0);
-        ((TextView)header_layout.findViewById(R.id.nav_bar_username)).setText(DbContext.CurrentUser.getUsername());
-        ((TextView)header_layout.findViewById(R.id.nav_bar_achieve)).setText((int)DbContext.CurrentUser.getAchievePoint() + "");
-
+        header_layout = navigationView.getHeaderView(0);
+        refreshLeftMenuBar(); // username & achievement
     }
 
     @Override
@@ -99,6 +98,15 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    public void refreshLeftMenuBar(){
+        ((TextView)header_layout.findViewById(R.id.nav_bar_username)).setText(DbContext.CurrentUser.getUsername());
+        ((TextView)header_layout.findViewById(R.id.nav_bar_achieve)).setText((int)DbContext.CurrentUser.getAchievePoint() + "");
+    }
+
+
+    /**
+    * refresh current fragment
+    * */
     public void refreshFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager()
                 .getPrimaryNavigationFragment().getChildFragmentManager();

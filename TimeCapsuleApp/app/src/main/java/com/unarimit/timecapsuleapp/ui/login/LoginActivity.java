@@ -10,8 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unarimit.timecapsuleapp.R;
+import com.unarimit.timecapsuleapp.ui.common.UserConfig;
+import com.unarimit.timecapsuleapp.utils.database.DbContext;
 import com.unarimit.timecapsuleapp.utils.http.dto.UserDto;
 import com.unarimit.timecapsuleapp.utils.http.requests.AccountRequest;
+import com.unarimit.timecapsuleapp.utils.http.requests.EntitySyncRequest;
 
 import java.io.IOException;
 
@@ -46,6 +49,12 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
+
+                        try {
+                            EntitySyncRequest.Test();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }).start();
             }
@@ -57,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(isSuccess){
-                    //TODO: db save username
+                    DbContext.UserInfos.AddOrUpdateValue(UserConfig.USER_NAME, username.getText().toString());
                     finish();
                 }else{
                     Toast toast = Toast.makeText(LoginActivity.this, R.string.login_failed, Toast.LENGTH_SHORT);

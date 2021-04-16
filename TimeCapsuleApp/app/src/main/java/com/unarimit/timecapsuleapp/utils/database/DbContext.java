@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.unarimit.timecapsuleapp.entities.CurveJobBase;
-import com.unarimit.timecapsuleapp.entities.ExceptionInfo;
 import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.entities.TaskClass;
@@ -62,8 +61,8 @@ public class DbContext {
     private static void SeedDataForTest(){
         Log.d("debug", "database seed");
 
-        DbContext.UserInfos.AddValue(UserConfig.USER_NAME, "test");
-        DbContext.UserInfos.AddValue(UserConfig.ACHIEVE, 100+"");
+        DbContext.UserInfos.AddOrUpdateValue(UserConfig.USER_NAME, "test");
+        DbContext.UserInfos.AddOrUpdateValue(UserConfig.ACHIEVE, 100+"");
         CurrentUser = new User();
         // add task class
         TaskClass eatTaskClass = new TaskClass(UUID.randomUUID().toString(),"eat", "#444444",1);

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.unarimit.timecapsuleapp.R;
+import com.unarimit.timecapsuleapp.ui.common.UserConfig;
 import com.unarimit.timecapsuleapp.ui.login.LoginActivity;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
@@ -24,16 +25,18 @@ public class SettingFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
+    TextView achieveTv;
+    TextView usernameTv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root =  inflater.inflate(R.layout.fragment_setting, container, false);
         ListView list =  root.findViewById(R.id.listview);
-        TextView achieve_tv = root.findViewById(R.id.setting_achieve);
+        achieveTv = root.findViewById(R.id.setting_achieve);
+        usernameTv = root.findViewById(R.id.setting_username);
         View head = root.findViewById(R.id.setting_head);
 
-        achieve_tv.setText((int) DbContext.CurrentUser.getAchievePoint() + "");
+
         list.setAdapter(new ArrayAdapter<String>(root.getContext(), android.R.layout.simple_list_item_1, data));
 
         head.setOnClickListener(new View.OnClickListener() {
@@ -44,5 +47,12 @@ public class SettingFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        usernameTv.setText(DbContext.UserInfos.GetValue(UserConfig.USER_NAME));
+        achieveTv.setText((int) DbContext.CurrentUser.getAchievePoint() + "");
     }
 }
