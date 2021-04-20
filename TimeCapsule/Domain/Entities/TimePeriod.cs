@@ -10,8 +10,6 @@ namespace TimeCapsule.Domain.Entities
     {
         public Guid Id { get; set; }
 
-        public TimePeriodAssess Assess { get; set; }
-
         public bool IsFinish { get; set; }
 
         public DateTime BeginTime { get; set; }
