@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TimeCapsule.Infrastructure.Utils
+namespace TimeCapsule.Application.Utils
 {
     public class TimeHelper
     {

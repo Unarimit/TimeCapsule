@@ -14,7 +14,7 @@ namespace TimeCapsule.Domain.Entities
 
         public string Icon { get; set; }
 
-        public int AchievementPerHour { get; set; }
+        public double AchievementPerHour { get; set; }
 
         /// <summary>
         /// 专门的接口修改该状态

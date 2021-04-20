@@ -7,10 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TimeSubTaskRecords\**" />
+    <Compile Remove="TimeSubTasks\**" />
+    <EmbeddedResource Remove="TimeSubTaskRecords\**" />
+    <EmbeddedResource Remove="TimeSubTasks\**" />
+    <None Remove="TimeSubTaskRecords\**" />
+    <None Remove="TimeSubTasks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.Annotations" Version="13.10.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,14 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AndroidSync\Commands\" />
     <Folder Include="Common\Exceptions\" />
     <Folder Include="RegisterRequests\Commands\CreateRequest\" />
     <Folder Include="RegisterRequests\Commands\UpdateRequest\" />
     <Folder Include="RegisterRequests\Queries\GetRegisterRequests\" />
     <Folder Include="TimeDailies\Commands\UpdateDaily\" />
-    <Folder Include="TimeSubTaskRecords\Commands\" />
-    <Folder Include="TimeSubTasks\Commands\" />
     <Folder Include="TimeTasks\Queries\GetTask\" />
     <Folder Include="Users\Commands\" />
   </ItemGroup>

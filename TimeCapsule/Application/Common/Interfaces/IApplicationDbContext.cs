@@ -17,5 +17,6 @@ namespace TimeCapsule.Application.Common.Interfaces
 
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
     }
 }

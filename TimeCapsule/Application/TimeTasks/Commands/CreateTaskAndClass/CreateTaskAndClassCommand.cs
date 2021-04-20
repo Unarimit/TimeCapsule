@@ -30,7 +30,7 @@ namespace TimeCapsule.Application.TimeTasks.Commands.CreateTaskAndClass
 
         public string Icon { get; set; }
 
-        public int AchievementPerHour { get; set; }
+        public double AchievementPerHour { get; set; }
     }
 
     public class CreateTaskAndClassCommandHandler : IRequestHandler<CreateTaskAndClassCommand, CommonResult>

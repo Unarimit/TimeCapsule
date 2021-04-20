@@ -25,7 +25,7 @@ namespace TimeCapsule.Application.TimeTasks.Commands.CreateTask
 
         public string Icon { get; set; }
 
-        public int AchievementPerHour { get; set; } 
+        public double AchievementPerHour { get; set; } 
 
         // public TimeSpan TotalTime { get; set; } default 0
     }

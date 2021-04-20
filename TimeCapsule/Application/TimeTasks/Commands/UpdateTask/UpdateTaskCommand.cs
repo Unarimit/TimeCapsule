@@ -29,7 +29,7 @@ namespace TimeCapsule.Application.TimeTasks.Commands.UpdateTask
 
         public string Icon { get; set; }
 
-        public int AchievementPerHour { get; set; }
+        public double AchievementPerHour { get; set; }
     }
 
     public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, CommonResult>
