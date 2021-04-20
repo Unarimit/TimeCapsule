@@ -26,8 +26,6 @@ namespace TimeCapsule.Infrastructure.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<TimeDaily> Dailies { get; set; }
         public DbSet<TimePeriod> Periods { get; set; }
-        public DbSet<TimeSubTask> SubTasks { get; set; }
-        public DbSet<TimeSubTaskRecord> SubTaskRecords { get; set; }
         public DbSet<TimeTask> Tasks { get; set; }
         public DbSet<TimeTaskClass> TaskClasses { get; set; }
 
@@ -58,8 +56,6 @@ namespace TimeCapsule.Infrastructure.Persistence
             builder.Entity<TimeTask>().HasOne(x => x.TaskClass).WithMany(x => x.Tasks).IsRequired();
             builder.Entity<TimeTaskClass>().HasOne(x => x.User).WithMany(x => x.TaskClasses).IsRequired();
             builder.Entity<TimeDaily>().HasOne(x => x.User).WithMany(x => x.Dailies).IsRequired();
-            builder.Entity<TimeSubTask>().HasOne(x => x.Task).WithMany(x => x.SubTasks).IsRequired();
-            builder.Entity<TimeSubTaskRecord>().HasOne(x => x.Period).WithMany(x => x.SubTaskRecords).IsRequired();
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);

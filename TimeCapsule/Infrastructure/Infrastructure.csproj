@@ -27,6 +27,10 @@
     <Compile Remove="Persistence\Migrations\20200619154144_ForeignKeyShouldNull.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20200619154923_ForeignKeyShouldNull.cs" />
     <Compile Remove="Persistence\Migrations\20200619154923_ForeignKeyShouldNull.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210420022557_deletemodels.cs" />
+    <Compile Remove="Persistence\Migrations\20210420022557_deletemodels.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210420022819_deletemodels.cs" />
+    <Compile Remove="Persistence\Migrations\20210420022819_deletemodels.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

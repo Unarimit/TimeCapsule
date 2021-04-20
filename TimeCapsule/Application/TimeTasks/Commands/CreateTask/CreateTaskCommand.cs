@@ -56,8 +56,6 @@ namespace TimeCapsule.Application.TimeTasks.Commands.CreateTask
                 Desc = request.Desc,
                 Icon = request.Icon,
                 IsFinish = false,
-                IsCounting = request.IsCounting,
-                DeadLine = request.DeadLine,
                 AchievementPerHour = request.AchievementPerHour
             });
 

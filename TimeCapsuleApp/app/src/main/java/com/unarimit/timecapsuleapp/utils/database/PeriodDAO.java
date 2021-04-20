@@ -156,7 +156,7 @@ public class PeriodDAO {
         values.put(SYNC, false);
         values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+period.getId(), null);
-        if(period.getEnd() != -1){
+        if(period.getEnd() != -1){  // 处理之前修改过的时间段
             double last_achievement = 0;
             if(period.getLogEnd() != -1){
                 long total = (period.getLogEnd() - period.getBegin()) / 3600; // to min

@@ -22,7 +22,5 @@ namespace TimeCapsule.Domain.Entities
 
         public virtual TimeDaily Daily { get; set; }
 
-        public virtual IList<TimeSubTaskRecord> SubTaskRecords { get; set; }
-
     }
 }

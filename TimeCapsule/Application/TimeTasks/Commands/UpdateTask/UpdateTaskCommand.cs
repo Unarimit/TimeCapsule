@@ -60,7 +60,6 @@ namespace TimeCapsule.Application.TimeTasks.Commands.UpdateTask
             task.Name = request.Name;
             task.Desc = request.Desc;
             task.Icon = request.Icon;
-            task.DeadLine = request.DeadLine;
             task.IsFinish = request.IsFinish;
             task.AchievementPerHour = request.AchievementPerHour;
 

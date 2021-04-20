@@ -9,14 +9,14 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Task implements Serializable {
+    TaskClass TaskClass;
     int Id; // id for sql connection query
     String Guid;
     String Name;
     String Desc;
-    TaskClass TaskClass;
+    String Icon;
     double AchievePerHour;
     boolean IsFinished;
-    String Icon;
     boolean IsOften;
     long CreateTime;
     long FinishTime;

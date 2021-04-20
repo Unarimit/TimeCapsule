@@ -12,8 +12,6 @@ namespace TimeCapsule.Application.Common.Interfaces
         DbSet<User> Users { get; set; }
         DbSet<TimeDaily> Dailies { get; set; }
         DbSet<TimePeriod> Periods { get; set; }
-        DbSet<TimeSubTask> SubTasks { get; set; }
-        DbSet<TimeSubTaskRecord> SubTaskRecords { get; set; }
         DbSet<TimeTask> Tasks { get; set; }
         DbSet<TimeTaskClass> TaskClasses { get; set; }
 

@@ -19,18 +19,9 @@ namespace TimeCapsule.Domain.Entities
 
         public DateTime? FinishTime { get; set; }
 
-        public bool IsCounting { get; set; } = false;
-
-        public DateTime? DeadLine { get; set; }
-
         public string Icon { get; set; }
 
         public int AchievementPerHour { get; set; }
-
-        /// <summary>
-        /// 任务累计进行的时间
-        /// </summary>
-        public TimeSpan TotalTime { get; set; }
 
 
         public virtual User User { get; set; }
@@ -40,7 +31,6 @@ namespace TimeCapsule.Domain.Entities
         /// </summary>
         public virtual TimeTaskClass TaskClass { get; set; }
 
-        public virtual IList<TimeSubTask> SubTasks { get; set; }
 
         public virtual IList<TimePeriod> Periods { get; set; }
 

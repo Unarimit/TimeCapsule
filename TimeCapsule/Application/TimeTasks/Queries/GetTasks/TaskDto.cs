@@ -19,13 +19,12 @@ namespace TimeCapsule.Application.TimeTasks.Queries.GetTasks
 
         public bool IsCounting { get; set; }
 
-        public string DeadLine { get; set; }
-
+        /*
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TimeTask, TaskDto>()
                 .ForMember(dest => dest.DeadLine, opt => opt.MapFrom(src => src.DeadLine == null ? null : ((DateTime)src.DeadLine).ToString("yyyy,MM,dd,HH,mm,ss")));
 
-        }
+        }*/
     }
 }
