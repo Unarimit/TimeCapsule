@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TimeCapsule.Application.Common.Exceptions
 {
-    public class UserException
+    public class UserExceptions
     {
         public class UnExistUserException : CustomExceptionBase
         {

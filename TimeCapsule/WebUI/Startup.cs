@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TimeCapsule.Application.Common.Interfaces;
 using TimeCapsule.WebUI.Services;
+using TimeCapsule.WebUI.Filters;
 
 namespace TimeCapsule.WebUI
 {
@@ -29,7 +30,9 @@ namespace TimeCapsule.WebUI
             services.AddApplication();
             services.AddInfrastructure(Configuration);
 
-            services.AddControllers();
+            services.AddControllers(o => {  
+                o.Filters.Add<CustomExceptionAttribute>();
+            });
 
             services.AddRazorPages();
 
