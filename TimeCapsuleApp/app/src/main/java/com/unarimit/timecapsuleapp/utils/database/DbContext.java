@@ -38,7 +38,7 @@ public class DbContext {
     public static int WindowsWidth;
     public static Context Context;
 
-    private static final int DB_VERSION = 55;         //database version
+    private static final int DB_VERSION = 56;         //database version
 
     public static void InitDbContext(Context context){
         Context = context;
@@ -63,6 +63,7 @@ public class DbContext {
 
         DbContext.UserInfos.AddOrUpdateValue(UserConfig.USER_NAME, "test");
         DbContext.UserInfos.AddOrUpdateValue(UserConfig.ACHIEVE, 100+"");
+        DbContext.UserInfos.AddOrUpdateValue(UserConfig.SYNC, "false");
         CurrentUser = new User();
         // add task class
         TaskClass eatTaskClass = new TaskClass(UUID.randomUUID().toString(),"eat", "#444444",1);

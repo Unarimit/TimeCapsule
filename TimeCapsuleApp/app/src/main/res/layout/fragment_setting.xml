@@ -45,12 +45,13 @@
                 android:text="100" />
         </LinearLayout>
         <TextView
+            android:id="@+id/setting_unlogin_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/imageView"
             android:layout_marginStart="10dp"
             android:layout_marginTop="60dp"
-            android:text="未登录，点击头像登录"
+            android:text="未登录或登陆过期，点击头像登录"
             android:textSize="15sp"/>
     </RelativeLayout>
 

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.entities.TaskClass;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
+import com.unarimit.timecapsuleapp.utils.http.dto.TaskDto;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -129,10 +130,46 @@ public class TaskDAO {
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+task.getId(), null);
     }
 
-    public void Sync(@NotNull Task task){
+    public List<TaskDto> GetNotSyncAll(){
+        Cursor cursor;
+        cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME+", "+TaskClassDAO.TABLE_NAME+
+                " where "+ TASK_CLASS_ID +"="+ TaskClassDAO.TABLE_NAME+"."+TaskClassDAO.ID +
+                " and " + SYNC + "= 0", null);
+
+
+        if(cursor == null || !cursor.moveToFirst())
+            return null;
+
+        List<TaskDto> result = new LinkedList<>();
+        do{
+            boolean isfinish_temp = false;
+            boolean isoften_temp = false;
+            if(cursor.getInt(cursor.getColumnIndex(IS_FINISHED)) == 1)
+                isfinish_temp = true;
+            if(cursor.getInt(cursor.getColumnIndex(IS_OFTEN)) == 1)
+                isoften_temp = true;
+
+            result.add(new TaskDto(cursor.getInt(cursor.getColumnIndex(ID)),
+                    cursor.getString(cursor.getColumnIndex(TaskClassDAO.GUID)),
+                    cursor.getString(cursor.getColumnIndex(GUID)),
+                    cursor.getString(cursor.getColumnIndex(NAME)),
+                    cursor.getString(cursor.getColumnIndex(DESC)),
+                    cursor.getString(cursor.getColumnIndex(ICON)),
+                    cursor.getDouble(cursor.getColumnIndex(ACHIEVE_PER_HOUR)),
+                    isfinish_temp,
+                    isoften_temp,
+                    cursor.getLong(cursor.getColumnIndex(CREATE_TIME)),
+                    cursor.getLong(cursor.getColumnIndex(FINISH_TIME))));
+        }while (cursor.moveToNext());
+
+        cursor.close();
+        return result;
+    }
+
+    public void Sync(int id){
         ContentValues values = new  ContentValues();
-        values.put(SYNC, true);
-        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+task.getId(), null);
+        values.put(SYNC, 1);
+        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+id, null);
     }
 
     public void Remove(@NotNull Task task){

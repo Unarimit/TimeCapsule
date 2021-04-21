@@ -49,9 +49,11 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-
+                        // HTTP REQUEST
                         try {
-                            EntitySyncRequest.Test();
+                            if(!DbContext.UserInfos.GetValue(UserConfig.SYNC).equals("false")){
+                                EntitySyncRequest.SyncStuff();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

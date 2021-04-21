@@ -4,5 +4,6 @@ public enum UserConfig {
     USER_NAME,
     USER_ID,
     ACHIEVE,
-    COOKIE
+    COOKIE,
+    SYNC
 }

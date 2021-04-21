@@ -5,6 +5,7 @@ import android.database.Cursor;
 
 import com.unarimit.timecapsuleapp.entities.TaskClass;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
+import com.unarimit.timecapsuleapp.utils.http.dto.TaskClassDto;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -64,10 +65,29 @@ public class TaskClassDAO {
         values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+taskClass.getId(), null);
     }
-    public void Sync(@NotNull TaskClass taskClass){
+
+    public List<TaskClassDto> GetNotSyncAll(){
+        Cursor cursor = DbContext._SQLiteDatabase.query(TABLE_NAME, new String[]{ID, NAME, COLOR, GUID},
+                SYNC + "= 0", null, null, null, null);
+        if(cursor == null || !cursor.moveToFirst())
+            return null;
+        List<TaskClassDto> result = new LinkedList<>();
+        do{
+            result.add(new TaskClassDto(cursor.getInt(cursor.getColumnIndex(ID)),
+                    cursor.getString(cursor.getColumnIndex(GUID)),
+                    cursor.getString(cursor.getColumnIndex(NAME)),
+                    cursor.getString(cursor.getColumnIndex(COLOR))));
+        }while (cursor.moveToNext());
+
+        cursor.close();
+        return result;
+    }
+
+
+    public void Sync(int id){
         ContentValues values = new  ContentValues();
-        values.put(SYNC, true);
-        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+taskClass.getId(), null);
+        values.put(SYNC, 1);
+        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+id, null);
     }
 
     public void Remove(TaskClass taskClass){

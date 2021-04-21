@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.RequestBody.Companion.*;
 
 public class AccountRequest {
     public static boolean login(UserDto user) throws IOException {
@@ -29,7 +30,7 @@ public class AccountRequest {
             e.printStackTrace();
         }
 
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString());
+        RequestBody body = RequestBody.Companion.create(json.toString(), MediaType.parse("application/json; charset=utf-8"));
         Request request = new Request.Builder().url(HttpConfig.URL+"/api/identify/Account/login").post(body).build();
         Response response = client.newCall(request).execute();
         if(response.code() == 200){
