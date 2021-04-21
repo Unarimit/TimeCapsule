@@ -32,7 +32,7 @@ namespace TimeCapsule.Application.AndroidSync.AndroidDtos
         /// still need attach taskclass
         /// </summary>
         /// <returns></returns>
-        public TimeTask ToTimeTask(TimeTaskClass taskClass)
+        public TimeTask ToTimeTask(TimeTaskClass taskClass, User user)
         {
             return new TimeTask
             {
@@ -45,7 +45,8 @@ namespace TimeCapsule.Application.AndroidSync.AndroidDtos
                 IsFinish = IsFinish,
                 BeginTime = TimeHelper.ConvertFromUnixTimestamp(BeginTime),
                 FinishTime = TimeHelper.ConvertFromUnixTimestamp(FinishTime),
-                TaskClass = taskClass
+                TaskClass = taskClass,
+                User = user
             };
         }
     }

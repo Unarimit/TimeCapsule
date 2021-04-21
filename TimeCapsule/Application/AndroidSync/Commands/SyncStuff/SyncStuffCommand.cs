@@ -73,11 +73,11 @@ namespace TimeCapsule.Application.AndroidSync.Commands.SyncStuff
                 }
                 if (temp == null)
                 {
-                    _context.Tasks.Add(task.ToTimeTask(taskClass));
+                    _context.Tasks.Add(task.ToTimeTask(taskClass, user));
                 }
                 else
                 {
-                    temp = task.ToTimeTask(taskClass);
+                    temp = task.ToTimeTask(taskClass, user);
                 }
             }
             vm.TaskChange = await _context.SaveChangesAsync(new CancellationToken());
