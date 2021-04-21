@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TimeCapsule.Application.AndroidSync.Commands.SyncPeriods;
 using TimeCapsule.Application.AndroidSync.Commands.SyncStuff;
+using TimeCapsule.Application.AndroidSync.Queries.GetPeriods;
 
 namespace TimeCapsule.WebUI.Controllers.User
 {
@@ -18,6 +20,28 @@ namespace TimeCapsule.WebUI.Controllers.User
         public async Task<ActionResult<SyncStuffVm>> SyncStuff(SyncStuffCommand command)
         {
             command.SetUsername(GetUsername());
+            return await Mediator.Send(command);
+        }
+
+        /// <summary>
+        /// sync push periods
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost("periods")]
+        public async Task<ActionResult<SyncPeriodsVm>> SyncPeriod(SyncPeriodsCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        /// <summary>
+        /// sync pull periods
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet("periods")]
+        public async Task<ActionResult<PeriodsVm>> QueryStuff(GetPeriodsQuery command)
+        {
             return await Mediator.Send(command);
         }
     }

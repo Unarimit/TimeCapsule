@@ -57,6 +57,7 @@ namespace TimeCapsule.Application.AndroidSync.Commands.SyncStuff
                 }
                 else
                 {
+                    // TODO: check last modified
                     temp = taskclass.ToTimeTaskClass(user);
                 }
             }
@@ -77,6 +78,7 @@ namespace TimeCapsule.Application.AndroidSync.Commands.SyncStuff
                 }
                 else
                 {
+                    // TODO: check last modified
                     temp = task.ToTimeTask(taskClass, user);
                 }
             }
