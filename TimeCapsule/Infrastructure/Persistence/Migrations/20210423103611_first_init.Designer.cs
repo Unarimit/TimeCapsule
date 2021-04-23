@@ -9,8 +9,8 @@ using TimeCapsule.Infrastructure.Persistence;
 namespace TimeCapsule.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210313065837_deleteAuditableField")]
-    partial class deleteAuditableField
+    [Migration("20210423103611_first_init")]
+    partial class first_init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,9 +88,6 @@ namespace TimeCapsule.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("Assess")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("BeginTime")
                         .HasColumnType("datetime(6)");
 
@@ -118,71 +115,16 @@ namespace TimeCapsule.Infrastructure.Persistence.Migrations
                     b.ToTable("Periods");
                 });
 
-            modelBuilder.Entity("TimeCapsule.Domain.Entities.TimeSubTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("Achievement")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsMulti")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime>("LastModified")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
-                        .HasMaxLength(50);
-
-                    b.Property<int>("Progress")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TargetProgress")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("TaskId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("SubTasks");
-                });
-
-            modelBuilder.Entity("TimeCapsule.Domain.Entities.TimeSubTaskRecord", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("IncreProgress")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("PeriodId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PeriodId");
-
-                    b.ToTable("SubTaskRecords");
-                });
-
             modelBuilder.Entity("TimeCapsule.Domain.Entities.TimeTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("AchievementPerHour")
-                        .HasColumnType("int");
+                    b.Property<double>("AchievementPerHour")
+                        .HasColumnType("double");
 
-                    b.Property<DateTime?>("DeadLine")
+                    b.Property<DateTime>("BeginTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Desc")
@@ -197,10 +139,10 @@ namespace TimeCapsule.Infrastructure.Persistence.Migrations
                         .HasColumnType("varchar(512) CHARACTER SET utf8mb4")
                         .HasMaxLength(512);
 
-                    b.Property<bool>("IsCounting")
+                    b.Property<bool>("IsFinish")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool>("IsFinish")
+                    b.Property<bool>("IsOften")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("LastModified")
@@ -213,9 +155,6 @@ namespace TimeCapsule.Infrastructure.Persistence.Migrations
 
                     b.Property<Guid>("TaskClassId")
                         .HasColumnType("char(36)");
-
-                    b.Property<TimeSpan>("TotalTime")
-                        .HasColumnType("time(6)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -310,24 +249,6 @@ namespace TimeCapsule.Infrastructure.Persistence.Migrations
                     b.HasOne("TimeCapsule.Domain.Entities.TimeTask", "Task")
                         .WithMany("Periods")
                         .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TimeCapsule.Domain.Entities.TimeSubTask", b =>
-                {
-                    b.HasOne("TimeCapsule.Domain.Entities.TimeTask", "Task")
-                        .WithMany("SubTasks")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TimeCapsule.Domain.Entities.TimeSubTaskRecord", b =>
-                {
-                    b.HasOne("TimeCapsule.Domain.Entities.TimePeriod", "Period")
-                        .WithMany("SubTaskRecords")
-                        .HasForeignKey("PeriodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

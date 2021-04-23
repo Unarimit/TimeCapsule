@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Persistence\20210423103511_int.cs" />
+    <Compile Remove="Persistence\20210423103511_int.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20200619145418_TryRelation.cs" />
     <Compile Remove="Persistence\Migrations\20200619145418_TryRelation.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20200619150211_TryRelation2.cs" />
