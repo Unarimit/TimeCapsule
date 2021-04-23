@@ -3,6 +3,7 @@ package com.unarimit.timecapsuleapp;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.unarimit.timecapsuleapp.entities.ExceptionInfo;
+import com.unarimit.timecapsuleapp.ui.home.HomeFragment;
 import com.unarimit.timecapsuleapp.ui.home.TimingService;
 import com.unarimit.timecapsuleapp.ui.period.manager.PeriodManagerActivity;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
@@ -30,6 +32,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity Activity;
@@ -127,6 +130,18 @@ public class MainActivity extends AppCompatActivity {
         transaction.detach(fragment);
         transaction.attach(fragment);
         transaction.commit();
+    }
+
+    public void refreshHomeFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> list =  getSupportFragmentManager().getPrimaryNavigationFragment().getChildFragmentManager().getFragments();
+        Log.d("MainActivity.java", "ex");
+        for (Fragment f:list
+             ) {
+            if(f instanceof HomeFragment){
+                ((HomeFragment)f).BigUpdateUI();
+            }
+        }
     }
 
     /**

@@ -9,15 +9,15 @@ public class PeriodDto implements Serializable {
     private String taskId;
     private long begin;
     private long end;
-    private long lostModified;
+    private long lastModified;
 
-    public PeriodDto(int _id, String i, String taskId, long begin, long end, long lostModified) {
+    public PeriodDto(int _id, String i, String taskId, long begin, long end, long lastModified) {
         this._id = _id;
         this.id = i;
         this.taskId = taskId;
         this.begin = begin;
         this.end = end;
-        this.lostModified = lostModified;
+        this.lastModified = lastModified;
     }
 
 
@@ -53,11 +53,11 @@ public class PeriodDto implements Serializable {
         this.end = end;
     }
 
-    public long getLostModified() {
-        return lostModified;
+    public long getLastModified() {
+        return lastModified;
     }
 
-    public void setLostModified(long lostModified) {
-        this.lostModified = lostModified;
+    public void setLastModified(long lastModified) {
+        this.lastModified = lastModified;
     }
 }

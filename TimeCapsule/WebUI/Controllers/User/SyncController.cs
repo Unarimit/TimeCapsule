@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,18 @@ using System.Threading.Tasks;
 using TimeCapsule.Application.AndroidSync.Commands.SyncPeriods;
 using TimeCapsule.Application.AndroidSync.Commands.SyncStuff;
 using TimeCapsule.Application.AndroidSync.Queries.GetPeriods;
+using TimeCapsule.WebUI.Hubs;
 
 namespace TimeCapsule.WebUI.Controllers.User
 {
     public class SyncController : UserBaseController
     {
+        IHubContext<SyncHub> _hub;
+        public SyncController(IHubContext<SyncHub> hub) : base()
+        {
+            _hub = hub;
+        }
+
         /// <summary>
         /// sync stuff include task and taskclass
         /// </summary>
@@ -31,7 +39,9 @@ namespace TimeCapsule.WebUI.Controllers.User
         [HttpPost("periods")]
         public async Task<ActionResult<SyncPeriodsVm>> SyncPeriod(SyncPeriodsCommand command)
         {
-            return await Mediator.Send(command);
+            var result = await Mediator.Send(command);
+            await _hub.Clients.All.SendAsync("ReceiveMessage");
+            return result;
         }
 
         /// <summary>

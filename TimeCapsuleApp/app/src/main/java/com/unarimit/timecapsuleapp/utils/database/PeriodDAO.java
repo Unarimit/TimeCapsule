@@ -77,7 +77,8 @@ public class PeriodDAO {
                 cursor.getLong(cursor.getColumnIndex(BEGIN)),
                 cursor.getLong(cursor.getColumnIndex(END)),
                 cursor.getLong(cursor.getColumnIndex(BEGIN_CALENDER)),
-                cursor.getLong(cursor.getColumnIndex(END_CALENDER)));
+                cursor.getLong(cursor.getColumnIndex(END_CALENDER)),
+                cursor.getLong(cursor.getColumnIndex(LAST_MODIFIED)));
     }
 
     /**
@@ -120,7 +121,8 @@ public class PeriodDAO {
                     cursor.getLong(cursor.getColumnIndex(BEGIN)),
                     cursor.getLong(cursor.getColumnIndex(END)),
                     cursor.getLong(cursor.getColumnIndex(BEGIN_CALENDER)),
-                    cursor.getLong(cursor.getColumnIndex(END_CALENDER))));
+                    cursor.getLong(cursor.getColumnIndex(END_CALENDER)),
+                    cursor.getLong(cursor.getColumnIndex(LAST_MODIFIED))));
 
         }while(cursor.moveToNext());
 
@@ -136,7 +138,11 @@ public class PeriodDAO {
         values.put(BEGIN_CALENDER, period.getBeginCalendar());
         values.put(END_CALENDER, period.getEndCalendar());
         values.put(SYNC, sync);
-        values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
+        if(period.getLastModified() != 0){
+            values.put(LAST_MODIFIED, period.getLastModified());
+        }else{
+            values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
+        }
         DbContext._SQLiteDatabase.insert(TABLE_NAME, ID, values);
 
         if(period.getEnd() != -1){
@@ -148,15 +154,24 @@ public class PeriodDAO {
 
     public void UpdatePeriod(Period period, boolean sync){
         ContentValues values = new  ContentValues();
-        values.put(GUID, period.getGuid());
         values.put(TASK_ID, period.getTask().getId());
         values.put(BEGIN, period.getBegin());
         values.put(END, period.getEnd());
         values.put(BEGIN_CALENDER, period.getBeginCalendar());
         values.put(END_CALENDER, period.getEndCalendar());
         values.put(SYNC, sync);
-        values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
-        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+period.getId(), null);
+        if(period.getLastModified() != 0){
+            values.put(LAST_MODIFIED, period.getLastModified());
+        }else{
+            values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
+        }
+        if(period.getId() == 0){
+            DbContext._SQLiteDatabase.update(TABLE_NAME, values, GUID+"= '"+period.getGuid()+"'", null);
+        }else{
+            DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+period.getId(), null);
+        }
+
+
         if(period.getEnd() != -1){  // 处理之前修改过的时间段
             double last_achievement = 0;
             if(period.getLogEnd() != -1){

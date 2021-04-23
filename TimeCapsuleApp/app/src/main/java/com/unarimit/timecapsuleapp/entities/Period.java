@@ -16,6 +16,7 @@ public class Period implements Serializable {
     long End; // equal -1 when not finish
     long BeginCalendar;
     long EndCalendar; // equal -1 when not finish
+    private long LastModified;
 
     long LogEnd; // for calculate achievement
     Task LogTask; // for calculate achievement
@@ -35,7 +36,7 @@ public class Period implements Serializable {
     /**
      * DAO evoke
      * */
-    public Period(String guid, int id, Task task, long begin, long end, long beginCalendar, long endCalendar) {
+    public Period(String guid, int id, Task task, long begin, long end, long beginCalendar, long endCalendar, long lastModified) {
         Guid = guid;
         Id = id;
         Task = task;
@@ -45,6 +46,7 @@ public class Period implements Serializable {
         EndCalendar = endCalendar;
         LogTask = task;
         LogEnd = end;
+        LastModified = lastModified;
     }
 
     public void Finish(){
@@ -108,5 +110,7 @@ public class Period implements Serializable {
         EndCalendar = endCalendar;
     }
 
-
+    public long getLastModified() {
+        return LastModified;
+    }
 }

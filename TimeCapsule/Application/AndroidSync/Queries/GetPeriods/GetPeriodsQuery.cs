@@ -28,16 +28,16 @@ namespace TimeCapsule.Application.AndroidSync.Queries.GetPeriods
         public async Task<PeriodsVm> Handle(GetPeriodsQuery request, CancellationToken cancellationToken)
         {
             var count = await _context.Periods.AsNoTracking()
-                .Where(x => x.LastModified >= TimeHelper.ConvertFromUnixTimestamp(request.LastSync))
+                .Where(x => x.LastModified > TimeHelper.ConvertFromUnixTimestamp(request.LastSync + 1))
                 .CountAsync();
 
             var list = await _context.Periods.AsNoTracking()
                 .Include(x => x.Task)
-                .Where(x => x.LastModified >= TimeHelper.ConvertFromUnixTimestamp(request.LastSync))
+                .Where(x => x.LastModified > TimeHelper.ConvertFromUnixTimestamp(request.LastSync + 1))
                 .OrderBy(x => x.LastModified)
                 .Take(500)
                 .ToListAsync();
-
+            var temp = TimeHelper.ConvertFromUnixTimestamp(request.LastSync);
             var result = new List<ATimePeriod>();
             foreach(var x in list)
             {

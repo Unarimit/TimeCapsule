@@ -1,9 +1,7 @@
 ﻿@page
-@{
-    ViewData["Title"] = "TaskList";
-}
+@{ ViewData["Title"] = "TaskList"; }
 <style>
-    
+
     .colorful {
         display: inline-block;
         width: 32px;
@@ -14,6 +12,7 @@
         -webkit-mask-size: 100% 100%;
         mask-size: 100% 100%;
     }
+
     .colorbox {
         display: inline-block;
         width: 16px;
@@ -31,15 +30,17 @@
     .right_div {
         display: inline-block;
         vertical-align: top;
-        margin-left:5%;
+        margin-left: 5%;
         width: 30%;
         height: 100%;
     }
+
     .mytitle {
         font-size: 20px;
         font-family: "Microsoft YaHei";
     }
 </style>
+<link rel="stylesheet" href="~/css/solid.css" />
 <script>
     document.onreadystatechange = loadAsync;
     function loadAsync() {
@@ -86,11 +87,11 @@
 
     function dataprocess_tasks(d) {
         var htmldata = "";
-        
+
         for (var i = 0; i < d.tasks.length; i++) {
             htmldata += "<tr>";
-            htmldata += "<td><div class=\"colorful\" style=\"--pic:url('/img/" + d.tasks[i].icon + "'); --mycolor:#000000 \" ></div></td>";
-            htmldata += "<td><p style=\"color:" + d.tasks[i].taskClass.color +"\">" + d.tasks[i].taskClass.name + "</p></td>";
+            htmldata += "<td><div class=\"fas\" --mycolor:#000000 \" >" + d.tasks[i].icon + "</div></td>";
+            htmldata += "<td><p style=\"color:" + d.tasks[i].taskClass.color + "\">" + d.tasks[i].taskClass.name + "</p></td>";
             htmldata += "<td>" + d.tasks[i].name + "</td>";
             // operation
             htmldata += "<td>";
@@ -107,7 +108,7 @@
 
         for (var i = 0; i < d.classes.length; i++) {
             htmldata += "<tr>";
-            htmldata += "<td><div class='colorbox' style='--mycolor:" + d.classes[i].color +"'></div><p style=\"display: inline-block; font-family:'Consolas'\">" + d.classes[i].color + "</p></td>";
+            htmldata += "<td><div class='colorbox' style='--mycolor:" + d.classes[i].color + "'></div><p style=\"display: inline-block; font-family:'Consolas'\">" + d.classes[i].color + "</p></td>";
             htmldata += "<td>" + d.classes[i].name + "</td>";
             // end
             htmldata += "</tr>";
@@ -115,7 +116,7 @@
         }
         $("#class_tbody").html(htmldata);
     }
-    
+
 </script>
 
 <h1>任务&任务类</h1>
@@ -144,7 +145,6 @@
             </tr>
         </thead>
         <tbody id="class_tbody">
-
         </tbody>
     </table>
 </div>

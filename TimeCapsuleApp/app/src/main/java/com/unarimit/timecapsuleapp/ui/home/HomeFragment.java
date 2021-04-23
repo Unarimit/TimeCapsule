@@ -1,12 +1,15 @@
 package com.unarimit.timecapsuleapp.ui.home;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.unarimit.timecapsuleapp.ui.common.IconTextView;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
 import com.unarimit.timecapsuleapp.utils.database.DbContext;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -169,7 +173,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
+    // Activity --> Service
     class TimingServiceConnection implements ServiceConnection {
 
         TimingService.TimingBinder binder;

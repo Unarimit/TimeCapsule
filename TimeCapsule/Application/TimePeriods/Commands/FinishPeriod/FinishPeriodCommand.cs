@@ -49,6 +49,7 @@ namespace TimeCapsule.Application.TimePeriods.Commands.FinishPeriod
 
             period.IsFinish = request.IsFinish;
             period.EndTime = request.EndTime;
+            period.LastModified = DateTime.Now;
             await _context.SaveChangesAsync(cancellationToken);
 
             return CommonResult.SUCCESS;

@@ -1,7 +1,5 @@
 ﻿@page
-@{
-    ViewData["Title"] = "PeriodList";
-}
+@{ ViewData["Title"] = "PeriodList"; }
 <style>
     .colorful {
         display: inline-block;
@@ -15,6 +13,7 @@
         mask-size: 100% 100%;
     }
 </style>
+<link rel="stylesheet" href="~/css/solid.css" />
 <script>
     var mydate;
     var firstLoading = true;
@@ -126,9 +125,9 @@
                 b_temp = d.periods[i].endTime.split(",");
                 end = new Date(b_temp[0], b_temp[1], b_temp[2], b_temp[3], b_temp[4], b_temp[5]);
             }
-            
+
             htmldata += "<tr>";
-            htmldata += "<td><div class=\"colorful\" style=\"--pic:url('/img/" + d.periods[i].task.icon + "'); --mycolor:" + d.periods[i].task.taskClass.color + " \" ></div>";
+            htmldata += "<td><div class=\"fas\" style=\"color:" + d.periods[i].task.taskClass.color + ";\" >" + d.periods[i].task.icon + "</div>";
             htmldata += "<p style=\"display: inline; vertical-align: middle;\">" + d.periods[i].task.name + " </p></td>";
             if (begin.getMinutes() < 10) {
                 htmldata += "<td>" + begin.getHours() + ":0" + begin.getMinutes() + "</td>";
@@ -217,7 +216,7 @@
         var now = new Date();
         var jobj = {};
         var yyyy = now.getFullYear().toString();
-        var MM = (now.getMonth()+1).toString();
+        var MM = (now.getMonth() + 1).toString();
         var dd = now.getDate().toString();
         var HH = now.getHours().toString();
         var mm = now.getMinutes().toString();
@@ -301,6 +300,5 @@
         </tr>
     </thead>
     <tbody id="data_area">
-
     </tbody>
 </table>

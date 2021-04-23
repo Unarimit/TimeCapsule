@@ -65,6 +65,7 @@
         font-family: "Microsoft YaHei";
     }
 </style>
+<link rel="stylesheet" href="~/css/solid.css" />
 <script type="text/javascript" src="~/js/echarts.min.js"></script>
 <script type="text/javascript">
     document.onreadystatechange = loadAsync;
@@ -165,7 +166,7 @@
         for (var i = 0; i < d.periods.length; i++) {
             if (d.periods[i].isFinish == false) {
                 no_proceding = false;
-                htmldata += "<div class=\"colorful\" style=\"--pic:url('/img/" + d.periods[i].task.icon + "'); --mycolor:" + d.periods[i].task.taskClass.color + " \" ></div>";
+                htmldata += "<div class=\"fas\" style=\"color:" + d.periods[i].task.taskClass.color + ";\" >" + d.periods[i].task.icon + "</div>";
                 htmldata += "<p id=\"mycount_p" + count + "\" style=\"display: inline\"> </p>";
                 htmldata += "<button class='btn btn-info btn-sm' style=\"display: inline; vertical-align: middle; margin-left:3px;\" onclick=\"finishPeriod('" + d.periods[i].id + "')\">结束</button>";
                 counting_arr.push("mycount_p" + count);
@@ -195,7 +196,7 @@
 
         for (var i = 0; i < d.tasks.length; i++) {
             htmldata += "<div class='taskContainer' \">"
-            htmldata += "<div onclick=\"startTask('" + d.tasks[i].id + "')\" class=\"colorful\" style=\"--pic:url('/img/" + d.tasks[i].icon + "'); --mycolor:" + d.tasks[i].taskClass.color + ";cursor: pointer; \" ></div>";
+            htmldata += "<div onclick=\"startTask('" + d.tasks[i].id + "')\" class=\"fas\" style=\"color:" + d.tasks[i].taskClass.color + ";cursor: pointer; \" >" + d.tasks[i].icon + "</div>";
             htmldata += "<p>" + d.tasks[i].name + "</p>";
             htmldata += "</div>"
 

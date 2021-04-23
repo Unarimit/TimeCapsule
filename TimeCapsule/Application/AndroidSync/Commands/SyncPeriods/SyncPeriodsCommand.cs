@@ -36,7 +36,9 @@ namespace TimeCapsule.Application.AndroidSync.Commands.SyncPeriods
                 {
                     throw new TaskException.TaskUnexistException(periodDto.TaskId);
                 }
-                var period = await _context.Periods.FirstOrDefaultAsync(x => x.Id == periodDto.Id);
+                var period = await _context.Periods
+                    .Include(x => x.Task)
+                    .FirstOrDefaultAsync(x => x.Id == periodDto.Id);
                 if (period == null)
                 {
                     period = periodDto.ToTimePeriod(task);
@@ -57,11 +59,15 @@ namespace TimeCapsule.Application.AndroidSync.Commands.SyncPeriods
                     period.Daily = daily;
                     _context.Periods.Add(period);
                 }
-                
                 else
                 {
                     // TODO: check last modified
-                    period = periodDto.ToTimePeriod(task);
+                    var temp = periodDto.ToTimePeriod(task);
+                    period.Task = task;
+                    period.BeginTime = temp.BeginTime;
+                    period.EndTime = temp.EndTime;
+                    period.IsFinish = temp.IsFinish;
+                    period.LastModified = temp.LastModified;
                 }
             }
             return new SyncPeriodsVm { Change = await _context.SaveChangesAsync(new CancellationToken()) };

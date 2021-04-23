@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.Messenger;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -85,15 +86,12 @@ public class TimingService extends Service {
         @Override
         public void run() {
             while(true){
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if(DbContext.UserInfos.GetValue(UserConfig.SYNC).equals("true")){
+                SystemClock.sleep(3000);
+                if(DbContext.UserInfos.GetValue(UserConfig.SYNC).equals("true") && DbContext.IsMainActive){
                     try {
                         if(EntitySyncRequest.SyncPeriods() == EntitySyncRequest.SyncStatus.CHANGED){
                             Period period = DbContext.Periods.GetCurrentPeriod();
+
                             if(period == null){
                                 binder.StopTiming();
                             }else{
@@ -102,6 +100,7 @@ public class TimingService extends Service {
                                         period.getTask().getName(),
                                         period.getBegin());
                             }
+                            MainActivity.Activity.refreshHomeFragment();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
