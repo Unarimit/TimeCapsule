@@ -156,6 +156,7 @@ public class EntitySyncRequest {
         long last_sync = pullModel.lastSync;
         if(response.code() == 200){
             String temp = response.body().string();
+            Log.d("entity_sync_request.java", temp);
             SyncPeriodsPullResult result = gson.fromJson(temp, SyncPeriodsPullResult.class);
             List<Task> taskList = DbContext.Tasks.GetTaskList(true);
             if(result.aTimePeriods != null)
@@ -177,9 +178,10 @@ public class EntitySyncRequest {
                             period_dto.getBegin(),
                             period_dto.getEnd(),
                             period_dto.getBegin() / 3600 / 24,
-                            period_dto.getEnd() / 3600 / 24));
-                    if(last_sync < period_dto.getBegin()){
-                        last_sync = period_dto.getBegin();
+                            period_dto.getEnd() / 3600 / 24,
+                            period_dto.getLastModified()));
+                    if(last_sync < period_dto.getLastModified()){
+                        last_sync = period_dto.getLastModified();
                     }
                 }
 
@@ -230,8 +232,8 @@ public class EntitySyncRequest {
             for (PeriodDto p: pushModel.aTimePeriods
             ) {
                 DbContext.Periods.Sync(p._id);
-                if(sync < p.getBegin()){
-                    sync = p.getBegin();
+                if(sync < p.getLastModified()){
+                    sync = p.getLastModified();
                 }
             }
             DbContext.UserInfos.AddOrUpdateValue(UserConfig.LAST_SYNC, sync+"");

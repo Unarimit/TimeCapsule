@@ -33,16 +33,20 @@ namespace TimeCapsule.Infrastructure.Persistence
         {
             foreach (var entry in ChangeTracker.Entries<AudiableEntity>())
             {
-                switch (entry.State)
+                if (entry.Entity.LastModified != null)
                 {
-                    // TODO: not very necessary for createtime and username
-                    case EntityState.Added:
-                        entry.Entity.LastModified = DateTime.Now;
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.LastModified = DateTime.Now;
-                        break;
+                    switch (entry.State)
+                    {
+                        // TODO: not very necessary for createtime and username
+                        case EntityState.Added:
+                            entry.Entity.LastModified = DateTime.Now;
+                            break;
+                        case EntityState.Modified:
+                            entry.Entity.LastModified = DateTime.Now;
+                            break;
+                    }
                 }
+                
             }
             return base.SaveChangesAsync(cancellationToken);
         }
