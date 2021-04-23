@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 period.Finish();
-                DbContext.Periods.UpdatePeriod(period);
+                DbContext.Periods.UpdatePeriod(period, false);
                 connection.StopTiming();
                 timeMeter.stop();
                 timeMeter.setVisibility(View.GONE);

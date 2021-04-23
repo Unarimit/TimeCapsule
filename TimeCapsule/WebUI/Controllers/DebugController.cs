@@ -20,6 +20,38 @@ namespace TimeCapsule.WebUI.Controllers
             _context = context;
         }
         /// <summary>
+        /// 仅添加用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("UserOnly")]
+        [SwaggerResponse(typeof(Guid))]
+        public async Task<ActionResult> AddUsersOnly()
+        {
+            if (_context.Users.Count() > 0)
+                return NoContent();
+            _context.Users.Add(new Domain.Entities.User
+            {
+                Username = "admin",
+                Password = "1234",
+                Email = "admin@admin.com",
+                IsAdmin = true,
+                IsUser = true
+            });
+            _context.Users.Add(new Domain.Entities.User
+            {
+                Username = "test",
+                Password = "1234",
+                Email = "test@test.com",
+                IsAdmin = false,
+                IsUser = true
+            });
+
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
+
+            return Ok();
+        }
+
+        /// <summary>
         /// 添加不同角色的用户
         /// </summary>
         /// <returns></returns>

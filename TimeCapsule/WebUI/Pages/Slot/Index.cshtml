@@ -1,0 +1,258 @@
+﻿@page
+@{
+    Layout = "_SlotLayout";
+}
+
+<link rel="stylesheet" href="~/css/solid.css" />
+<style>
+    .taskContainer {
+        margin: 20px;
+        display: inline-block;
+        height: 60px;
+        width: 60px;
+        text-align: center;
+    }
+
+    .countingContainer {
+        margin: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        display: inline-block;
+        height: 60px;
+        font-size: 20px;
+        text-align: center;
+        border: 1px solid red;
+        border-radius: 5px;
+    }
+
+    .right_div {
+        display: inline-block;
+        vertical-align: top;
+        width: 35%;
+        height: 100%;
+    }
+
+    .left_div {
+        display: inline-block;
+        vertical-align: top;
+        width: 60%;
+        height: 100%;
+    }
+
+    .mytitle {
+        font-size: 20px;
+        font-family: "Microsoft YaHei";
+    }
+</style>
+<script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script type="text/javascript" src="~/js/slot.js"></script>
+<script>
+    document.onreadystatechange = loadAsync;
+    // 在网页加载后请求数据
+    function loadAsync() {
+        if (document.readyState == "complete") {
+            loadCurrentPeriod();
+            loadTasks();
+        }
+    }
+    // 请求今天的时间段数据
+    function loadCurrentPeriod() {
+        var _date = new Date();
+        var dd = _date.getDate();
+        var mm = _date.getMonth() + 1;
+        var yyyy = _date.getFullYear();
+        mm_str = "" + mm;
+        dd_str = "" + dd;
+        if (mm < 10)
+            mm_str = "0" + mm;
+        if (dd < 10)
+            dd_str = "0" + dd;
+        var int_date = yyyy + "" + mm_str + "" + dd_str;
+
+        $.ajax({
+            url: "/api/user/period/current",
+            type: "get",
+            dataType: "json",
+            async: false,
+
+            success: function (data) {
+                dataprocess_currentP(data);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+    // query tasks
+    function loadTasks() {
+        $.ajax({
+            url: "/api/user/task/often",
+            type: "get",
+            dataType: "json",
+            async: false,
+
+            success: function (data) {
+                dataprocess_task(data);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    // 处理进行中的任务
+    var counting_arr = new Array();
+    var counting_arr_date = new Array();
+    function dataprocess_currentP(d) {
+        counting_arr = new Array();
+        counting_arr_date = new Array();
+        var no_proceding = true;
+        var htmldata = "";
+        var count = 0;
+        if (d != null) {
+            no_proceding = false;
+            htmldata += "<div class=\"fas\" style=\"color:" + d.task.taskClass.color + ";\" >" + d.task.icon + "</div>";
+            htmldata += "<p id=\"mycount_p" + count + "\" style=\"display: inline\"> </p>";
+            htmldata += "<button class='btn btn-info btn-sm' style=\"display: inline; vertical-align: middle; margin-left:3px;\" onclick=\"finishPeriod('" + d.id + "')\">结束</button>";
+            counting_arr.push("mycount_p" + count);
+            var b_temp = d.beginTime.split(",");
+            temp = new Date(b_temp[0], b_temp[1], b_temp[2], b_temp[3], b_temp[4], b_temp[5]);
+
+            counting_arr_date.push(temp);
+            count++;
+            $("#100").show();
+            $("#101").hide();
+        } else {
+            $("#101").show();
+            $("#100").hide();
+        }
+
+        if (no_proceding) {
+            $("#proceding_div").html("<p style='color:#808080;'>没有正在进行的任务</p>");
+            window.clearInterval("display_count()");
+        }
+        else {
+            $("#proceding_div").html(htmldata);
+            window.clearInterval("display_count()");
+            display_count();
+            window.setInterval("display_count()", 1000);
+        }
+    }
+
+    // show tasks
+    function dataprocess_task(d) {
+        var htmldata = "";
+
+        for (var i = 0; i < d.tasks.length; i++) {
+            htmldata += "<div class='taskContainer' \">"
+            htmldata += "<div onclick=\"startTask('" + d.tasks[i].id + "')\" class=\"fas\" style=\"color:" + d.tasks[i].taskClass.color + ";cursor: pointer; \" >" + d.tasks[i].icon + "</div>";
+            htmldata += "<p>" + d.tasks[i].name + "</p>";
+            htmldata += "</div>"
+
+        }
+        $("#start_new_task").html(htmldata);
+    }
+
+    // 定时刷新进行时间
+    function display_count() {
+        for (var i = 0; i < counting_arr.length; i++) {
+            var now = new Date();
+            now.setHours(now.getHours() - counting_arr_date[i].getHours());
+            now.setMinutes(now.getMinutes() - counting_arr_date[i].getMinutes());
+            now.setSeconds(now.getSeconds() - counting_arr_date[i].getSeconds());
+            minutes = now.getMinutes();
+            seconds = now.getSeconds();
+            if (minutes < 10)
+                minutes = "0" + minutes;
+            if (seconds < 10)
+                seconds = "0" + seconds;
+            $("#" + counting_arr[i]).html(now.getHours() + ":" + minutes + ":" + seconds);
+        }
+    }// button
+    function finishPeriod(id) {
+        var now = new Date();
+        var jobj = {};
+        jobj.isFinish = true;
+        jobj.endTime = getFormatDate(now);
+        jstr = JSON.stringify(jobj);
+
+        $.ajax({
+            url: "/api/user/period/finish/" + id,
+            type: "put",
+            data: jstr,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            //TODO: Error Process
+            success: function (data) {
+                loadCurrentPeriod();
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+    // button
+    function startTask(id) {
+        var now = new Date();
+        var jobj = {};
+        jobj.isFinish = false;
+        jobj.taskId = id;
+        jobj.beginTime = getFormatDate(now);
+        jstr = JSON.stringify(jobj);
+
+        $.ajax({
+            url: "/api/user/period",
+            type: "post",
+            data: jstr,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            //TODO: Error Process
+            success: function (data) {
+                loadCurrentPeriod();
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+            }
+        });
+    }
+    function getFormatDate(date) {
+        var yyyy = date.getFullYear().toString();
+        var MM = (date.getMonth() + 1).toString();
+        var dd = date.getDate().toString();
+        var HH = date.getHours().toString();
+        var mm = date.getMinutes().toString();
+        var ss = date.getSeconds().toString();
+        if (MM.length < 2)
+            MM = "0" + MM;
+        if (dd.length < 2)
+            dd = "0" + dd;
+        if (mm.length < 2)
+            mm = "0" + mm;
+        if (HH.length < 2)
+            HH = "0" + HH;
+        if (ss.length < 2)
+            ss = "0" + ss;
+        return yyyy + "-" + MM + "-" + dd + "T" + HH + ":" + mm + ":" + ss;
+    }
+</script>
+<div style="background-color:rgba(255, 255, 255, 0.5); padding:10px">
+    <div style="margin-top:20px" name="preceding_period" id="100">
+        <p class='mytitle' id="proceding_p">正在进行的任务</p>
+        <div id="proceding_div"> </div>
+    </div>
+
+    <div style="margin-top: 20px" name="start_new_task(period)" id="101">
+        <p class='mytitle'>开始新任务</p>
+        <div style="border: 1px solid #808080; border-radius:10px" id="start_new_task">
+            <!-- img button here -->
+        </div>
+    </div>
+</div>
+
+

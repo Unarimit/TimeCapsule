@@ -51,9 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         // HTTP REQUEST
                         try {
-                            if(!DbContext.UserInfos.GetValue(UserConfig.SYNC).equals("false")){
-                                EntitySyncRequest.SyncStuff();
-                            }
+                            EntitySyncRequest.SyncStuff();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

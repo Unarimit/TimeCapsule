@@ -39,7 +39,7 @@ public class HomeCurveTaskViewAdapter  extends RecyclerView.Adapter<HomeCurveTas
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbContext.Periods.Add(new Period(mValues.get(position).getTask()));
+                DbContext.Periods.Add(new Period(mValues.get(position).getTask()), false);
                 fragment.BigUpdateUI();
             }
         });

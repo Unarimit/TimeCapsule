@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using TimeCapsule.Application.Common.Interfaces;
 using TimeCapsule.WebUI.Services;
 using TimeCapsule.WebUI.Filters;
+using TimeCapsule.WebUI.Hubs;
 
 namespace TimeCapsule.WebUI
 {
@@ -35,6 +36,7 @@ namespace TimeCapsule.WebUI
             });
 
             services.AddRazorPages();
+            services.AddSignalR();
 
             //意义不明
             services.AddHealthChecks()
@@ -43,6 +45,7 @@ namespace TimeCapsule.WebUI
             //注册get current用户服务
             services.AddHttpContextAccessor();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+
 
             //认证
             services.AddAuthentication(CookieScheme) // Sets the default scheme to cookies
@@ -115,6 +118,7 @@ namespace TimeCapsule.WebUI
             {
                 // endpoints.MapControllers(); map all
                 endpoints.MapControllerRoute(name:default, pattern:"{controller}/{action=index}/{id?}"); // map pattern
+                endpoints.MapHub<SyncHub>("/syncHub");
                 endpoints.MapRazorPages();
             });
         }

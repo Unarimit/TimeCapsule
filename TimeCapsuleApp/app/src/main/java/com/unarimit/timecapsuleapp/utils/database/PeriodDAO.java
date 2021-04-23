@@ -7,6 +7,7 @@ import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.entities.Task;
 import com.unarimit.timecapsuleapp.entities.TaskClass;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
+import com.unarimit.timecapsuleapp.utils.http.dto.PeriodDto;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -126,7 +127,7 @@ public class PeriodDAO {
         return list;
     }
 
-    public void Add(Period period){
+    public void Add(Period period, boolean sync){
         ContentValues values = new  ContentValues();
         values.put(GUID, period.getGuid());
         values.put(TASK_ID, period.getTask().getId());
@@ -134,7 +135,7 @@ public class PeriodDAO {
         values.put(END, period.getEnd());
         values.put(BEGIN_CALENDER, period.getBeginCalendar());
         values.put(END_CALENDER, period.getEndCalendar());
-        values.put(SYNC, false);
+        values.put(SYNC, sync);
         values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         DbContext._SQLiteDatabase.insert(TABLE_NAME, ID, values);
 
@@ -145,7 +146,7 @@ public class PeriodDAO {
         }
     }
 
-    public void UpdatePeriod(Period period){
+    public void UpdatePeriod(Period period, boolean sync){
         ContentValues values = new  ContentValues();
         values.put(GUID, period.getGuid());
         values.put(TASK_ID, period.getTask().getId());
@@ -153,7 +154,7 @@ public class PeriodDAO {
         values.put(END, period.getEnd());
         values.put(BEGIN_CALENDER, period.getBeginCalendar());
         values.put(END_CALENDER, period.getEndCalendar());
-        values.put(SYNC, false);
+        values.put(SYNC, sync);
         values.put(LAST_MODIFIED, TimeHelper.GetCurrentSeconds());
         DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+period.getId(), null);
         if(period.getEnd() != -1){  // 处理之前修改过的时间段
@@ -167,10 +168,43 @@ public class PeriodDAO {
             DbContext.CurrentUser.SetAchievePoint(DbContext.CurrentUser.getAchievePoint() + (achieve - last_achievement));
         }
     }
-    public void Sync(@NotNull Period period){
+    /**
+     * invoke by sync function, task.id(int) need
+     * */
+    public void UpdateOrAddPeriod(Period period){
+        Cursor cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME +
+                " where " + GUID + " = '" + period.getGuid()+"'", null);
+        if(cursor == null || !cursor.moveToFirst())
+            Add(period, true);
+        else
+            UpdatePeriod(period, true);
+    }
+
+    public List<PeriodDto> GetNotSyncPeriodAll(){
+        Cursor cursor = DbContext._SQLiteDatabase.rawQuery("select * from "+TABLE_NAME+", "+TaskDAO.TABLE_NAME+
+                " where "+ TASK_ID + "=" + TaskDAO.ID
+                + " and "+ SYNC + "= 0"
+                + " limit 100", null);
+
+        if(cursor == null || !cursor.moveToFirst())
+            return null;
+        LinkedList<PeriodDto> list = new LinkedList<>();
+        do{
+            // TODO: 性能优化，getIndex在循环外进行，不要进行联表查询
+            list.add(new PeriodDto(cursor.getInt(cursor.getColumnIndex(ID)),
+                    cursor.getString(cursor.getColumnIndex(GUID)),
+                    cursor.getString(cursor.getColumnIndex(TaskDAO.GUID)),
+                    cursor.getLong(cursor.getColumnIndex(BEGIN)),
+                    cursor.getLong(cursor.getColumnIndex(END)),
+                    cursor.getLong(cursor.getColumnIndex(LAST_MODIFIED))));
+        }while(cursor.moveToNext());
+
+        return list;
+    }
+    public void Sync(int id){
         ContentValues values = new  ContentValues();
         values.put(SYNC, true);
-        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+period.getId(), null);
+        DbContext._SQLiteDatabase.update(TABLE_NAME, values, ID+"="+id, null);
     }
 
     public void DeletePeriod(Period period){

@@ -25,9 +25,14 @@ import androidx.core.app.NotificationChannelCompat.Builder;
 
 import com.unarimit.timecapsuleapp.MainActivity;
 import com.unarimit.timecapsuleapp.R;
+import com.unarimit.timecapsuleapp.entities.Period;
 import com.unarimit.timecapsuleapp.ui.common.IconStringList;
+import com.unarimit.timecapsuleapp.ui.common.UserConfig;
 import com.unarimit.timecapsuleapp.utils.TimeHelper;
+import com.unarimit.timecapsuleapp.utils.database.DbContext;
+import com.unarimit.timecapsuleapp.utils.http.requests.EntitySyncRequest;
 
+import java.io.IOException;
 import java.util.Locale;
 
 public class TimingService extends Service {
@@ -65,6 +70,8 @@ public class TimingService extends Service {
                 .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
                 .setContentIntent(pi);
         startForeground(1, notificationBuilder.build());
+
+        new Thread(new SyncWorker()).start();
     }
 
 
@@ -72,6 +79,36 @@ public class TimingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public class SyncWorker implements Runnable{
+        @Override
+        public void run() {
+            while(true){
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(DbContext.UserInfos.GetValue(UserConfig.SYNC).equals("true")){
+                    try {
+                        if(EntitySyncRequest.SyncPeriods() == EntitySyncRequest.SyncStatus.CHANGED){
+                            Period period = DbContext.Periods.GetCurrentPeriod();
+                            if(period == null){
+                                binder.StopTiming();
+                            }else{
+                                binder.StartTiming(period.getTask().getTaskClass().getColor(),
+                                        period.getTask().getIcon(),
+                                        period.getTask().getName(),
+                                        period.getBegin());
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
 

@@ -1,0 +1,60 @@
+﻿@page
+@{
+    Layout = null;
+}
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        document.onkeydown = function keydownf(event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 13) {
+                login();
+            }
+
+        };
+        function login() {
+            var jobj = {};
+            jobj.usernameOrEmail = $("#username").val();
+            jobj.password = $("#password").val();
+            jstr = JSON.stringify(jobj);
+
+            $.ajax({
+                url: "/api/identify/account/login",
+                type: "post",
+                data: jstr,
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                async: false,
+
+                success: function (response, statu, xhr) {
+                    if (xhr.status == 200) {
+                        window.location.href = '/slot/index';
+                    }
+                    else {
+                        alert(xhr.status);
+                    }
+                },
+
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 403) {
+                        alert("用户名或密码错误");
+                    } else {
+                        alert(XMLHttpRequest.readyState + " " + XMLHttpRequest.status + " " + XMLHttpRequest.responseText);
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<h1>登录</h1>
+<div style="margin-top: 20px;">
+    <input type="text" placeholder="username" id="username" class="form-control" />
+</div>
+<div style="margin-top: 20px;">
+    <input type="password" placeholder="password" id="password" class="form-control" />
+</div>
+<div style="margin-top: 20px;">
+    <button class="btn btn-primary" onclick="login()">登录</button>
+    <button class="btn btn-secondary" onclick="window.location.href ='register'">注册</button>
+</div>

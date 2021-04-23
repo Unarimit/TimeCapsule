@@ -82,6 +82,19 @@ public class MainActivity extends AppCompatActivity {
         // Set Value to Nav
         header_layout = navigationView.getHeaderView(0);
         refreshLeftMenuBar(); // username & achievement
+        DbContext.IsMainActive = true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DbContext.IsMainActive = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DbContext.IsMainActive = false;
     }
 
     @Override

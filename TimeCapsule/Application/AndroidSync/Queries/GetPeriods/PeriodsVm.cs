@@ -5,7 +5,7 @@ using TimeCapsule.Application.AndroidSync.AndroidDtos;
 
 namespace TimeCapsule.Application.AndroidSync.Queries.GetPeriods
 {
-    public class SyncPeriodsVm
+    public class PeriodsVm
     {
         public IList<ATimePeriod> ATimePeriods { get; set; }
 

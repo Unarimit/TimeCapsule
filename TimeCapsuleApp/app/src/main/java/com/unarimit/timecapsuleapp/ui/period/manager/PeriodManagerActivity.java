@@ -201,14 +201,14 @@ public class PeriodManagerActivity extends AppCompatActivity {
                     period.setEndCalendar(ec);
                     period.setBegin(bt);
                     period.setEnd(et);
-                    DbContext.Periods.UpdatePeriod(period);
+                    DbContext.Periods.UpdatePeriod(period, false);
                 }else{
                     period = new Period(task);
                     period.setBeginCalendar(bc);
                     period.setEndCalendar(ec);
                     period.setBegin(bt);
                     period.setEnd(et);
-                    DbContext.Periods.Add(period);
+                    DbContext.Periods.Add(period, false);
                 }
                 finish();
             }

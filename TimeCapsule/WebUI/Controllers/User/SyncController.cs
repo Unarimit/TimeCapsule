@@ -39,7 +39,7 @@ namespace TimeCapsule.WebUI.Controllers.User
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpGet("periods")]
+        [HttpPost("getPeriods")]
         public async Task<ActionResult<PeriodsVm>> QueryStuff(GetPeriodsQuery command)
         {
             return await Mediator.Send(command);

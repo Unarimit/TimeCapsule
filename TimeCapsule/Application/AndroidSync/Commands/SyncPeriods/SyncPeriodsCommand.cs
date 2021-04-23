@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TimeCapsule.Application.AndroidSync.AndroidDtos;
 using TimeCapsule.Application.Common.Exceptions;
 using TimeCapsule.Application.Common.Interfaces;
+using TimeCapsule.Domain.Entities;
 
 namespace TimeCapsule.Application.AndroidSync.Commands.SyncPeriods
 {
@@ -28,7 +29,9 @@ namespace TimeCapsule.Application.AndroidSync.Commands.SyncPeriods
         {
             foreach(var periodDto in request.ATimePeriods)
             {
-                var task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == periodDto.TaskId);
+                var task = await _context.Tasks
+                    .Include(x => x.User)
+                    .FirstOrDefaultAsync(x => x.Id == periodDto.TaskId);
                 if(task == null)
                 {
                     throw new TaskException.TaskUnexistException(periodDto.TaskId);
@@ -36,8 +39,25 @@ namespace TimeCapsule.Application.AndroidSync.Commands.SyncPeriods
                 var period = await _context.Periods.FirstOrDefaultAsync(x => x.Id == periodDto.Id);
                 if (period == null)
                 {
-                    _context.Periods.Add(periodDto.ToTimePeriod(task));
+                    period = periodDto.ToTimePeriod(task);
+
+                    // add daily
+                    int begin = int.Parse(period.BeginTime.ToString("yyyyMMdd"));
+                    var daily = await _context.Dailies.FirstOrDefaultAsync(x => x.Calendar == begin);
+                    if (daily == null)
+                    {
+                        daily = new TimeDaily
+                        {
+                            Calendar = begin,
+                            User = task.User,
+                            Desc = ""
+                        };
+                    }
+
+                    period.Daily = daily;
+                    _context.Periods.Add(period);
                 }
+                
                 else
                 {
                     // TODO: check last modified

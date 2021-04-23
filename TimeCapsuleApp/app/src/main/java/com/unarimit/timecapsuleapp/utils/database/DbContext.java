@@ -37,8 +37,9 @@ public class DbContext {
     public static PeriodFragment.StatisticType statisticType = PeriodFragment.StatisticType.LIST;
     public static int WindowsWidth;
     public static Context Context;
+    public static boolean IsMainActive;
 
-    private static final int DB_VERSION = 56;         //database version
+    private static final int DB_VERSION = 62;         //database version
 
     public static void InitDbContext(Context context){
         Context = context;
@@ -51,9 +52,17 @@ public class DbContext {
         CurveJobBases = new CurveJobBaseDAO();
         CurveJobs = new CurveJobDAO();
         UserInfos = new UserDAO();
-        if(JustCreate)
-            SeedDataForTest();
 
+        DbContext.UserInfos.AddOrUpdateValue(UserConfig.SYNC, "false");
+
+
+
+        if(JustCreate){
+            // basic config
+            DbContext.UserInfos.AddOrUpdateValue(UserConfig.ACHIEVE, 100+"");
+            DbContext.UserInfos.AddOrUpdateValue(UserConfig.LAST_SYNC, 1+"");
+            SeedDataForTest();
+        }
 
         CurrentUser = new User();
     }
@@ -62,8 +71,6 @@ public class DbContext {
         Log.d("debug", "database seed");
 
         DbContext.UserInfos.AddOrUpdateValue(UserConfig.USER_NAME, "test");
-        DbContext.UserInfos.AddOrUpdateValue(UserConfig.ACHIEVE, 100+"");
-        DbContext.UserInfos.AddOrUpdateValue(UserConfig.SYNC, "false");
         CurrentUser = new User();
         // add task class
         TaskClass eatTaskClass = new TaskClass(UUID.randomUUID().toString(),"eat", "#444444",1);
@@ -86,15 +93,15 @@ public class DbContext {
         // add period
         long begin_c = TimeHelper.GetCurrentSeconds() / 3600 / 24 - 1; // begin from yesterday
         long begin = begin_c * 3600 * 24;
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 8, begin + 3600 * 9, begin_c, begin_c));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, mathTask, begin + 3600 * 9, begin + 3600 * 12, begin_c, begin_c));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 12, begin + 3600 * 13, begin_c, begin_c));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, mathTask, begin + 3600 * 13, begin + 3600 * 16, begin_c, begin_c));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, englishTask, begin + 3600 * 16, begin + 3600 * 18, begin_c, begin_c));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 18, begin + 3600 * 18 + 900, begin_c, begin_c));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, readingTask, begin + 3600 * 18 + 900, begin + 3600 * 22, begin_c, begin_c));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, mathTask, begin + 3600 * 22, begin + 3600 * 25, begin_c, begin_c+1));
-        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 32, begin + 3600 * 33, begin_c+1, begin_c+1));
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 8, begin + 3600 * 9, begin_c, begin_c), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, mathTask, begin + 3600 * 9, begin + 3600 * 12, begin_c, begin_c), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 12, begin + 3600 * 13, begin_c, begin_c), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, mathTask, begin + 3600 * 13, begin + 3600 * 16, begin_c, begin_c), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, englishTask, begin + 3600 * 16, begin + 3600 * 18, begin_c, begin_c), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 18, begin + 3600 * 18 + 900, begin_c, begin_c), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, readingTask, begin + 3600 * 18 + 900, begin + 3600 * 22, begin_c, begin_c), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, mathTask, begin + 3600 * 22, begin + 3600 * 25, begin_c, begin_c+1), false);
+        DbContext.Periods.Add(new Period(UUID.randomUUID().toString(), 0, eatTask, begin + 3600 * 32, begin + 3600 * 33, begin_c+1, begin_c+1), false);
 
         DbContext.CurveJobBases.Add(new CurveJobBase(mathTask, begin_c-1, 40));
 

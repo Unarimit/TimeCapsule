@@ -11,6 +11,7 @@ using TimeCapsule.Application.TimeTasks.Commands.CreateTaskAndClass;
 using TimeCapsule.Application.TimeTasks.Commands.DeleteTask;
 using TimeCapsule.Application.TimeTasks.Commands.FinishTask;
 using TimeCapsule.Application.TimeTasks.Commands.UpdateTask;
+using TimeCapsule.Application.TimeTasks.Queries.GetOftenTasks;
 using TimeCapsule.Application.TimeTasks.Queries.GetTasks;
 
 namespace TimeCapsule.WebUI.Controllers.User
@@ -21,6 +22,12 @@ namespace TimeCapsule.WebUI.Controllers.User
         public async Task<ActionResult<TasksVm>> GetTaskList([FromQuery]int skip = 0, [FromQuery]int take = 20)
         {
             return await Mediator.Send(new GetTasksQuery { Username = GetUsername(), Skip = skip, Take = take }) ;
+
+        }
+        [HttpGet("often")]
+        public async Task<ActionResult<OftenTasksVm>> GetOftenTaskList([FromQuery] int skip = 0, [FromQuery] int take = 20)
+        {
+            return await Mediator.Send(new GetOftenTasksQuery { Username = GetUsername(), Skip = skip, Take = take });
         }
 
         [HttpPost]

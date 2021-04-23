@@ -40,7 +40,7 @@ public class HomeTaskViewAdapter extends RecyclerView.Adapter<HomeTaskViewAdapte
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbContext.Periods.Add(new Period(mValues.get(position)));
+                DbContext.Periods.Add(new Period(mValues.get(position)), false);
                 fragment.BigUpdateUI();
             }
         });
