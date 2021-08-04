@@ -93,7 +93,6 @@ public class CurveJobBase implements Serializable {
     public void Create(long calendar){
         if(calendar <= LastCheckCalendar)
             return;
-
         // for before days create
         for(long i = LastCheckCalendar; i < calendar - 1; i++){ // lastCheckCalendar always smaller than calendar
             int during = (int)(i - BeginCalendar + 2);
@@ -115,7 +114,6 @@ public class CurveJobBase implements Serializable {
                 }
             }
         }
-
         // for calendar day(normally today) create
         CurveJob temp = new CurveJob(this, "", BaseCost, (int)calendar - (int)BeginCalendar + 1);
         temp.Begin();
