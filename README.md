@@ -10,17 +10,17 @@
 
 
 ## 预览
-<img width="150" src="Docs/img/home_1.png"/>
+<img width="250" src="Docs/img/home_1.png"/>
 
-![home_2](Docs/img/home_2.png)
+<img width="250" src="Docs/img/home_2.png"/>
 
-![taskclass](Docs/img/taskclass.png)
+<img width="250" src="Docs/img/task.png"/>
 
-![task](Docs/img/task.png)
+<img width="250" src="Docs/img/taskclass.png"/>
 
-![statistic_1](Docs/img/statistic_1.png)
+<img width="250" src="Docs/img/statistic_1.png"/>
 
-![statistic_2](Docs/img/statistic_2.png)
+<img width="250" src="Docs/img/statistic_2.png"/>
 
 
 
