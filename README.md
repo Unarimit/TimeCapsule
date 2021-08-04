@@ -10,7 +10,7 @@
 
 
 ## 预览
-![home_1](Docs/img/home_1.png)
+<img width="150" src="Docs/img/home_1.png"/>
 
 ![home_2](Docs/img/home_2.png)
 
