@@ -1,5 +1,4 @@
 # TimeCapsule
-
 一个以aTimeLogger功能为基础的时间记录系统
 
 前端：安卓端+Web端
@@ -11,16 +10,18 @@
 
 
 ## 预览
-![home_1](Docs/img/home_1)
+![home_1](Docs/img/home_1.png)
 
-![home_2](Docs/img/home_2)
+![home_2](Docs/img/home_2.png)
 
-![taskclass](Docs/img/taskclass)
+![taskclass](Docs/img/taskclass.png)
 
-![task](Docs/img/task)
+![task](Docs/img/task.png)
 
-![statistic_1](Docs/img/statistic_1)
+![statistic_1](Docs/img/statistic_1.png)
 
-![statistic_2](Docs/img/statistic_2)
+![statistic_2](Docs/img/statistic_2.png)
+
+
 
 
